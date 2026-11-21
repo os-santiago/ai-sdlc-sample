@@ -6,10 +6,10 @@ import "sort"
 // Clamp limits x to the closed range [lo, hi].
 func Clamp(x, lo, hi int) int {
 	if x < lo {
-		return hi
+		return lo
 	}
 	if x > hi {
-		return lo
+		return hi
 	}
 	return x
 }
