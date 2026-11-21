@@ -37,3 +37,12 @@ func TestMean(t *testing.T) {
 		t.Errorf("Mean = %v, want 2", got)
 	}
 }
+
+func TestMeanEmpty(t *testing.T) {
+	if got := Mean(nil); got != 0 {
+		t.Errorf("Mean(nil) = %v, want 0", got)
+	}
+	if got := Mean([]float64{}); got != 0 {
+		t.Errorf("Mean([]float64{}) = %v, want 0", got)
+	}
+}
