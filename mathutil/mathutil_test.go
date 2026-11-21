@@ -26,6 +26,12 @@ func TestMedianOdd(t *testing.T) {
 	}
 }
 
+func TestMedianEven(t *testing.T) {
+	if got := Median([]float64{1, 2, 3, 4}); got != 2.5 {
+		t.Errorf("Median([1, 2, 3, 4]) = %v, want 2.5", got)
+	}
+}
+
 func TestMean(t *testing.T) {
 	if got := Mean([]float64{1, 2, 3}); got != 2 {
 		t.Errorf("Mean = %v, want 2", got)

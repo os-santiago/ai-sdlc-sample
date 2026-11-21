@@ -21,7 +21,13 @@ func Median(xs []float64) float64 {
 	}
 	sorted := append([]float64(nil), xs...)
 	sort.Float64s(sorted)
-	return sorted[len(sorted)/2]
+	n := len(sorted)
+	if n%2 == 0 {
+		// Even length: average of the two middle values
+		return (sorted[n/2-1] + sorted[n/2]) / 2
+	}
+	// Odd length: return the middle value
+	return sorted[n/2]
 }
 
 // Mean returns the arithmetic mean of xs, or 0 for an empty slice.
