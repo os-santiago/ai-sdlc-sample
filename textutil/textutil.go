@@ -74,3 +74,16 @@ func Capitalize(s string) string {
 	r[0] = unicode.ToUpper(r[0])
 	return string(r)
 }
+
+// CountVowels returns the number of vowels (a, e, i, o, u) in s,
+// counting both upper and lower case.
+func CountVowels(s string) int {
+	count := 0
+	for _, r := range s {
+		lower := unicode.ToLower(r)
+		if lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u' {
+			count++
+		}
+	}
+	return count
+}
