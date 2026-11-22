@@ -15,9 +15,20 @@ func Reverse(s string) string {
 	return string(r)
 }
 
-// WordCount returns the number of whitespace-separated words in s.
+// WordCount returns the number of whitespace-separated words in s,
+// excluding tokens that contain no letters or digits.
 func WordCount(s string) int {
-	return len(strings.Fields(s))
+	fields := strings.Fields(s)
+	count := 0
+	for _, field := range fields {
+		for _, r := range field {
+			if unicode.IsLetter(r) || unicode.IsDigit(r) {
+				count++
+				break
+			}
+		}
+	}
+	return count
 }
 
 // IsPalindrome reports whether s reads the same forwards and backwards,
