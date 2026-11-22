@@ -411,3 +411,72 @@ func TestSignPositive(t *testing.T) {
 		t.Errorf("Sign(5) = %d, want 1", got)
 	}
 }
+func TestPowBasicExample(t *testing.T) {
+	got, ok := Pow(2, 10)
+	if !ok {
+		t.Error("Pow(2, 10) returned false, want true")
+	}
+	if got != 1024 {
+		t.Errorf("Pow(2, 10) = %d, want 1024", got)
+	}
+}
+
+func TestPowZeroExponent(t *testing.T) {
+	got, ok := Pow(5, 0)
+	if !ok {
+		t.Error("Pow(5, 0) returned false, want true")
+	}
+	if got != 1 {
+		t.Errorf("Pow(5, 0) = %d, want 1", got)
+	}
+}
+
+func TestPowNegativeExponent(t *testing.T) {
+	got, ok := Pow(2, -1)
+	if ok {
+		t.Error("Pow(2, -1) returned true, want false")
+	}
+	if got != 0 {
+		t.Errorf("Pow(2, -1) = %d, want 0", got)
+	}
+}
+
+func TestPowOne(t *testing.T) {
+	got, ok := Pow(7, 1)
+	if !ok {
+		t.Error("Pow(7, 1) returned false, want true")
+	}
+	if got != 7 {
+		t.Errorf("Pow(7, 1) = %d, want 7", got)
+	}
+}
+
+func TestPowZeroBase(t *testing.T) {
+	got, ok := Pow(0, 5)
+	if !ok {
+		t.Error("Pow(0, 5) returned false, want true")
+	}
+	if got != 0 {
+		t.Errorf("Pow(0, 5) = %d, want 0", got)
+	}
+}
+
+func TestPowNegativeBase(t *testing.T) {
+	got, ok := Pow(-2, 3)
+	if !ok {
+		t.Error("Pow(-2, 3) returned false, want true")
+	}
+	if got != -8 {
+		t.Errorf("Pow(-2, 3) = %d, want -8", got)
+	}
+}
+
+func TestPowLargerExponent(t *testing.T) {
+	got, ok := Pow(3, 4)
+	if !ok {
+		t.Error("Pow(3, 4) returned false, want true")
+	}
+	if got != 81 {
+		t.Errorf("Pow(3, 4) = %d, want 81", got)
+	}
+}
