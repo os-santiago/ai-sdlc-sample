@@ -4,6 +4,7 @@ package textutil
 import (
 	"strings"
 	"unicode"
+	"unicode/utf8"
 )
 
 // Reverse returns s with its characters in reverse order.
@@ -124,4 +125,10 @@ func HasPrefixFold(s, prefix string) bool {
 func Squeeze(s string) string {
 	fields := strings.Fields(s)
 	return strings.Join(fields, " ")
+}
+
+// CountRunes returns the number of Unicode code points in s.
+// It counts runes (characters), not bytes.
+func CountRunes(s string) int {
+	return utf8.RuneCountInString(s)
 }
