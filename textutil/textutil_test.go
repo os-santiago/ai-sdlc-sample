@@ -22,9 +22,37 @@ func TestReverseMultibyte(t *testing.T) {
 }
 
 func TestWordCount(t *testing.T) {
-	for in, want := range map[string]int{"" : 0, "one": 1, " two  words ": 2} {
-		if got := WordCount(in); got != want {
-			t.Errorf("WordCount(%q) = %d, want %d", in, got, want)
+	tests := []struct {
+		in   string
+		want int
+	}{
+		// Existing test cases
+		{"", 0},
+		{"one", 1},
+		{" two  words ", 2},
+		// New test cases for punctuation-only tokens
+		{"hello , world !", 2},
+		{"one two three", 3},
+		// Edge cases with punctuation
+		{"!", 0},
+		{"!!!", 0},
+		{"   ,   ", 0},
+		{"a , b , c", 3},
+		{"word!", 1},
+		{"!word", 1},
+		{"wo!rd", 1},
+		// Numbers count as words
+		{"123", 1},
+		{"abc123", 1},
+		{"123abc", 1},
+		// Mixed punctuation and words
+		{"hello, world!", 2},
+		{"   ,   !   ?   ", 0},
+	}
+
+	for _, tt := range tests {
+		if got := WordCount(tt.in); got != tt.want {
+			t.Errorf("WordCount(%q) = %d, want %d", tt.in, got, tt.want)
 		}
 	}
 }
