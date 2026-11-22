@@ -129,3 +129,11 @@ func MinMax(xs []int) (min, max int, ok bool) {
 
 	return min, max, true
 }
+
+// Abs returns the absolute value of x.
+func Abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
