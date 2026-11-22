@@ -3,6 +3,7 @@ package kv
 
 import (
 	"errors"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -24,6 +25,24 @@ func Parse(s string) (map[string]string, error) {
 		out[k] = v
 	}
 	return out, nil
+}
+
+// Format renders a map as a deterministic "key=value;key=value" string.
+// Keys are sorted alphabetically. Returns empty string for empty map.
+func Format(m map[string]string) string {
+	if len(m) == 0 {
+		return ""
+	}
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	pairs := make([]string, len(keys))
+	for i, k := range keys {
+		pairs[i] = k + "=" + m[k]
+	}
+	return strings.Join(pairs, ";")
 }
 
 // ParseInts reads pairs separated by ";" and converts values to integers.

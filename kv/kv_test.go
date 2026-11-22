@@ -87,3 +87,74 @@ func TestParseIntsEmpty(t *testing.T) {
 		t.Fatalf("ParseInts = %v, want empty map", got)
 	}
 }
+
+// Format tests - Acceptance Criteria
+
+func TestFormatSorted(t *testing.T) {
+	// Acceptance Criteria 1: Format with keys sorted
+	m := map[string]string{"b": "2", "a": "1"}
+	got := Format(m)
+	want := "a=1;b=2"
+	if got != want {
+		t.Fatalf("Format(%v) = %q, want %q", m, got, want)
+	}
+}
+
+func TestFormatEmpty(t *testing.T) {
+	// Acceptance Criteria 2: Format of empty map returns empty string
+	m := map[string]string{}
+	got := Format(m)
+	if got != "" {
+		t.Fatalf("Format(empty map) = %q, want empty string", got)
+	}
+}
+
+func TestFormatParseRoundTrip(t *testing.T) {
+	// Acceptance Criteria 3: Parse(Format(m)) returns m
+	tests := []map[string]string{
+		{"a": "1", "b": "2"},
+		{"foo": "bar", "baz": "qux", "x": "y"},
+		{"single": "value"},
+		{},
+	}
+
+	for _, m := range tests {
+		formatted := Format(m)
+		parsed, err := Parse(formatted)
+		if err != nil {
+			t.Fatalf("Parse(Format(%v)) returned error: %v", m, err)
+		}
+		if len(parsed) != len(m) {
+			t.Fatalf("Parse(Format(%v)) = %v, length mismatch", m, parsed)
+		}
+		for k, v := range m {
+			if parsed[k] != v {
+				t.Fatalf("Parse(Format(%v))[%q] = %q, want %q", m, k, parsed[k], v)
+			}
+		}
+	}
+}
+
+func TestFormatMultipleKeys(t *testing.T) {
+	// Test with multiple keys to verify sorting
+	m := map[string]string{
+		"z": "last",
+		"a": "first",
+		"m": "middle",
+	}
+	got := Format(m)
+	want := "a=first;m=middle;z=last"
+	if got != want {
+		t.Fatalf("Format(%v) = %q, want %q", m, got, want)
+	}
+}
+
+func TestFormatSinglePair(t *testing.T) {
+	// Test with single pair
+	m := map[string]string{"key": "value"}
+	got := Format(m)
+	want := "key=value"
+	if got != want {
+		t.Fatalf("Format(%v) = %q, want %q", m, got, want)
+	}
+}
