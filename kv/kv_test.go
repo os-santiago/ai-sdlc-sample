@@ -305,3 +305,79 @@ func TestDeleteSingleKey(t *testing.T) {
 		t.Fatalf("Delete single key: length = %d, want 0", len(got))
 	}
 }
+
+// Equal tests - Issue #67 Acceptance Criteria
+
+func TestEqualSameMaps(t *testing.T) {
+	// Acceptance Criteria 1: Equal returns true when both maps have same keys and values
+	a := map[string]string{"a": "1", "b": "2"}
+	b := map[string]string{"a": "1", "b": "2"}
+	if !Equal(a, b) {
+		t.Fatalf("Equal(%v, %v) = false, want true", a, b)
+	}
+}
+
+func TestEqualDifferentValue(t *testing.T) {
+	// Acceptance Criteria 3: Test with different value
+	a := map[string]string{"a": "1", "b": "2"}
+	b := map[string]string{"a": "1", "b": "3"}
+	if Equal(a, b) {
+		t.Fatalf("Equal(%v, %v) = true, want false", a, b)
+	}
+}
+
+func TestEqualMissingKey(t *testing.T) {
+	// Acceptance Criteria 3: Test with missing key
+	a := map[string]string{"a": "1", "b": "2"}
+	b := map[string]string{"a": "1"}
+	if Equal(a, b) {
+		t.Fatalf("Equal(%v, %v) = true, want false", a, b)
+	}
+}
+
+func TestEqualNilVsEmpty(t *testing.T) {
+	// Acceptance Criteria 2: A nil map equals an empty map
+	var nilMap map[string]string
+	emptyMap := map[string]string{}
+	if !Equal(nilMap, emptyMap) {
+		t.Fatalf("Equal(nil, {}) = false, want true")
+	}
+	if !Equal(emptyMap, nilMap) {
+		t.Fatalf("Equal({}, nil) = false, want true")
+	}
+}
+
+func TestEqualBothNil(t *testing.T) {
+	// Edge case: Both nil
+	var a, b map[string]string
+	if !Equal(a, b) {
+		t.Fatalf("Equal(nil, nil) = false, want true")
+	}
+}
+
+func TestEqualBothEmpty(t *testing.T) {
+	// Edge case: Both empty
+	a := map[string]string{}
+	b := map[string]string{}
+	if !Equal(a, b) {
+		t.Fatalf("Equal({}, {}) = false, want true")
+	}
+}
+
+func TestEqualDifferentKeysEmptyValues(t *testing.T) {
+	// Edge case: Different keys with empty values
+	a := map[string]string{"x": ""}
+	b := map[string]string{"y": ""}
+	if Equal(a, b) {
+		t.Fatalf("Equal(%v, %v) = true, want false", a, b)
+	}
+}
+
+func TestEqualExtraKeyInB(t *testing.T) {
+	// Edge case: b has an extra key
+	a := map[string]string{"a": "1"}
+	b := map[string]string{"a": "1", "b": "2"}
+	if Equal(a, b) {
+		t.Fatalf("Equal(%v, %v) = true, want false", a, b)
+	}
+}
