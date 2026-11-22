@@ -5,4 +5,4 @@
 reviews:
   auto_review:
     ignore_title_keywords:
-      - "fix(ai-sdlc)"
+      - "fix(ai-sdlc): address issue #"
