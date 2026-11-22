@@ -28,3 +28,33 @@ func TestWordCount(t *testing.T) {
 		}
 	}
 }
+
+func TestIsPalindrome(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Empty string
+		{"", true},
+		// Single character
+		{"a", true},
+		// Simple palindromes
+		{"aba", true},
+		{"abba", true},
+		// Not palindromes
+		{"abc", false},
+		{"ab", false},
+		// Case and space handling
+		{"Never odd or even", true},
+		{"A man a plan a canal Panama", true},
+		// Unicode characters
+		{"ñaña", false},
+		{"añña", true},
+	}
+
+	for _, tt := range tests {
+		if got := IsPalindrome(tt.in); got != tt.want {
+			t.Errorf("IsPalindrome(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
