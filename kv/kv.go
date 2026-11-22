@@ -3,6 +3,7 @@ package kv
 
 import (
 	"errors"
+	"strconv"
 	"strings"
 )
 
@@ -18,6 +19,23 @@ func Parse(s string) (map[string]string, error) {
 			return nil, ErrSyntax
 		}
 		out[k] = v
+	}
+	return out, nil
+}
+
+// ParseInts reads pairs separated by ";" and converts values to integers.
+func ParseInts(s string) (map[string]int, error) {
+	out := map[string]int{}
+	for _, pair := range strings.Split(s, ";") {
+		k, v, ok := strings.Cut(pair, "=")
+		if !ok {
+			return nil, ErrSyntax
+		}
+		n, err := strconv.Atoi(v)
+		if err != nil {
+			return nil, ErrSyntax
+		}
+		out[k] = n
 	}
 	return out, nil
 }
