@@ -27,3 +27,16 @@ func Title(s string) string {
 	}
 	return strings.Join(words, " ")
 }
+
+// PadLeft prepends pad runes to s until it reaches width characters.
+// Width counts characters (runes), not bytes. If s already has width
+// or more characters, it is returned unchanged.
+func PadLeft(s string, width int, pad rune) string {
+	runes := []rune(s)
+	if len(runes) >= width {
+		return s
+	}
+	needed := width - len(runes)
+	padding := strings.Repeat(string(pad), needed)
+	return padding + s
+}
