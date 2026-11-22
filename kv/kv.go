@@ -14,6 +14,9 @@ var ErrSyntax = errors.New("kv: malformed pair")
 func Parse(s string) (map[string]string, error) {
 	out := map[string]string{}
 	for _, pair := range strings.Split(s, ";") {
+		if pair == "" {
+			continue
+		}
 		k, v, ok := strings.Cut(pair, "=")
 		if !ok {
 			return nil, ErrSyntax
@@ -27,6 +30,9 @@ func Parse(s string) (map[string]string, error) {
 func ParseInts(s string) (map[string]int, error) {
 	out := map[string]int{}
 	for _, pair := range strings.Split(s, ";") {
+		if pair == "" {
+			continue
+		}
 		k, v, ok := strings.Cut(pair, "=")
 		if !ok {
 			return nil, ErrSyntax
