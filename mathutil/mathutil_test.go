@@ -339,3 +339,57 @@ func TestRangeSingleValue(t *testing.T) {
 		t.Errorf("Range(7, 8) = %v, want [7]", got)
 	}
 }
+
+func TestGCDExample1(t *testing.T) {
+	if got := GCD(12, 18); got != 6 {
+		t.Errorf("GCD(12, 18) = %d, want 6", got)
+	}
+}
+
+func TestGCDExample2(t *testing.T) {
+	if got := GCD(0, 5); got != 5 {
+		t.Errorf("GCD(0, 5) = %d, want 5", got)
+	}
+}
+
+func TestGCDExample3(t *testing.T) {
+	if got := GCD(0, 0); got != 0 {
+		t.Errorf("GCD(0, 0) = %d, want 0", got)
+	}
+}
+
+func TestGCDNegativeFirst(t *testing.T) {
+	if got := GCD(-12, 18); got != 6 {
+		t.Errorf("GCD(-12, 18) = %d, want 6", got)
+	}
+}
+
+func TestGCDNegativeSecond(t *testing.T) {
+	if got := GCD(12, -18); got != 6 {
+		t.Errorf("GCD(12, -18) = %d, want 6", got)
+	}
+}
+
+func TestGCDBothNegative(t *testing.T) {
+	if got := GCD(-12, -18); got != 6 {
+		t.Errorf("GCD(-12, -18) = %d, want 6", got)
+	}
+}
+
+func TestGCDCommutative(t *testing.T) {
+	if got := GCD(18, 12); got != 6 {
+		t.Errorf("GCD(18, 12) = %d, want 6", got)
+	}
+}
+
+func TestGCDZeroFirst(t *testing.T) {
+	if got := GCD(0, 10); got != 10 {
+		t.Errorf("GCD(0, 10) = %d, want 10", got)
+	}
+}
+
+func TestGCDLargeNumbers(t *testing.T) {
+	if got := GCD(1071, 462); got != 21 {
+		t.Errorf("GCD(1071, 462) = %d, want 21", got)
+	}
+}

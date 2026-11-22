@@ -178,3 +178,17 @@ func Range(start, end int) []int {
 	}
 	return result
 }
+
+// GCD returns the greatest common divisor of the absolute values of a and b.
+// GCD(0, 0) returns 0.
+func GCD(a, b int) int {
+	// Use absolute values
+	a = Abs(a)
+	b = Abs(b)
+	
+	// Euclidean algorithm
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
