@@ -142,6 +142,22 @@ func MinMax(xs []int) (min, max int, ok bool) {
 	return min, max, true
 }
 
+// Max returns the largest value in xs and true,
+// or 0, false for an empty slice.
+func Max(xs []int) (int, bool) {
+	if len(xs) == 0 {
+		return 0, false
+	}
+
+	max := xs[0]
+	for _, x := range xs[1:] {
+		if x > max {
+			max = x
+		}
+	}
+	return max, true
+}
+
 // Abs returns the absolute value of x.
 func Abs(x int) int {
 	if x < 0 {
