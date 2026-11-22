@@ -109,3 +109,12 @@ func ReverseWords(s string) string {
 func IsBlank(s string) bool {
 	return strings.TrimSpace(s) == ""
 }
+
+// HasPrefixFold reports whether s starts with prefix, ignoring Unicode case.
+// An empty prefix always matches.
+func HasPrefixFold(s, prefix string) bool {
+	if len(prefix) > len(s) {
+		return false
+	}
+	return strings.EqualFold(s[:len(prefix)], prefix)
+}
