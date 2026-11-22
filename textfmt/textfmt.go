@@ -40,3 +40,18 @@ func PadLeft(s string, width int, pad rune) string {
 	padding := strings.Repeat(string(pad), needed)
 	return padding + s
 }
+
+// Center pads s on both sides to width characters using pad. Width counts
+// characters (runes), not bytes. When the total padding is odd, the extra
+// character goes on the right. If s already has width or more characters,
+// it is returned unchanged.
+func Center(s string, width int, pad rune) string {
+	runes := []rune(s)
+	if len(runes) >= width {
+		return s
+	}
+	needed := width - len(runes)
+	leftPad := needed / 2
+	rightPad := needed - leftPad
+	return strings.Repeat(string(pad), leftPad) + s + strings.Repeat(string(pad), rightPad)
+}
