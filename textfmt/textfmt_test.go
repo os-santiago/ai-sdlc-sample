@@ -25,3 +25,21 @@ func TestTitleMultibyte(t *testing.T) {
 		t.Errorf("Title = %q, want %q", got, "Élan Vital")
 	}
 }
+
+func TestPadLeftASCII(t *testing.T) {
+	if got := PadLeft("hi", 5, '.'); got != "...hi" {
+		t.Errorf("PadLeft = %q, want %q", got, "...hi")
+	}
+}
+
+func TestPadLeftMultibyte(t *testing.T) {
+	if got := PadLeft("é", 3, '.'); got != "..é" {
+		t.Errorf("PadLeft = %q, want %q", got, "..é")
+	}
+}
+
+func TestPadLeftLonger(t *testing.T) {
+	if got := PadLeft("hello", 3, '.'); got != "hello" {
+		t.Errorf("PadLeft = %q, want %q", got, "hello")
+	}
+}
