@@ -393,3 +393,21 @@ func TestGCDLargeNumbers(t *testing.T) {
 		t.Errorf("GCD(1071, 462) = %d, want 21", got)
 	}
 }
+
+func TestSignNegative(t *testing.T) {
+	if got := Sign(-5); got != -1 {
+		t.Errorf("Sign(-5) = %d, want -1", got)
+	}
+}
+
+func TestSignZero(t *testing.T) {
+	if got := Sign(0); got != 0 {
+		t.Errorf("Sign(0) = %d, want 0", got)
+	}
+}
+
+func TestSignPositive(t *testing.T) {
+	if got := Sign(5); got != 1 {
+		t.Errorf("Sign(5) = %d, want 1", got)
+	}
+}
