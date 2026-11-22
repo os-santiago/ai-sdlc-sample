@@ -235,3 +235,85 @@ func TestIndentMultipleEmptyLines(t *testing.T) {
 		t.Errorf("Indent = %q, want %q", got, want)
 	}
 }
+
+// Wrap tests
+
+func TestWrapBasic(t *testing.T) {
+	input := "hello world this is a test"
+	want := "hello world\nthis is a\ntest"
+	if got := Wrap(input, 12); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapSingleWord(t *testing.T) {
+	input := "hello"
+	want := "hello"
+	if got := Wrap(input, 10); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapLongWord(t *testing.T) {
+	input := "supercalifragilisticexpialidocious"
+	want := "supercalifragilisticexpialidocious"
+	if got := Wrap(input, 10); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapLongWordWithOthers(t *testing.T) {
+	input := "hello supercalifragilisticexpialidocious world"
+	want := "hello\nsupercalifragilisticexpialidocious\nworld"
+	if got := Wrap(input, 10); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapZeroWidth(t *testing.T) {
+	input := "hello world"
+	want := "hello world"
+	if got := Wrap(input, 0); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapNegativeWidth(t *testing.T) {
+	input := "hello world"
+	want := "hello world"
+	if got := Wrap(input, -5); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapEmptyString(t *testing.T) {
+	input := ""
+	want := ""
+	if got := Wrap(input, 10); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapMultipleSpaces(t *testing.T) {
+	input := "hello    world"
+	want := "hello\nworld"
+	if got := Wrap(input, 7); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapMultibyte(t *testing.T) {
+	input := "héllo wörld café"
+	want := "héllo\nwörld café"
+	if got := Wrap(input, 10); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
+
+func TestWrapNoSpaces(t *testing.T) {
+	input := "helloworld"
+	want := "helloworld"
+	if got := Wrap(input, 5); got != want {
+		t.Errorf("Wrap = %q, want %q", got, want)
+	}
+}
