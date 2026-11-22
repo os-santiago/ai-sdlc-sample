@@ -44,6 +44,30 @@ func TestPadLeftLonger(t *testing.T) {
 	}
 }
 
+func TestPadRightASCII(t *testing.T) {
+	if got := PadRight("hi", 5, '.'); got != "hi..." {
+		t.Errorf("PadRight = %q, want %q", got, "hi...")
+	}
+}
+
+func TestPadRightMultibyte(t *testing.T) {
+	if got := PadRight("é", 3, '.'); got != "é.." {
+		t.Errorf("PadRight = %q, want %q", got, "é..")
+	}
+}
+
+func TestPadRightLonger(t *testing.T) {
+	if got := PadRight("hello", 3, '.'); got != "hello" {
+		t.Errorf("PadRight = %q, want %q", got, "hello")
+	}
+}
+
+func TestPadRightExactWidth(t *testing.T) {
+	if got := PadRight("abc", 3, '.'); got != "abc" {
+		t.Errorf("PadRight = %q, want %q", got, "abc")
+	}
+}
+
 func TestCenterOddPadding(t *testing.T) {
 	if got := Center("ab", 5, '*'); got != "*ab**" {
 		t.Errorf("Center = %q, want %q", got, "*ab**")
