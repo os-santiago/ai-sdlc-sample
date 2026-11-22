@@ -83,6 +83,42 @@ func TestSumSingleValue(t *testing.T) {
 	}
 }
 
+func TestProductNil(t *testing.T) {
+	if got := Product(nil); got != 1 {
+		t.Errorf("Product(nil) = %v, want 1", got)
+	}
+}
+
+func TestProductEmpty(t *testing.T) {
+	if got := Product([]int{}); got != 1 {
+		t.Errorf("Product([]int{}) = %v, want 1", got)
+	}
+}
+
+func TestProductExample(t *testing.T) {
+	if got := Product([]int{2, 3, 4}); got != 24 {
+		t.Errorf("Product([2, 3, 4]) = %v, want 24", got)
+	}
+}
+
+func TestProductSingleValue(t *testing.T) {
+	if got := Product([]int{7}); got != 7 {
+		t.Errorf("Product([7]) = %v, want 7", got)
+	}
+}
+
+func TestProductWithZero(t *testing.T) {
+	if got := Product([]int{2, 0, 5}); got != 0 {
+		t.Errorf("Product([2, 0, 5]) = %v, want 0", got)
+	}
+}
+
+func TestProductNegative(t *testing.T) {
+	if got := Product([]int{-2, 3, -4}); got != 24 {
+		t.Errorf("Product([-2, 3, -4]) = %v, want 24", got)
+	}
+}
+
 func TestModeClearWinner(t *testing.T) {
 	got, ok := Mode([]int{1, 2, 2, 3})
 	if !ok {

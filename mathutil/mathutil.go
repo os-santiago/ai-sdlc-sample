@@ -54,6 +54,18 @@ func Sum(xs []float64) float64 {
 	return sum
 }
 
+// Product returns the product of all values in xs, or 1 for an empty slice.
+func Product(xs []int) int {
+	if len(xs) == 0 {
+		return 1
+	}
+	product := 1
+	for _, x := range xs {
+		product *= x
+	}
+	return product
+}
+
 // Mode returns the most frequent value in xs and true, or 0, false for an empty slice.
 // On a tie, it returns the smallest of the tied values.
 func Mode(xs []int) (int, bool) {
