@@ -203,3 +203,19 @@ func Sign(x int) int {
 	}
 	return 0
 }
+
+// Pow returns base raised to the power of exp for non-negative integer exponents.
+// It returns the result and true for exp >= 0.
+// For negative exponents, it returns 0, false.
+func Pow(base, exp int) (int, bool) {
+	if exp < 0 {
+		return 0, false
+	}
+	
+	result := 1
+	for i := 0; i < exp; i++ {
+		result *= base
+	}
+	
+	return result, true
+}
