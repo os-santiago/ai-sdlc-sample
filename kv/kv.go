@@ -18,7 +18,8 @@ func Parse(s string) (map[string]string, error) {
 		if pair == "" {
 			continue
 		}
-		k, v, ok := strings.Cut(pair, "=")
+		k, v, ok := strings.Cut(strings.TrimSpace(pair), "=")
+		k, v = strings.TrimSpace(k), strings.TrimSpace(v)
 		if !ok {
 			return nil, ErrSyntax
 		}
@@ -52,7 +53,8 @@ func ParseInts(s string) (map[string]int, error) {
 		if pair == "" {
 			continue
 		}
-		k, v, ok := strings.Cut(pair, "=")
+		k, v, ok := strings.Cut(strings.TrimSpace(pair), "=")
+		k, v = strings.TrimSpace(k), strings.TrimSpace(v)
 		if !ok {
 			return nil, ErrSyntax
 		}
