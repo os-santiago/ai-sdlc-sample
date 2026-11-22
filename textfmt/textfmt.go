@@ -89,3 +89,31 @@ func Ellipsis(s string, n int) string {
 	}
 	return string(runes[:n-1]) + "…"
 }
+
+// Indent adds prefix at the start of every non-empty line in s.
+// Empty lines stay empty, and line endings are kept.
+func Indent(s, prefix string) string {
+	if s == "" {
+		return ""
+	}
+
+	var result strings.Builder
+	atLineStart := true
+
+	for i := 0; i < len(s); i++ {
+		ch := s[i]
+
+		if atLineStart && ch != '\n' && ch != '\r' {
+			result.WriteString(prefix)
+			atLineStart = false
+		}
+
+		result.WriteByte(ch)
+
+		if ch == '\n' {
+			atLineStart = true
+		}
+	}
+
+	return result.String()
+}

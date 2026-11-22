@@ -74,125 +74,164 @@ func TestCenterExactWidth(t *testing.T) {
 	}
 }
 
-// Tests for Repeat function
-
 func TestRepeatBasic(t *testing.T) {
-	// Main acceptance criteria: Repeat("ab", "-", 3) returns "ab-ab-ab"
 	if got := Repeat("ab", "-", 3); got != "ab-ab-ab" {
-		t.Errorf("Repeat(\"ab\", \"-\", 3) = %q, want %q", got, "ab-ab-ab")
+		t.Errorf("Repeat = %q, want %q", got, "ab-ab-ab")
 	}
 }
 
 func TestRepeatZero(t *testing.T) {
-	// n of 0 returns empty string
 	if got := Repeat("hello", ",", 0); got != "" {
-		t.Errorf("Repeat(\"hello\", \",\", 0) = %q, want %q", got, "")
+		t.Errorf("Repeat = %q, want empty", got)
 	}
 }
 
 func TestRepeatNegative(t *testing.T) {
-	// n less than 0 returns empty string
 	if got := Repeat("test", " ", -1); got != "" {
-		t.Errorf("Repeat(\"test\", \" \", -1) = %q, want %q", got, "")
+		t.Errorf("Repeat = %q, want empty", got)
 	}
 }
 
 func TestRepeatOne(t *testing.T) {
-	// n of 1 returns just the string without separator
 	if got := Repeat("single", "|", 1); got != "single" {
-		t.Errorf("Repeat(\"single\", \"|\", 1) = %q, want %q", got, "single")
+		t.Errorf("Repeat = %q, want %q", got, "single")
 	}
 }
 
 func TestRepeatEmptyString(t *testing.T) {
-	// Repeating empty string
 	if got := Repeat("", "-", 3); got != "--" {
-		t.Errorf("Repeat(\"\", \"-\", 3) = %q, want %q", got, "--")
+		t.Errorf("Repeat = %q, want %q", got, "--")
 	}
 }
 
 func TestRepeatEmptySeparator(t *testing.T) {
-	// Repeating with empty separator
 	if got := Repeat("ab", "", 3); got != "ababab" {
-		t.Errorf("Repeat(\"ab\", \"\", 3) = %q, want %q", got, "ababab")
+		t.Errorf("Repeat = %q, want %q", got, "ababab")
 	}
 }
 
 func TestRepeatMultibyte(t *testing.T) {
-	// Repeating multibyte characters
 	if got := Repeat("é", "•", 2); got != "é•é" {
-		t.Errorf("Repeat(\"é\", \"•\", 2) = %q, want %q", got, "é•é")
+		t.Errorf("Repeat = %q, want %q", got, "é•é")
 	}
 }
 
-// Tests for Ellipsis function
-
 func TestEllipsisShortASCII(t *testing.T) {
-	// String with at most n characters is returned unchanged
 	if got := Ellipsis("hello", 10); got != "hello" {
-		t.Errorf("Ellipsis(\"hello\", 10) = %q, want %q", got, "hello")
+		t.Errorf("Ellipsis = %q, want %q", got, "hello")
 	}
 }
 
 func TestEllipsisExactLength(t *testing.T) {
-	// String with exactly n characters is returned unchanged
 	if got := Ellipsis("hello", 5); got != "hello" {
-		t.Errorf("Ellipsis(\"hello\", 5) = %q, want %q", got, "hello")
+		t.Errorf("Ellipsis = %q, want %q", got, "hello")
 	}
 }
 
 func TestEllipsisTruncateASCII(t *testing.T) {
-	// String longer than n characters gets truncated with ellipsis
 	if got := Ellipsis("hello world", 8); got != "hello w…" {
-		t.Errorf("Ellipsis(\"hello world\", 8) = %q, want %q", got, "hello w…")
+		t.Errorf("Ellipsis = %q, want %q", got, "hello w…")
 	}
 }
 
 func TestEllipsisMultibyte(t *testing.T) {
-	// Multibyte characters are counted as single runes
 	if got := Ellipsis("héllo wörld", 8); got != "héllo w…" {
-		t.Errorf("Ellipsis(\"héllo wörld\", 8) = %q, want %q", got, "héllo w…")
+		t.Errorf("Ellipsis = %q, want %q", got, "héllo w…")
 	}
 }
 
 func TestEllipsisMultibyteShort(t *testing.T) {
-	// Short multibyte string is returned unchanged
 	if got := Ellipsis("café", 10); got != "café" {
-		t.Errorf("Ellipsis(\"café\", 10) = %q, want %q", got, "café")
+		t.Errorf("Ellipsis = %q, want %q", got, "café")
 	}
 }
 
 func TestEllipsisZero(t *testing.T) {
-	// n of 0 returns empty string
 	if got := Ellipsis("hello", 0); got != "" {
-		t.Errorf("Ellipsis(\"hello\", 0) = %q, want %q", got, "")
+		t.Errorf("Ellipsis = %q, want empty", got)
 	}
 }
 
 func TestEllipsisNegative(t *testing.T) {
-	// n less than 0 returns empty string
 	if got := Ellipsis("hello", -1); got != "" {
-		t.Errorf("Ellipsis(\"hello\", -1) = %q, want %q", got, "")
+		t.Errorf("Ellipsis = %q, want empty", got)
 	}
 }
 
 func TestEllipsisEmptyString(t *testing.T) {
-	// Empty string with positive n returns empty string
 	if got := Ellipsis("", 5); got != "" {
-		t.Errorf("Ellipsis(\"\", 5) = %q, want %q", got, "")
+		t.Errorf("Ellipsis = %q, want empty", got)
 	}
 }
 
 func TestEllipsisOne(t *testing.T) {
-	// n of 1 with longer string returns just ellipsis
 	if got := Ellipsis("hello", 1); got != "…" {
-		t.Errorf("Ellipsis(\"hello\", 1) = %q, want %q", got, "…")
+		t.Errorf("Ellipsis = %q, want %q", got, "…")
 	}
 }
 
 func TestEllipsisTwo(t *testing.T) {
-	// n of 2 with longer string returns first character + ellipsis
 	if got := Ellipsis("hello", 2); got != "h…" {
-		t.Errorf("Ellipsis(\"hello\", 2) = %q, want %q", got, "h…")
+		t.Errorf("Ellipsis = %q, want %q", got, "h…")
+	}
+}
+
+func TestIndentSingleLine(t *testing.T) {
+	if got := Indent("hello", "  "); got != "  hello" {
+		t.Errorf("Indent = %q, want %q", got, "  hello")
+	}
+}
+
+func TestIndentMultiLine(t *testing.T) {
+	input := "hello\nworld"
+	want := "  hello\n  world"
+	if got := Indent(input, "  "); got != want {
+		t.Errorf("Indent = %q, want %q", got, want)
+	}
+}
+
+func TestIndentEmptyLine(t *testing.T) {
+	input := "hello\n\nworld"
+	want := "  hello\n\n  world"
+	if got := Indent(input, "  "); got != want {
+		t.Errorf("Indent = %q, want %q", got, want)
+	}
+}
+
+func TestIndentTrailingNewline(t *testing.T) {
+	input := "hello\n"
+	want := "  hello\n"
+	if got := Indent(input, "  "); got != want {
+		t.Errorf("Indent = %q, want %q", got, want)
+	}
+}
+
+func TestIndentLeadingNewline(t *testing.T) {
+	input := "\nhello"
+	want := "\n  hello"
+	if got := Indent(input, "  "); got != want {
+		t.Errorf("Indent = %q, want %q", got, want)
+	}
+}
+
+func TestIndentEmptyString(t *testing.T) {
+	if got := Indent("", "  "); got != "" {
+		t.Errorf("Indent = %q, want empty", got)
+	}
+}
+
+func TestIndentDifferentPrefix(t *testing.T) {
+	input := "line1\nline2"
+	want := ">>line1\n>>line2"
+	if got := Indent(input, ">>"); got != want {
+		t.Errorf("Indent = %q, want %q", got, want)
+	}
+}
+
+func TestIndentMultipleEmptyLines(t *testing.T) {
+	input := "a\n\n\nb"
+	want := "  a\n\n\n  b"
+	if got := Indent(input, "  "); got != want {
+		t.Errorf("Indent = %q, want %q", got, want)
 	}
 }
