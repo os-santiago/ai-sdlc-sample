@@ -381,3 +381,80 @@ func TestEqualExtraKeyInB(t *testing.T) {
 		t.Fatalf("Equal(%v, %v) = true, want false", a, b)
 	}
 }
+
+// Filter tests - Issue #71 Acceptance Criteria
+
+func TestFilterMatching(t *testing.T) {
+	// Acceptance Criteria 1 & 3: Returns new map with only keys starting with prefix
+	m := map[string]string{
+		"app.name":    "myapp",
+		"app.version": "1.0",
+		"db.host":     "localhost",
+		"db.port":     "5432",
+	}
+	got := Filter(m, "app.")
+	if len(got) != 2 {
+		t.Fatalf("Filter(%v, \"app.\") length = %d, want 2", m, len(got))
+	}
+	if got["app.name"] != "myapp" || got["app.version"] != "1.0" {
+		t.Fatalf("Filter(%v, \"app.\") = %v, want {app.name:myapp, app.version:1.0}", m, got)
+	}
+}
+
+func TestFilterNoMatch(t *testing.T) {
+	// Acceptance Criteria 3: Test with no matching keys
+	m := map[string]string{
+		"app.name":    "myapp",
+		"app.version": "1.0",
+	}
+	got := Filter(m, "db.")
+	if len(got) != 0 {
+		t.Fatalf("Filter(%v, \"db.\") length = %d, want 0", m, len(got))
+	}
+}
+
+func TestFilterEmptyPrefix(t *testing.T) {
+	// Acceptance Criteria 3: Empty prefix should match all keys
+	m := map[string]string{
+		"a": "1",
+		"b": "2",
+		"c": "3",
+	}
+	got := Filter(m, "")
+	if len(got) != 3 {
+		t.Fatalf("Filter(%v, \"\") length = %d, want 3", m, len(got))
+	}
+	if got["a"] != "1" || got["b"] != "2" || got["c"] != "3" {
+		t.Fatalf("Filter(%v, \"\") = %v, want all entries", m, got)
+	}
+}
+
+func TestFilterDoesNotModifyInput(t *testing.T) {
+	// Acceptance Criteria 2: The input map is not modified
+	original := map[string]string{
+		"app.name": "myapp",
+		"db.host":  "localhost",
+	}
+	_ = Filter(original, "app.")
+	if len(original) != 2 || original["app.name"] != "myapp" || original["db.host"] != "localhost" {
+		t.Fatalf("Filter mutated input: %v, want {app.name:myapp, db.host:localhost}", original)
+	}
+}
+
+func TestFilterEmptyMap(t *testing.T) {
+	// Edge case: Filter on empty map
+	m := map[string]string{}
+	got := Filter(m, "any")
+	if len(got) != 0 {
+		t.Fatalf("Filter(empty map, \"any\") length = %d, want 0", len(got))
+	}
+}
+
+func TestFilterNilMap(t *testing.T) {
+	// Edge case: Filter on nil map
+	var m map[string]string
+	got := Filter(m, "prefix")
+	if got == nil || len(got) != 0 {
+		t.Fatalf("Filter(nil map, \"prefix\") = %v, want empty non-nil map", got)
+	}
+}
