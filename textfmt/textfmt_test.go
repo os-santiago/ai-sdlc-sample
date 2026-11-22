@@ -73,3 +73,54 @@ func TestCenterExactWidth(t *testing.T) {
 		t.Errorf("Center = %q, want %q", got, "abc")
 	}
 }
+
+// Tests for Repeat function
+
+func TestRepeatBasic(t *testing.T) {
+	// Main acceptance criteria: Repeat("ab", "-", 3) returns "ab-ab-ab"
+	if got := Repeat("ab", "-", 3); got != "ab-ab-ab" {
+		t.Errorf("Repeat(\"ab\", \"-\", 3) = %q, want %q", got, "ab-ab-ab")
+	}
+}
+
+func TestRepeatZero(t *testing.T) {
+	// n of 0 returns empty string
+	if got := Repeat("hello", ",", 0); got != "" {
+		t.Errorf("Repeat(\"hello\", \",\", 0) = %q, want %q", got, "")
+	}
+}
+
+func TestRepeatNegative(t *testing.T) {
+	// n less than 0 returns empty string
+	if got := Repeat("test", " ", -1); got != "" {
+		t.Errorf("Repeat(\"test\", \" \", -1) = %q, want %q", got, "")
+	}
+}
+
+func TestRepeatOne(t *testing.T) {
+	// n of 1 returns just the string without separator
+	if got := Repeat("single", "|", 1); got != "single" {
+		t.Errorf("Repeat(\"single\", \"|\", 1) = %q, want %q", got, "single")
+	}
+}
+
+func TestRepeatEmptyString(t *testing.T) {
+	// Repeating empty string
+	if got := Repeat("", "-", 3); got != "--" {
+		t.Errorf("Repeat(\"\", \"-\", 3) = %q, want %q", got, "--")
+	}
+}
+
+func TestRepeatEmptySeparator(t *testing.T) {
+	// Repeating with empty separator
+	if got := Repeat("ab", "", 3); got != "ababab" {
+		t.Errorf("Repeat(\"ab\", \"\", 3) = %q, want %q", got, "ababab")
+	}
+}
+
+func TestRepeatMultibyte(t *testing.T) {
+	// Repeating multibyte characters
+	if got := Repeat("é", "•", 2); got != "é•é" {
+		t.Errorf("Repeat(\"é\", \"•\", 2) = %q, want %q", got, "é•é")
+	}
+}
