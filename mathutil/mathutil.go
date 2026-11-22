@@ -192,3 +192,14 @@ func GCD(a, b int) int {
 	}
 	return a
 }
+
+// Sign returns the sign of x: -1 for negative, 0 for zero, 1 for positive.
+func Sign(x int) int {
+	if x < 0 {
+		return -1
+	}
+	if x > 0 {
+		return 1
+	}
+	return 0
+}
