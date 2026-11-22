@@ -55,3 +55,22 @@ func Center(s string, width int, pad rune) string {
 	rightPad := needed - leftPad
 	return strings.Repeat(string(pad), leftPad) + s + strings.Repeat(string(pad), rightPad)
 }
+
+// Repeat joins n copies of s with sep as the separator between them.
+// If n is 0 or less, it returns an empty string.
+func Repeat(s, sep string, n int) string {
+	if n <= 0 {
+		return ""
+	}
+	if n == 1 {
+		return s
+	}
+	var result strings.Builder
+	for i := 0; i < n; i++ {
+		if i > 0 {
+			result.WriteString(sep)
+		}
+		result.WriteString(s)
+	}
+	return result.String()
+}
