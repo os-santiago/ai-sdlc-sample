@@ -255,3 +255,38 @@ func TestIsBlank(t *testing.T) {
 		}
 	}
 }
+
+func TestHasPrefixFold(t *testing.T) {
+	tests := []struct {
+		s      string
+		prefix string
+		want   bool
+	}{
+		// Acceptance criteria cases
+		{"Hello", "he", true},
+		{"Hi", "hello", false},
+		// Empty prefix
+		{"", "", true},
+		{"Hello", "", true},
+		// Exact match (case-insensitive)
+		{"hello", "HELLO", true},
+		{"HELLO", "hello", true},
+		// Partial match
+		{"Hello World", "hello", true},
+		{"Hello World", "HELLO", true},
+		// No match
+		{"Hello", "world", false},
+		{"abc", "xyz", false},
+		// Prefix longer than string
+		{"Hi", "Hello", false},
+		// Unicode awareness
+		{"Élégant", "élé", true},
+		{"ÉLÉGANT", "élé", true},
+	}
+
+	for _, tt := range tests {
+		if got := HasPrefixFold(tt.s, tt.prefix); got != tt.want {
+			t.Errorf("HasPrefixFold(%q, %q) = %v, want %v", tt.s, tt.prefix, got, tt.want)
+		}
+	}
+}
