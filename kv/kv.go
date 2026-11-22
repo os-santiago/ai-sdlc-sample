@@ -94,3 +94,15 @@ func Merge(a, b map[string]string) map[string]string {
 	}
 	return out
 }
+
+// Delete returns a new map with all entries of m except the given key.
+// The input map is not modified. If key is not in m, returns an equal copy.
+func Delete(m map[string]string, key string) map[string]string {
+	out := make(map[string]string, len(m))
+	for k, v := range m {
+		if k != key {
+			out[k] = v
+		}
+	}
+	return out
+}

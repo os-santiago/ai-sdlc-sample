@@ -244,3 +244,64 @@ func TestKeysNil(t *testing.T) {
 	// Verify it's usable (can be appended to, ranged over, etc.)
 	_ = append(got, "test")
 }
+
+// Delete tests - Issue #53 Acceptance Criteria
+
+func TestDeleteRemovesKey(t *testing.T) {
+	// Acceptance Criteria 1: Delete returns a new map without the specified key
+	m := map[string]string{"a": "1", "b": "2", "c": "3"}
+	got := Delete(m, "b")
+	if len(got) != 2 {
+		t.Fatalf("Delete length = %d, want 2", len(got))
+	}
+	if got["a"] != "1" || got["c"] != "3" {
+		t.Fatalf("Delete = %v, want {a:1, c:3}", got)
+	}
+	if _, exists := got["b"]; exists {
+		t.Fatalf("Delete still contains key b")
+	}
+}
+
+func TestDeleteDoesNotMutateInput(t *testing.T) {
+	// Acceptance Criteria 2: The input map is not modified
+	original := map[string]string{"a": "1", "b": "2"}
+	_ = Delete(original, "a")
+	if len(original) != 2 {
+		t.Fatalf("Delete mutated input: length = %d, want 2", len(original))
+	}
+	if original["a"] != "1" || original["b"] != "2" {
+		t.Fatalf("Delete mutated input: %v, want {a:1, b:2}", original)
+	}
+}
+
+func TestDeleteMissingKeyReturnsCopy(t *testing.T) {
+	// Acceptance Criteria 3: Deleting a missing key returns an equal copy
+	m := map[string]string{"a": "1", "b": "2"}
+	got := Delete(m, "missing")
+	if len(got) != len(m) {
+		t.Fatalf("Delete with missing key: length = %d, want %d", len(got), len(m))
+	}
+	for k, v := range m {
+		if got[k] != v {
+			t.Fatalf("Delete with missing key: got[%q] = %q, want %q", k, got[k], v)
+		}
+	}
+}
+
+func TestDeleteEmptyMap(t *testing.T) {
+	// Edge case: Delete from empty map
+	m := map[string]string{}
+	got := Delete(m, "any")
+	if len(got) != 0 {
+		t.Fatalf("Delete from empty map: length = %d, want 0", len(got))
+	}
+}
+
+func TestDeleteSingleKey(t *testing.T) {
+	// Edge case: Delete the only key
+	m := map[string]string{"only": "value"}
+	got := Delete(m, "only")
+	if len(got) != 0 {
+		t.Fatalf("Delete single key: length = %d, want 0", len(got))
+	}
+}
