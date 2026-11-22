@@ -74,3 +74,18 @@ func Repeat(s, sep string, n int) string {
 	}
 	return result.String()
 }
+
+// Ellipsis shortens s to at most n characters for display, adding an ellipsis
+// when it had to cut. n of 0 or less returns an empty string. When s has at
+// most n characters (runes), it is returned unchanged. Otherwise the first
+// n-1 characters are returned followed by "…".
+func Ellipsis(s string, n int) string {
+	if n <= 0 {
+		return ""
+	}
+	runes := []rune(s)
+	if len(runes) <= n {
+		return s
+	}
+	return string(runes[:n-1]) + "…"
+}

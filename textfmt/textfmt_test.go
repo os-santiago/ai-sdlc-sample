@@ -124,3 +124,75 @@ func TestRepeatMultibyte(t *testing.T) {
 		t.Errorf("Repeat(\"é\", \"•\", 2) = %q, want %q", got, "é•é")
 	}
 }
+
+// Tests for Ellipsis function
+
+func TestEllipsisShortASCII(t *testing.T) {
+	// String with at most n characters is returned unchanged
+	if got := Ellipsis("hello", 10); got != "hello" {
+		t.Errorf("Ellipsis(\"hello\", 10) = %q, want %q", got, "hello")
+	}
+}
+
+func TestEllipsisExactLength(t *testing.T) {
+	// String with exactly n characters is returned unchanged
+	if got := Ellipsis("hello", 5); got != "hello" {
+		t.Errorf("Ellipsis(\"hello\", 5) = %q, want %q", got, "hello")
+	}
+}
+
+func TestEllipsisTruncateASCII(t *testing.T) {
+	// String longer than n characters gets truncated with ellipsis
+	if got := Ellipsis("hello world", 8); got != "hello w…" {
+		t.Errorf("Ellipsis(\"hello world\", 8) = %q, want %q", got, "hello w…")
+	}
+}
+
+func TestEllipsisMultibyte(t *testing.T) {
+	// Multibyte characters are counted as single runes
+	if got := Ellipsis("héllo wörld", 8); got != "héllo w…" {
+		t.Errorf("Ellipsis(\"héllo wörld\", 8) = %q, want %q", got, "héllo w…")
+	}
+}
+
+func TestEllipsisMultibyteShort(t *testing.T) {
+	// Short multibyte string is returned unchanged
+	if got := Ellipsis("café", 10); got != "café" {
+		t.Errorf("Ellipsis(\"café\", 10) = %q, want %q", got, "café")
+	}
+}
+
+func TestEllipsisZero(t *testing.T) {
+	// n of 0 returns empty string
+	if got := Ellipsis("hello", 0); got != "" {
+		t.Errorf("Ellipsis(\"hello\", 0) = %q, want %q", got, "")
+	}
+}
+
+func TestEllipsisNegative(t *testing.T) {
+	// n less than 0 returns empty string
+	if got := Ellipsis("hello", -1); got != "" {
+		t.Errorf("Ellipsis(\"hello\", -1) = %q, want %q", got, "")
+	}
+}
+
+func TestEllipsisEmptyString(t *testing.T) {
+	// Empty string with positive n returns empty string
+	if got := Ellipsis("", 5); got != "" {
+		t.Errorf("Ellipsis(\"\", 5) = %q, want %q", got, "")
+	}
+}
+
+func TestEllipsisOne(t *testing.T) {
+	// n of 1 with longer string returns just ellipsis
+	if got := Ellipsis("hello", 1); got != "…" {
+		t.Errorf("Ellipsis(\"hello\", 1) = %q, want %q", got, "…")
+	}
+}
+
+func TestEllipsisTwo(t *testing.T) {
+	// n of 2 with longer string returns first character + ellipsis
+	if got := Ellipsis("hello", 2); got != "h…" {
+		t.Errorf("Ellipsis(\"hello\", 2) = %q, want %q", got, "h…")
+	}
+}
