@@ -41,3 +41,41 @@ func Mean(xs []float64) float64 {
 	}
 	return sum / float64(len(xs))
 }
+
+// Mode returns the most frequent value in xs and true, or 0, false for an empty slice.
+// On a tie, it returns the smallest of the tied values.
+func Mode(xs []int) (int, bool) {
+	if len(xs) == 0 {
+		return 0, false
+	}
+
+	// Count frequencies
+	freq := make(map[int]int)
+	for _, x := range xs {
+		freq[x]++
+	}
+
+	// Find the maximum frequency
+	maxFreq := 0
+	for _, count := range freq {
+		if count > maxFreq {
+			maxFreq = count
+		}
+	}
+
+	// Find the smallest value with maximum frequency
+	var mode int
+	first := true
+	for val, count := range freq {
+		if count == maxFreq {
+			if first {
+				mode = val
+				first = false
+			} else if val < mode {
+				mode = val
+			}
+		}
+	}
+
+	return mode, true
+}
