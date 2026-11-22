@@ -214,3 +214,33 @@ func TestParseTrimVariousWhitespace(t *testing.T) {
 		}
 	}
 }
+
+// Keys tests - Issue #33 Acceptance Criteria
+
+func TestKeysSorted(t *testing.T) {
+	// Acceptance Criteria 1: Keys returns sorted keys in ascending order
+	m := map[string]string{"z": "last", "a": "first", "m": "middle"}
+	got := Keys(m)
+	want := []string{"a", "m", "z"}
+	if len(got) != len(want) {
+		t.Fatalf("Keys(%v) length = %d, want %d", m, len(got), len(want))
+	}
+	for i, k := range want {
+		if got[i] != k {
+			t.Fatalf("Keys(%v)[%d] = %q, want %q", m, i, got[i], k)
+		}
+	}
+}
+
+func TestKeysNil(t *testing.T) {
+	// Acceptance Criteria 2: Keys(nil) returns empty, non-nil slice
+	got := Keys(nil)
+	if got == nil {
+		t.Fatalf("Keys(nil) returned nil, want non-nil empty slice")
+	}
+	if len(got) != 0 {
+		t.Fatalf("Keys(nil) = %v, want empty slice", got)
+	}
+	// Verify it's usable (can be appended to, ranged over, etc.)
+	_ = append(got, "test")
+}

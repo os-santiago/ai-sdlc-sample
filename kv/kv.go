@@ -66,3 +66,17 @@ func ParseInts(s string) (map[string]int, error) {
 	}
 	return out, nil
 }
+
+// Keys returns the keys of the map sorted in ascending order.
+// Returns an empty, non-nil slice for a nil map.
+func Keys(m map[string]string) []string {
+	if m == nil {
+		return []string{}
+	}
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
+}
