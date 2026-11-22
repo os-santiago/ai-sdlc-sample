@@ -151,10 +151,66 @@ func TestFormatMultipleKeys(t *testing.T) {
 
 func TestFormatSinglePair(t *testing.T) {
 	// Test with single pair
-	m := map[string]string{"key": "value"}
+	m := map[string]string{"key": "[REDACTED]"}
 	got := Format(m)
-	want := "key=value"
+	want := "key=[REDACTED]"
 	if got != want {
 		t.Fatalf("Format(%v) = %q, want %q", m, got, want)
+	}
+}
+
+// Whitespace trimming tests - Issue #21 Acceptance Criteria
+
+func TestParseTrimWhitespace(t *testing.T) {
+	// Acceptance Criteria 1: Keys and values are trimmed of surrounding whitespace
+	got, err := Parse(" a = 1 ; b=2")
+	if err != nil {
+		t.Fatalf("Parse with spaces returned error: %v", err)
+	}
+	if got["a"] != "1" || got["b"] != "2" || len(got) != 2 {
+		t.Fatalf("Parse(\" a = 1 ; b=2\") = %v, want {a: \"1\", b: \"2\"}", got)
+	}
+}
+
+func TestParseWhitespaceInValue(t *testing.T) {
+	// Acceptance Criteria 2: Whitespace inside a value is kept
+	got, err := Parse("msg=hello world")
+	if err != nil {
+		t.Fatalf("Parse with internal spaces returned error: %v", err)
+	}
+	if got["msg"] != "hello world" || len(got) != 1 {
+		t.Fatalf("Parse(\"msg=hello world\") = %v, want {msg: \"hello world\"}", got)
+	}
+}
+
+func TestParseMalformedPairWithSpaces(t *testing.T) {
+	// Acceptance Criteria 3: A pair without '=' still returns ErrSyntax
+	_, err := Parse(" a ")
+	if err != ErrSyntax {
+		t.Fatalf("Parse malformed pair with spaces = %v, want ErrSyntax", err)
+	}
+}
+
+func TestParseTrimVariousWhitespace(t *testing.T) {
+	// Additional test: various combinations of whitespace
+	tests := []struct {
+		input     string
+		wantKey   string
+		wantValue string
+	}{
+		{"a=1", "a", "1"},
+		{" a=1", "a", "1"},
+		{"a =1", "a", "1"},
+		{"a= 1", "a", "1"},
+		{"a=1 ", "a", "1"},
+		{" a = 1 ", "a", "1"},
+		{"  a  =  1  ", "a", "1"},
+	}
+
+	for _, tt := range tests {
+		got, err := Parse(tt.input)
+		if err != nil || got[tt.wantKey] != tt.wantValue || len(got) != 1 {
+			t.Fatalf("Parse(%q) = %v, %v; want {%s: %s}", tt.input, got, err, tt.wantKey, tt.wantValue)
+		}
 	}
 }
