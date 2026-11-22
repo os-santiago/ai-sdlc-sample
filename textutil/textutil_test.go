@@ -181,3 +181,41 @@ func TestCountVowels(t *testing.T) {
 		}
 	}
 }
+
+func TestReverseWords(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		// Acceptance criteria cases
+		{"one two three", "three two one"},
+		{"", ""},
+		// Additional test cases
+		// Single word
+		{"hello", "hello"},
+		// Two words
+		{"hello world", "world hello"},
+		// Multiple spaces (should normalize to single spaces)
+		{"one  two   three", "three two one"},
+		{"  hello   world  ", "world hello"},
+		// Tab and newline whitespace
+		{"one\ttwo\nthree", "three two one"},
+		// Only whitespace
+		{"   ", ""},
+		{"\t\n  ", ""},
+		// Four words
+		{"the quick brown fox", "fox brown quick the"},
+		// Numbers and mixed characters
+		{"123 abc 456", "456 abc 123"},
+		// Punctuation (treated as part of words)
+		{"hello, world!", "world! hello,"},
+		// Unicode
+		{"héllo wörld", "wörld héllo"},
+	}
+
+	for _, tt := range tests {
+		if got := ReverseWords(tt.in); got != tt.want {
+			t.Errorf("ReverseWords(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
