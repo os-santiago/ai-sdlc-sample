@@ -96,3 +96,24 @@ func StdDev(xs []float64) float64 {
 	return math.Sqrt(variance)
 }
 
+// MinMax returns the smallest and largest value in xs and true,
+// or 0, 0, false for an empty slice.
+func MinMax(xs []int) (min, max int, ok bool) {
+	if len(xs) == 0 {
+		return 0, 0, false
+	}
+
+	min = xs[0]
+	max = xs[0]
+
+	for _, x := range xs[1:] {
+		if x < min {
+			min = x
+		}
+		if x > max {
+			max = x
+		}
+	}
+
+	return min, max, true
+}
