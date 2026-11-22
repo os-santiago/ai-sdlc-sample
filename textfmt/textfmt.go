@@ -21,7 +21,8 @@ func Title(s string) string {
 	words := strings.Split(s, " ")
 	for i, w := range words {
 		if w != "" {
-			words[i] = strings.ToUpper(w[:1]) + w[1:]
+			runes := []rune(w)
+			words[i] = strings.ToUpper(string(runes[:1])) + string(runes[1:])
 		}
 	}
 	return strings.Join(words, " ")

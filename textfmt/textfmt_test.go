@@ -19,3 +19,9 @@ func TestTitleASCII(t *testing.T) {
 		t.Errorf("Title = %q", got)
 	}
 }
+
+func TestTitleMultibyte(t *testing.T) {
+	if got := Title("élan vital"); got != "Élan Vital" {
+		t.Errorf("Title = %q, want %q", got, "Élan Vital")
+	}
+}
