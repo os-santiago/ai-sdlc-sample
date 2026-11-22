@@ -58,3 +58,32 @@ func TestIsPalindrome(t *testing.T) {
 		}
 	}
 }
+
+func TestInitials(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		// Empty string
+		{"", ""},
+		// Basic case
+		{"ada lovelace", "AL"},
+		// Extra whitespace
+		{"  ada   lovelace  ", "AL"},
+		{"one  two   three", "OTT"},
+		// Unicode awareness
+		{"élan vital", "ÉV"},
+		{"über alles", "ÜA"},
+		// Single word
+		{"hello", "H"},
+		// Mixed case input (should uppercase)
+		{"hello World", "HW"},
+		{"HELLO world", "HW"},
+	}
+
+	for _, tt := range tests {
+		if got := Initials(tt.in); got != tt.want {
+			t.Errorf("Initials(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
