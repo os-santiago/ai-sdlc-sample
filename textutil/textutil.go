@@ -1,7 +1,10 @@
 // Package textutil provides small text helpers.
 package textutil
 
-import "strings"
+import (
+	"strings"
+	"unicode"
+)
 
 // Reverse returns s with its characters in reverse order.
 func Reverse(s string) string {
@@ -31,4 +34,20 @@ func IsPalindrome(s string) bool {
 		}
 	}
 	return true
+}
+
+// Initials returns the upper-case initials of the words in s.
+// Words are separated by whitespace, and extra whitespace is ignored.
+func Initials(s string) string {
+	words := strings.Fields(s)
+	if len(words) == 0 {
+		return ""
+	}
+	
+	var initials []rune
+	for _, word := range words {
+		runes := []rune(word)
+		initials = append(initials, unicode.ToUpper(runes[0]))
+	}
+	return string(initials)
 }
