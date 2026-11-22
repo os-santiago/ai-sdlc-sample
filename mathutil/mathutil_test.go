@@ -98,3 +98,69 @@ func TestStdDevSingleValue(t *testing.T) {
 		t.Errorf("StdDev([5]) = %v, want 0 (no deviation from mean)", got)
 	}
 }
+
+func TestMinMaxNil(t *testing.T) {
+	min, max, ok := MinMax(nil)
+	if ok {
+		t.Error("MinMax(nil) returned true, want false")
+	}
+	if min != 0 || max != 0 {
+		t.Errorf("MinMax(nil) = %d, %d, want 0, 0", min, max)
+	}
+}
+
+func TestMinMaxEmpty(t *testing.T) {
+	min, max, ok := MinMax([]int{})
+	if ok {
+		t.Error("MinMax([]int{}) returned true, want false")
+	}
+	if min != 0 || max != 0 {
+		t.Errorf("MinMax([]int{}) = %d, %d, want 0, 0", min, max)
+	}
+}
+
+func TestMinMaxExample(t *testing.T) {
+	min, max, ok := MinMax([]int{3, -1, 7})
+	if !ok {
+		t.Error("MinMax returned false for non-empty slice")
+	}
+	if min != -1 {
+		t.Errorf("MinMax([3, -1, 7]) min = %d, want -1", min)
+	}
+	if max != 7 {
+		t.Errorf("MinMax([3, -1, 7]) max = %d, want 7", max)
+	}
+}
+
+func TestMinMaxSingleValue(t *testing.T) {
+	min, max, ok := MinMax([]int{42})
+	if !ok {
+		t.Error("MinMax returned false for non-empty slice")
+	}
+	if min != 42 || max != 42 {
+		t.Errorf("MinMax([42]) = %d, %d, want 42, 42", min, max)
+	}
+}
+
+func TestMinMaxAllSame(t *testing.T) {
+	min, max, ok := MinMax([]int{5, 5, 5, 5})
+	if !ok {
+		t.Error("MinMax returned false for non-empty slice")
+	}
+	if min != 5 || max != 5 {
+		t.Errorf("MinMax([5, 5, 5, 5]) = %d, %d, want 5, 5", min, max)
+	}
+}
+
+func TestMinMaxNegativeValues(t *testing.T) {
+	min, max, ok := MinMax([]int{-10, -20, -5, -15})
+	if !ok {
+		t.Error("MinMax returned false for non-empty slice")
+	}
+	if min != -20 {
+		t.Errorf("MinMax([-10, -20, -5, -15]) min = %d, want -20", min)
+	}
+	if max != -5 {
+		t.Errorf("MinMax([-10, -20, -5, -15]) max = %d, want -5", max)
+	}
+}
