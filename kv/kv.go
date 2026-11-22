@@ -106,3 +106,20 @@ func Delete(m map[string]string, key string) map[string]string {
 	}
 	return out
 }
+
+// Equal returns true when both maps have the same keys and values.
+// A nil map equals an empty map.
+func Equal(a, b map[string]string) bool {
+	// Treat nil maps as empty
+	lenA := len(a)
+	lenB := len(b)
+	if lenA != lenB {
+		return false
+	}
+	for k, v := range a {
+		if bv, ok := b[k]; !ok || bv != v {
+			return false
+		}
+	}
+	return true
+}
