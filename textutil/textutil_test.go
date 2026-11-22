@@ -144,3 +144,40 @@ func TestCapitalize(t *testing.T) {
 		}
 	}
 }
+
+func TestCountVowels(t *testing.T) {
+	tests := []struct {
+		in   string
+		want int
+	}{
+		// Acceptance criteria cases
+		{"Hello World", 3},
+		{"", 0},
+		// Additional test cases
+		// All vowels lowercase
+		{"aeiou", 5},
+		// All vowels uppercase
+		{"AEIOU", 5},
+		// Mixed case
+		{"AeIoU", 5},
+		// No vowels
+		{"bcdfg", 0},
+		{"xyz", 0},
+		// Single vowel
+		{"a", 1},
+		{"E", 1},
+		// Repeated vowels
+		{"aaaa", 4},
+		{"eeeee", 5},
+		// Real words
+		{"beautiful", 5},
+		{"rhythm", 0},
+		{"education", 5},
+	}
+
+	for _, tt := range tests {
+		if got := CountVowels(tt.in); got != tt.want {
+			t.Errorf("CountVowels(%q) = %d, want %d", tt.in, got, tt.want)
+		}
+	}
+}
