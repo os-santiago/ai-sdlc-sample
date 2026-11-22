@@ -254,3 +254,56 @@ func TestAbsPositive(t *testing.T) {
 		t.Errorf("Abs(5) = %d, want 5", got)
 	}
 }
+
+func TestRangeExample(t *testing.T) {
+	got := Range(2, 5)
+	want := []int{2, 3, 4}
+	if len(got) != len(want) {
+		t.Fatalf("Range(2, 5) length = %d, want %d", len(got), len(want))
+	}
+	for i := range got {
+		if got[i] != want[i] {
+			t.Errorf("Range(2, 5)[%d] = %d, want %d", i, got[i], want[i])
+		}
+	}
+}
+
+func TestRangePositive(t *testing.T) {
+	got := Range(0, 3)
+	want := []int{0, 1, 2}
+	if len(got) != len(want) {
+		t.Fatalf("Range(0, 3) length = %d, want %d", len(got), len(want))
+	}
+	for i := range got {
+		if got[i] != want[i] {
+			t.Errorf("Range(0, 3)[%d] = %d, want %d", i, got[i], want[i])
+		}
+	}
+}
+
+func TestRangeEqual(t *testing.T) {
+	got := Range(5, 5)
+	if got == nil {
+		t.Error("Range(5, 5) returned nil, want empty non-nil slice")
+	}
+	if len(got) != 0 {
+		t.Errorf("Range(5, 5) length = %d, want 0", len(got))
+	}
+}
+
+func TestRangeReversed(t *testing.T) {
+	got := Range(10, 5)
+	if got == nil {
+		t.Error("Range(10, 5) returned nil, want empty non-nil slice")
+	}
+	if len(got) != 0 {
+		t.Errorf("Range(10, 5) length = %d, want 0", len(got))
+	}
+}
+
+func TestRangeSingleValue(t *testing.T) {
+	got := Range(7, 8)
+	if len(got) != 1 || got[0] != 7 {
+		t.Errorf("Range(7, 8) = %v, want [7]", got)
+	}
+}

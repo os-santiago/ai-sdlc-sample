@@ -149,3 +149,16 @@ func Abs(x int) int {
 	}
 	return x
 }
+
+// Range returns a slice of integers from start up to but not including end.
+// When end <= start, it returns an empty, non-nil slice.
+func Range(start, end int) []int {
+	if end <= start {
+		return []int{}
+	}
+	result := make([]int, 0, end-start)
+	for i := start; i < end; i++ {
+		result = append(result, i)
+	}
+	return result
+}
