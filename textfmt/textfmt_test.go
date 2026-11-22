@@ -8,6 +8,12 @@ func TestTruncateShort(t *testing.T) {
 	}
 }
 
+func TestTruncateMultibyte(t *testing.T) {
+	if got := Truncate("héllo wörld", 8); got != "héllo..." {
+		t.Errorf("Truncate = %q, want %q", got, "héllo...")
+	}
+}
+
 func TestTitleASCII(t *testing.T) {
 	if got := Title("hello world"); got != "Hello World" {
 		t.Errorf("Title = %q", got)
