@@ -46,3 +46,32 @@ func TestMeanEmpty(t *testing.T) {
 		t.Errorf("Mean([]float64{}) = %v, want 0", got)
 	}
 }
+
+func TestModeClearWinner(t *testing.T) {
+	got, ok := Mode([]int{1, 2, 2, 3})
+	if !ok {
+		t.Error("Mode returned false for non-empty slice")
+	}
+	if got != 2 {
+		t.Errorf("Mode([1, 2, 2, 3]) = %d, want 2", got)
+	}
+}
+
+func TestModeTie(t *testing.T) {
+	got, ok := Mode([]int{3, 1, 1, 3, 2})
+	if !ok {
+		t.Error("Mode returned false for non-empty slice")
+	}
+	if got != 1 {
+		t.Errorf("Mode([3, 1, 1, 3, 2]) = %d, want 1 (smallest of tied values)", got)
+	}
+}
+
+func TestModeEmpty(t *testing.T) {
+	if _, ok := Mode(nil); ok {
+		t.Error("Mode(nil) returned true, want false")
+	}
+	if _, ok := Mode([]int{}); ok {
+		t.Error("Mode([]int{}) returned true, want false")
+	}
+}
