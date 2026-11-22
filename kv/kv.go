@@ -80,3 +80,17 @@ func Keys(m map[string]string) []string {
 	sort.Strings(keys)
 	return keys
 }
+
+// Merge returns a new map with every key of a and b.
+// When a key is in both, the value from b wins (right-hand precedence).
+// Neither input map is modified.
+func Merge(a, b map[string]string) map[string]string {
+	out := make(map[string]string, len(a)+len(b))
+	for k, v := range a {
+		out[k] = v
+	}
+	for k, v := range b {
+		out[k] = v
+	}
+	return out
+}
