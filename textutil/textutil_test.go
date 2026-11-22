@@ -331,3 +331,36 @@ func TestSqueeze(t *testing.T) {
 		}
 	}
 }
+
+func TestCountRunes(t *testing.T) {
+	tests := []struct {
+		in   string
+		want int
+	}{
+		// Acceptance criteria: empty input
+		{"", 0},
+		// Acceptance criteria: ASCII
+		{"hello", 5},
+		{"abc", 3},
+		{"a", 1},
+		// Acceptance criteria: multibyte Unicode ("héllo" returns 5)
+		{"héllo", 5},
+		// Additional multibyte test cases
+		{"日本語", 3},
+		{"こんにちは", 5},
+		{"café", 4},
+		{"naïve", 5},
+		{"Zürich", 6},
+		// Mixed ASCII and multibyte
+		{"hello世界", 7},
+		{"test😀emoji", 10},
+		// Emojis (each emoji is one rune)
+		{"😀😁😂", 3},
+	}
+
+	for _, tt := range tests {
+		if got := CountRunes(tt.in); got != tt.want {
+			t.Errorf("CountRunes(%q) = %d, want %d", tt.in, got, tt.want)
+		}
+	}
+}
