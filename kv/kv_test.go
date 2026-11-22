@@ -503,3 +503,52 @@ func TestGetNilMap(t *testing.T) {
 		t.Fatalf("Get(nil, \"any\", \"fallback\") = %q, want \"fallback\"", got)
 	}
 }
+
+// Invert tests - Issue #88 Acceptance Criteria
+
+func TestInvertUnique(t *testing.T) {
+	// Acceptance Criteria 1: Invert with unique values returns inverted map and true
+	m := map[string]string{
+		"a": "1",
+		"b": "2",
+		"c": "3",
+	}
+	got, ok := Invert(m)
+	if !ok {
+		t.Fatalf("Invert(%v) returned false, want true", m)
+	}
+	if len(got) != 3 {
+		t.Fatalf("Invert(%v) length = %d, want 3", m, len(got))
+	}
+	if got["1"] != "a" || got["2"] != "b" || got["3"] != "c" {
+		t.Fatalf("Invert(%v) = %v, want {1:a, 2:b, 3:c}", m, got)
+	}
+}
+
+func TestInvertDuplicate(t *testing.T) {
+	// Acceptance Criteria 2: Invert with duplicate values returns nil, false
+	m := map[string]string{
+		"a": "1",
+		"b": "1", // duplicate value
+		"c": "3",
+	}
+	got, ok := Invert(m)
+	if ok {
+		t.Fatalf("Invert(%v) returned true, want false", m)
+	}
+	if got != nil {
+		t.Fatalf("Invert(%v) = %v, want nil", m, got)
+	}
+}
+
+func TestInvertEmpty(t *testing.T) {
+	// Edge case: Empty map should return empty map and true
+	m := map[string]string{}
+	got, ok := Invert(m)
+	if !ok {
+		t.Fatalf("Invert(empty map) returned false, want true")
+	}
+	if len(got) != 0 {
+		t.Fatalf("Invert(empty map) length = %d, want 0", len(got))
+	}
+}

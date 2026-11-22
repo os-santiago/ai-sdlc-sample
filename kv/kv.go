@@ -144,3 +144,17 @@ func Get(m map[string]string, key, fallback string) string {
 	}
 	return fallback
 }
+
+// Invert returns a new map with keys and values swapped.
+// When all values are unique, it returns the inverted map and true.
+// When two or more keys share the same value, it returns nil, false.
+func Invert(m map[string]string) (map[string]string, bool) {
+	out := make(map[string]string, len(m))
+	for k, v := range m {
+		if _, exists := out[v]; exists {
+			return nil, false
+		}
+		out[v] = k
+	}
+	return out, true
+}
