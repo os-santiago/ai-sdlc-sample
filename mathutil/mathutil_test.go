@@ -75,3 +75,26 @@ func TestModeEmpty(t *testing.T) {
 		t.Error("Mode([]int{}) returned true, want false")
 	}
 }
+
+func TestStdDevExample(t *testing.T) {
+	got := StdDev([]float64{2, 4, 4, 4, 5, 5, 7, 9})
+	if got != 2 {
+		t.Errorf("StdDev([2, 4, 4, 4, 5, 5, 7, 9]) = %v, want 2", got)
+	}
+}
+
+func TestStdDevEmpty(t *testing.T) {
+	if got := StdDev(nil); got != 0 {
+		t.Errorf("StdDev(nil) = %v, want 0", got)
+	}
+	if got := StdDev([]float64{}); got != 0 {
+		t.Errorf("StdDev([]float64{}) = %v, want 0", got)
+	}
+}
+
+func TestStdDevSingleValue(t *testing.T) {
+	got := StdDev([]float64{5})
+	if got != 0 {
+		t.Errorf("StdDev([5]) = %v, want 0 (no deviation from mean)", got)
+	}
+}

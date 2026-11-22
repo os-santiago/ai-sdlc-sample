@@ -1,7 +1,7 @@
 // Package mathutil provides small numeric helpers.
 package mathutil
 
-import "sort"
+import ("math"; "sort")
 
 // Clamp limits x to the closed range [lo, hi].
 func Clamp(x, lo, hi int) int {
@@ -79,3 +79,20 @@ func Mode(xs []int) (int, bool) {
 
 	return mode, true
 }
+
+// StdDev returns the population standard deviation of xs, or 0 for an empty slice.
+// It uses the formula: sqrt(sum((x - mean)^2) / n)
+func StdDev(xs []float64) float64 {
+	if len(xs) == 0 {
+		return 0
+	}
+	mean := Mean(xs)
+	var sumSquaredDiff float64
+	for _, x := range xs {
+		diff := x - mean
+		sumSquaredDiff += diff * diff
+	}
+	variance := sumSquaredDiff / float64(len(xs))
+	return math.Sqrt(variance)
+}
+
