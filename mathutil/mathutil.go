@@ -42,6 +42,18 @@ func Mean(xs []float64) float64 {
 	return sum / float64(len(xs))
 }
 
+// Sum returns the sum of all values in xs, or 0 for an empty slice.
+func Sum(xs []float64) float64 {
+	if len(xs) == 0 {
+		return 0
+	}
+	var sum float64
+	for _, x := range xs {
+		sum += x
+	}
+	return sum
+}
+
 // Mode returns the most frequent value in xs and true, or 0, false for an empty slice.
 // On a tie, it returns the smallest of the tied values.
 func Mode(xs []int) (int, bool) {

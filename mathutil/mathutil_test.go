@@ -47,6 +47,42 @@ func TestMeanEmpty(t *testing.T) {
 	}
 }
 
+func TestSumNil(t *testing.T) {
+	if got := Sum(nil); got != 0 {
+		t.Errorf("Sum(nil) = %v, want 0", got)
+	}
+}
+
+func TestSumEmpty(t *testing.T) {
+	if got := Sum([]float64{}); got != 0 {
+		t.Errorf("Sum([]float64{}) = %v, want 0", got)
+	}
+}
+
+func TestSumExample(t *testing.T) {
+	if got := Sum([]float64{1.5, 2.5, -1}); got != 3 {
+		t.Errorf("Sum([1.5, 2.5, -1]) = %v, want 3", got)
+	}
+}
+
+func TestSumPositive(t *testing.T) {
+	if got := Sum([]float64{1, 2, 3, 4}); got != 10 {
+		t.Errorf("Sum([1, 2, 3, 4]) = %v, want 10", got)
+	}
+}
+
+func TestSumNegative(t *testing.T) {
+	if got := Sum([]float64{-1, -2, -3}); got != -6 {
+		t.Errorf("Sum([-1, -2, -3]) = %v, want -6", got)
+	}
+}
+
+func TestSumSingleValue(t *testing.T) {
+	if got := Sum([]float64{42}); got != 42 {
+		t.Errorf("Sum([42]) = %v, want 42", got)
+	}
+}
+
 func TestModeClearWinner(t *testing.T) {
 	got, ok := Mode([]int{1, 2, 2, 3})
 	if !ok {
