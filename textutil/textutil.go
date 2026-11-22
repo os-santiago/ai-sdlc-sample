@@ -87,3 +87,19 @@ func CountVowels(s string) int {
 	}
 	return count
 }
+
+// ReverseWords returns s with the order of its words reversed.
+// Words are separated by any whitespace, and the result joins them with single spaces.
+func ReverseWords(s string) string {
+	words := strings.Fields(s)
+	if len(words) == 0 {
+		return ""
+	}
+	
+	// Reverse the slice
+	for i, j := 0, len(words)-1; i < j; i, j = i+1, j-1 {
+		words[i], words[j] = words[j], words[i]
+	}
+	
+	return strings.Join(words, " ")
+}
