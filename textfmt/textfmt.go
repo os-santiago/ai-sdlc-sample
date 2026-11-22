@@ -117,3 +117,42 @@ func Indent(s, prefix string) string {
 
 	return result.String()
 }
+
+// Wrap breaks s into lines of at most width characters at spaces, joined with \n.
+// A single word longer than width stays on its own line. Width of 0 or less
+// returns s unchanged.
+func Wrap(s string, width int) string {
+	if width <= 0 {
+		return s
+	}
+
+	words := strings.Fields(s)
+	if len(words) == 0 {
+		return s
+	}
+
+	var result strings.Builder
+	lineLen := 0
+
+	for _, word := range words {
+		wordLen := len([]rune(word))
+
+		if lineLen == 0 {
+			// Start of a new line
+			result.WriteString(word)
+			lineLen = wordLen
+		} else if lineLen+1+wordLen <= width {
+			// Word fits on current line
+			result.WriteString(" ")
+			result.WriteString(word)
+			lineLen += 1 + wordLen
+		} else {
+			// Word doesn't fit, start a new line
+			result.WriteString("\n")
+			result.WriteString(word)
+			lineLen = wordLen
+		}
+	}
+
+	return result.String()
+}
