@@ -290,3 +290,44 @@ func TestHasPrefixFold(t *testing.T) {
 		}
 	}
 }
+
+func TestSqueeze(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		// Acceptance criteria: specific example
+		{"  a   b  ", "a b"},
+		// Acceptance criteria: empty string
+		{"", ""},
+		// Only whitespace (should return empty)
+		{" ", ""},
+		{"  ", ""},
+		// No whitespace
+		{"abc", "abc"},
+		// Single space (already normalized)
+		{"a b", "a b"},
+		// Multiple spaces
+		{"a  b", "a b"},
+		{"a   b   c", "a b c"},
+		// Leading/trailing whitespace
+		{" a", "a"},
+		{"a ", "a"},
+		{" a ", "a"},
+		// Tab characters
+		{"a\tb", "a b"},
+		{"a\t\tb", "a b"},
+		// Newlines
+		{"a\nb", "a b"},
+		{"a\n\nb", "a b"},
+		// Mixed whitespace
+		{"  a\t\n  b  ", "a b"},
+		{"one  \ttwo\n\nthree   ", "one two three"},
+	}
+
+	for _, tt := range tests {
+		if got := Squeeze(tt.in); got != tt.want {
+			t.Errorf("Squeeze(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}

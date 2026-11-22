@@ -118,3 +118,10 @@ func HasPrefixFold(s, prefix string) bool {
 	}
 	return strings.EqualFold(s[:len(prefix)], prefix)
 }
+
+// Squeeze replaces each run of Unicode whitespace with a single space
+// and trims both ends.
+func Squeeze(s string) string {
+	fields := strings.Fields(s)
+	return strings.Join(fields, " ")
+}
