@@ -103,3 +103,9 @@ func ReverseWords(s string) string {
 	
 	return strings.Join(words, " ")
 }
+
+// IsBlank reports whether s is empty or contains only whitespace.
+// It considers all Unicode whitespace characters.
+func IsBlank(s string) bool {
+	return strings.TrimSpace(s) == ""
+}

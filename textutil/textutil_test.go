@@ -219,3 +219,39 @@ func TestReverseWords(t *testing.T) {
 		}
 	}
 }
+
+func TestIsBlank(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: empty string
+		{"", true},
+		// Acceptance criteria: only whitespace (ASCII)
+		{" ", true},
+		{"  ", true},
+		{"   ", true},
+		{"\t", true},
+		{"\n", true},
+		{"\r", true},
+		{" \t\n ", true},
+		// Acceptance criteria: Unicode whitespace
+		{"\u00A0", true},     // Non-breaking space
+		{"\u2000", true},     // En quad
+		{"\u2003", true},     // Em space
+		{"\u3000", true},     // Ideographic space
+		{" \u00A0\t", true}, // Mixed whitespace
+		// Acceptance criteria: false for strings with content
+		{" a ", false},
+		{"a", false},
+		{"hello", false},
+		{" hello ", false},
+		{"\thello\n", false},
+	}
+
+	for _, tt := range tests {
+		if got := IsBlank(tt.in); got != tt.want {
+			t.Errorf("IsBlank(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
