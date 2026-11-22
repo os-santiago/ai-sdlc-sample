@@ -237,6 +237,38 @@ func TestMinMaxNegativeValues(t *testing.T) {
 	}
 }
 
+func TestMaxMixed(t *testing.T) {
+	got, ok := Max([]int{3, -1, 7, 2})
+	if !ok {
+		t.Error("Max returned false for non-empty slice")
+	}
+	if got != 7 {
+		t.Errorf("Max([3, -1, 7, 2]) = %d, want 7", got)
+	}
+}
+
+func TestMaxSingleValue(t *testing.T) {
+	got, ok := Max([]int{42})
+	if !ok {
+		t.Error("Max returned false for non-empty slice")
+	}
+	if got != 42 {
+		t.Errorf("Max([42]) = %d, want 42", got)
+	}
+}
+
+func TestMaxEmpty(t *testing.T) {
+	if _, ok := Max(nil); ok {
+		t.Error("Max(nil) returned true, want false")
+	}
+	if got, ok := Max(nil); ok || got != 0 {
+		t.Errorf("Max(nil) = %d, %v, want 0, false", got, ok)
+	}
+	if _, ok := Max([]int{}); ok {
+		t.Error("Max([]int{}) returned true, want false")
+	}
+}
+
 func TestAbsNegative(t *testing.T) {
 	if got := Abs(-3); got != 3 {
 		t.Errorf("Abs(-3) = %d, want 3", got)
