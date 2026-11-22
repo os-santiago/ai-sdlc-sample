@@ -458,3 +458,48 @@ func TestFilterNilMap(t *testing.T) {
 		t.Fatalf("Filter(nil map, \"prefix\") = %v, want empty non-nil map", got)
 	}
 }
+
+// Get tests - Issue #80 Acceptance Criteria
+
+func TestGetPresent(t *testing.T) {
+	// Acceptance Criteria 1: Returns the value for key when present
+	m := map[string]string{
+		"name": "Alice",
+		"age":  "30",
+	}
+	got := Get(m, "name", "default")
+	if got != "Alice" {
+		t.Fatalf("Get(%v, \"name\", \"default\") = %q, want \"Alice\"", m, got)
+	}
+}
+
+func TestGetMissing(t *testing.T) {
+	// Acceptance Criteria 1: Returns fallback when key is missing
+	m := map[string]string{
+		"name": "Alice",
+	}
+	got := Get(m, "age", "unknown")
+	if got != "unknown" {
+		t.Fatalf("Get(%v, \"age\", \"unknown\") = %q, want \"unknown\"", m, got)
+	}
+}
+
+func TestGetEmptyValue(t *testing.T) {
+	// Acceptance Criteria 2: A present key with empty value returns empty, not fallback
+	m := map[string]string{
+		"name": "",
+	}
+	got := Get(m, "name", "default")
+	if got != "" {
+		t.Fatalf("Get(%v, \"name\", \"default\") = %q, want empty string", m, got)
+	}
+}
+
+func TestGetNilMap(t *testing.T) {
+	// Edge case: Get from nil map returns fallback
+	var m map[string]string
+	got := Get(m, "any", "fallback")
+	if got != "fallback" {
+		t.Fatalf("Get(nil, \"any\", \"fallback\") = %q, want \"fallback\"", got)
+	}
+}

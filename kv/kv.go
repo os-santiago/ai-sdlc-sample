@@ -135,3 +135,12 @@ func Filter(m map[string]string, prefix string) map[string]string {
 	}
 	return out
 }
+
+// Get returns the value for key in m, or fallback when the key is missing.
+// A present key with an empty value returns the empty value, not the fallback.
+func Get(m map[string]string, key, fallback string) string {
+	if v, ok := m[key]; ok {
+		return v
+	}
+	return fallback
+}
