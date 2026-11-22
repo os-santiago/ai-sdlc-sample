@@ -115,3 +115,29 @@ func TestInitials(t *testing.T) {
 		}
 	}
 }
+
+func TestCapitalize(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		// Empty string
+		{"", ""},
+		// Basic ASCII case
+		{"hello world", "Hello world"},
+		// Unicode awareness
+		{"élan", "Élan"},
+		// Already capitalized
+		{"Hello", "Hello"},
+		// Single character
+		{"a", "A"},
+		// More Unicode examples
+		{"über", "Über"},
+	}
+
+	for _, tt := range tests {
+		if got := Capitalize(tt.in); got != tt.want {
+			t.Errorf("Capitalize(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}

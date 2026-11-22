@@ -62,3 +62,15 @@ func Initials(s string) string {
 	}
 	return string(initials)
 }
+
+// Capitalize returns s with the first letter upper-cased.
+// It is Unicode-aware.
+func Capitalize(s string) string {
+	if s == "" {
+		return ""
+	}
+	
+	r := []rune(s)
+	r[0] = unicode.ToUpper(r[0])
+	return string(r)
+}
