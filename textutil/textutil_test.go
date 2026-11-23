@@ -499,3 +499,55 @@ func TestStartsWithVowel(t *testing.T) {
 		}
 	}
 }
+
+func TestCountChar(t *testing.T) {
+	tests := []struct {
+		in   string
+		r    rune
+		want int
+	}{
+		// Acceptance criteria: empty input
+		{"", 'a', 0},
+		{"", '日', 0},
+		// Acceptance criteria: absent runes
+		{"hello", 'z', 0},
+		{"world", 'x', 0},
+		{"abc", 'd', 0},
+		// Acceptance criteria: multibyte runes
+		{"日本語", '日', 1},
+		{"日本語日", '日', 2},
+		{"こんにちは", 'ん', 1},
+		{"héllo", 'é', 1},
+		{"café", 'é', 1},
+		{"naïve", 'ï', 1},
+		// ASCII characters
+		{"hello", 'l', 2},
+		{"hello", 'h', 1},
+		{"hello", 'o', 1},
+		{"hello", 'e', 1},
+		// Single character
+		{"a", 'a', 1},
+		{"a", 'b', 0},
+		// Multiple occurrences
+		{"aaa", 'a', 3},
+		{"aaabbbccc", 'b', 3},
+		{"banana", 'a', 3},
+		{"banana", 'n', 2},
+		// Case sensitivity
+		{"Hello", 'H', 1},
+		{"Hello", 'h', 0},
+		{"Hello", 'l', 2},
+		{"Hello", 'L', 0},
+		// Emojis (multibyte)
+		{"😀😁😀", '😀', 2},
+		{"😀😁😂", '😀', 1},
+		{"test😀emoji", '😀', 1},
+		{"test😀emoji", 'e', 2},
+	}
+
+	for _, tt := range tests {
+		if got := CountChar(tt.in, tt.r); got != tt.want {
+			t.Errorf("CountChar(%q, %q) = %d, want %d", tt.in, tt.r, got, tt.want)
+		}
+	}
+}
