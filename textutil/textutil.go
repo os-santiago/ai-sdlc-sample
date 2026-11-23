@@ -174,3 +174,15 @@ func StartsWithVowel(s string) bool {
 	lower := unicode.ToLower(firstRune)
 	return lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u'
 }
+
+// CountChar returns the number of occurrences of r in s.
+// It counts multibyte runes correctly.
+func CountChar(s string, r rune) int {
+	count := 0
+	for _, char := range s {
+		if char == r {
+			count++
+		}
+	}
+	return count
+}
