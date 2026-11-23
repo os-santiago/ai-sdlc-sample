@@ -759,3 +759,81 @@ func TestCountEmptyMap(t *testing.T) {
 		t.Fatalf("Count(empty map, \"any\") = %d, want 0", got)
 	}
 }
+
+// EqualMaps tests - Issue #151 Acceptance Criteria
+
+func TestEqualMapsEqual(t *testing.T) {
+	// Acceptance Criteria: Returns true when both have the same keys and values
+	a := map[string]string{
+		"foo": "bar",
+		"baz": "qux",
+	}
+	b := map[string]string{
+		"foo": "bar",
+		"baz": "qux",
+	}
+	got := EqualMaps(a, b)
+	if !got {
+		t.Fatalf("EqualMaps(%v, %v) = false, want true", a, b)
+	}
+}
+
+func TestEqualMapsDifferentValues(t *testing.T) {
+	// Acceptance Criteria: Tests cover different values
+	a := map[string]string{
+		"key": "value1",
+	}
+	b := map[string]string{
+		"key": "value2",
+	}
+	got := EqualMaps(a, b)
+	if got {
+		t.Fatalf("EqualMaps(%v, %v) = true, want false", a, b)
+	}
+}
+
+func TestEqualMapsDifferentKeys(t *testing.T) {
+	// Acceptance Criteria: Tests cover different keys
+	a := map[string]string{
+		"key1": "value",
+	}
+	b := map[string]string{
+		"key2": "value",
+	}
+	got := EqualMaps(a, b)
+	if got {
+		t.Fatalf("EqualMaps(%v, %v) = true, want false", a, b)
+	}
+}
+
+func TestEqualMapsNilInput(t *testing.T) {
+	// Acceptance Criteria: Tests cover nil input, nil and empty maps are equal
+	var nilMap map[string]string
+	emptyMap := map[string]string{}
+	
+	// nil == nil
+	if !EqualMaps(nilMap, nilMap) {
+		t.Fatalf("EqualMaps(nil, nil) = false, want true")
+	}
+	
+	// nil == empty
+	if !EqualMaps(nilMap, emptyMap) {
+		t.Fatalf("EqualMaps(nil, empty) = false, want true")
+	}
+	
+	// empty == nil
+	if !EqualMaps(emptyMap, nilMap) {
+		t.Fatalf("EqualMaps(empty, nil) = false, want true")
+	}
+	
+	// empty == empty
+	if !EqualMaps(emptyMap, emptyMap) {
+		t.Fatalf("EqualMaps(empty, empty) = false, want true")
+	}
+	
+	// nil/empty != non-empty
+	nonEmpty := map[string]string{"a": "1"}
+	if EqualMaps(nilMap, nonEmpty) || EqualMaps(emptyMap, nonEmpty) {
+		t.Fatalf("EqualMaps(nil/empty, non-empty) = true, want false")
+	}
+}
