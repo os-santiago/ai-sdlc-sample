@@ -341,3 +341,47 @@ func TestWrapNoSpaces(t *testing.T) {
 		t.Errorf("Wrap = %q, want %q", got, want)
 	}
 }
+
+// Quote tests
+
+func TestQuotePlain(t *testing.T) {
+	if got := Quote("hello"); got != `"hello"` {
+		t.Errorf("Quote = %q, want %q", got, `"hello"`)
+	}
+}
+
+func TestQuoteWithDoubleQuote(t *testing.T) {
+	if got := Quote(`a"b`); got != `"a\"b"` {
+		t.Errorf("Quote = %q, want %q", got, `"a\"b"`)
+	}
+}
+
+func TestQuoteWithBackslash(t *testing.T) {
+	if got := Quote(`a\b`); got != `"a\\b"` {
+		t.Errorf("Quote = %q, want %q", got, `"a\\b"`)
+	}
+}
+
+func TestQuoteWithBoth(t *testing.T) {
+	if got := Quote(`a\"b`); got != `"a\\\"b"` {
+		t.Errorf("Quote = %q, want %q", got, `"a\\\"b"`)
+	}
+}
+
+func TestQuoteEmpty(t *testing.T) {
+	if got := Quote(""); got != `""` {
+		t.Errorf("Quote = %q, want %q", got, `""`)
+	}
+}
+
+func TestQuoteMultipleQuotes(t *testing.T) {
+	if got := Quote(`a"b"c`); got != `"a\"b\"c"` {
+		t.Errorf("Quote = %q, want %q", got, `"a\"b\"c"`)
+	}
+}
+
+func TestQuoteMultipleBackslashes(t *testing.T) {
+	if got := Quote(`a\\b`); got != `"a\\\\b"` {
+		t.Errorf("Quote = %q, want %q", got, `"a\\\\b"`)
+	}
+}
