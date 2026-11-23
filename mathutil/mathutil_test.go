@@ -480,3 +480,81 @@ func TestPowLargerExponent(t *testing.T) {
 		t.Errorf("Pow(3, 4) = %d, want 81", got)
 	}
 }
+
+func TestAverageIntEmpty(t *testing.T) {
+	got, ok := AverageInt(nil)
+	if ok {
+		t.Error("AverageInt(nil) returned true, want false")
+	}
+	if got != 0 {
+		t.Errorf("AverageInt(nil) = %d, want 0", got)
+	}
+	
+	got, ok = AverageInt([]int{})
+	if ok {
+		t.Error("AverageInt([]int{}) returned true, want false")
+	}
+	if got != 0 {
+		t.Errorf("AverageInt([]int{}) = %d, want 0", got)
+	}
+}
+
+func TestAverageIntExample1(t *testing.T) {
+	got, ok := AverageInt([]int{1, 2, 4})
+	if !ok {
+		t.Error("AverageInt([1, 2, 4]) returned false, want true")
+	}
+	if got != 2 {
+		t.Errorf("AverageInt([1, 2, 4]) = %d, want 2 (floor of 2.333...)", got)
+	}
+}
+
+func TestAverageIntExample2(t *testing.T) {
+	got, ok := AverageInt([]int{-3, -4})
+	if !ok {
+		t.Error("AverageInt([-3, -4]) returned false, want true")
+	}
+	if got != -4 {
+		t.Errorf("AverageInt([-3, -4]) = %d, want -4 (floor of -3.5)", got)
+	}
+}
+
+func TestAverageIntPositiveExact(t *testing.T) {
+	got, ok := AverageInt([]int{2, 4, 6})
+	if !ok {
+		t.Error("AverageInt([2, 4, 6]) returned false, want true")
+	}
+	if got != 4 {
+		t.Errorf("AverageInt([2, 4, 6]) = %d, want 4", got)
+	}
+}
+
+func TestAverageIntNegativeExact(t *testing.T) {
+	got, ok := AverageInt([]int{-2, -4, -6})
+	if !ok {
+		t.Error("AverageInt([-2, -4, -6]) returned false, want true")
+	}
+	if got != -4 {
+		t.Errorf("AverageInt([-2, -4, -6]) = %d, want -4", got)
+	}
+}
+
+func TestAverageIntSingleValue(t *testing.T) {
+	got, ok := AverageInt([]int{7})
+	if !ok {
+		t.Error("AverageInt([7]) returned false, want true")
+	}
+	if got != 7 {
+		t.Errorf("AverageInt([7]) = %d, want 7", got)
+	}
+}
+
+func TestAverageIntMixed(t *testing.T) {
+	got, ok := AverageInt([]int{-5, 10, -2})
+	if !ok {
+		t.Error("AverageInt([-5, 10, -2]) returned false, want true")
+	}
+	if got != 1 {
+		t.Errorf("AverageInt([-5, 10, -2]) = %d, want 1 (floor of 1.0)", got)
+	}
+}
