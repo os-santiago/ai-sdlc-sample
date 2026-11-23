@@ -708,3 +708,54 @@ func TestRenameExistingTo(t *testing.T) {
 		t.Fatalf("Rename modified map when 'to' already existed: got %v, want %v", m, original)
 	}
 }
+
+// Count tests - Issue #123 Acceptance Criteria
+
+func TestCountZeroMatches(t *testing.T) {
+	// Acceptance Criteria: Tests cover zero matches
+	m := map[string]string{
+		"a": "1",
+		"b": "2",
+		"c": "3",
+	}
+	got := Count(m, "4")
+	if got != 0 {
+		t.Fatalf("Count(%v, \"4\") = %d, want 0", m, got)
+	}
+}
+
+func TestCountOneMatch(t *testing.T) {
+	// Acceptance Criteria: Tests cover one match
+	m := map[string]string{
+		"a": "1",
+		"b": "2",
+		"c": "3",
+	}
+	got := Count(m, "2")
+	if got != 1 {
+		t.Fatalf("Count(%v, \"2\") = %d, want 1", m, got)
+	}
+}
+
+func TestCountSeveralMatches(t *testing.T) {
+	// Acceptance Criteria: Tests cover several matches
+	m := map[string]string{
+		"a": "same",
+		"b": "different",
+		"c": "same",
+		"d": "same",
+	}
+	got := Count(m, "same")
+	if got != 3 {
+		t.Fatalf("Count(%v, \"same\") = %d, want 3", m, got)
+	}
+}
+
+func TestCountEmptyMap(t *testing.T) {
+	// Edge case: Empty map returns 0
+	m := map[string]string{}
+	got := Count(m, "any")
+	if got != 0 {
+		t.Fatalf("Count(empty map, \"any\") = %d, want 0", got)
+	}
+}
