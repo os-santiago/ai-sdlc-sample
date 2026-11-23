@@ -217,3 +217,35 @@ func Acronym(s string) string {
 	}
 	return result.String()
 }
+
+// Lines splits s into lines, splitting on \n and \r\n without including the endings.
+// A trailing line ending does not produce an empty last line.
+// Lines("") returns an empty, non-nil slice.
+func Lines(s string) []string {
+	if s == "" {
+		return []string{}
+	}
+	
+	var lines []string
+	var current strings.Builder
+	
+	for i := 0; i < len(s); i++ {
+		if s[i] == '\n' {
+			lines = append(lines, current.String())
+			current.Reset()
+		} else if s[i] == '\r' && i+1 < len(s) && s[i+1] == '\n' {
+			lines = append(lines, current.String())
+			current.Reset()
+			i++ // Skip the \n
+		} else {
+			current.WriteByte(s[i])
+		}
+	}
+	
+	// Add the last line if there's content remaining
+	if current.Len() > 0 {
+		lines = append(lines, current.String())
+	}
+	
+	return lines
+}

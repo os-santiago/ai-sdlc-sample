@@ -638,3 +638,81 @@ func TestAcronym(t *testing.T) {
 		}
 	}
 }
+
+func TestLines(t *testing.T) {
+	tests := []struct {
+		in   string
+		want []string
+	}{
+		// Acceptance criteria: empty string returns empty, non-nil slice
+		{"", []string{}},
+		
+		// Acceptance criteria: splits on \n without the ending
+		{"one\ntwo\nthree", []string{"one", "two", "three"}},
+		{"line1\nline2", []string{"line1", "line2"}},
+		
+		// Acceptance criteria: splits on \r\n without the ending
+		{"one\r\ntwo\r\nthree", []string{"one", "two", "three"}},
+		{"line1\r\nline2", []string{"line1", "line2"}},
+		
+		// Acceptance criteria: trailing line ending does not produce empty last line
+		{"one\ntwo\n", []string{"one", "two"}},
+		{"one\r\ntwo\r\n", []string{"one", "two"}},
+		{"line\n", []string{"line"}},
+		{"line\r\n", []string{"line"}},
+		
+		// Mixed line endings
+		{"one\ntwo\r\nthree", []string{"one", "two", "three"}},
+		{"one\r\ntwo\nthree", []string{"one", "two", "three"}},
+		{"a\nb\r\nc\nd", []string{"a", "b", "c", "d"}},
+		
+		// Single line (no line endings)
+		{"single line", []string{"single line"}},
+		{"a", []string{"a"}},
+		
+		// Empty lines
+		{"\n", []string{""}},
+		{"\r\n", []string{""}},
+		{"one\n\ntwo", []string{"one", "", "two"}},
+		{"one\r\n\r\ntwo", []string{"one", "", "two"}},
+		{"\n\n", []string{"", ""}},
+		{"\r\n\r\n", []string{"", ""}},
+		
+		// Standalone \r (not followed by \n) - should be treated as content
+		{"one\rtwo", []string{"one\rtwo"}},
+		{"a\rb\nc", []string{"a\rb", "c"}},
+		
+		// Content with special characters
+		{"hello world\ngoodbye world", []string{"hello world", "goodbye world"}},
+		{"line with spaces   \nline 2", []string{"line with spaces   ", "line 2"}},
+		{"tab\there\nnext", []string{"tab\there", "next"}},
+		
+		// Multiple consecutive line endings
+		{"a\n\n\nb", []string{"a", "", "", "b"}},
+		{"a\r\n\r\n\r\nb", []string{"a", "", "", "b"}},
+	}
+
+	for _, tt := range tests {
+		got := Lines(tt.in)
+		
+		// Check nil vs non-nil
+		if got == nil {
+			t.Errorf("Lines(%q) returned nil, want non-nil slice", tt.in)
+			continue
+		}
+		
+		// Check length
+		if len(got) != len(tt.want) {
+			t.Errorf("Lines(%q) returned %d lines, want %d\nGot: %#v\nWant: %#v", 
+				tt.in, len(got), len(tt.want), got, tt.want)
+			continue
+		}
+		
+		// Check each line
+		for i := range got {
+			if got[i] != tt.want[i] {
+				t.Errorf("Lines(%q)[%d] = %q, want %q", tt.in, i, got[i], tt.want[i])
+			}
+		}
+	}
+}
