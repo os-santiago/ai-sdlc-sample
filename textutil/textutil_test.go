@@ -761,3 +761,53 @@ func TestHasDigit(t *testing.T) {
 		}
 	}
 }
+
+func TestIsLower(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: lowercase text (should return true)
+		{"hello", true},
+		{"world", true},
+		{"abc", true},
+		{"lowercase", true},
+		// Unicode lowercase
+		{"über", true},
+		{"café", true},
+		
+		// Acceptance criteria: mixed case (should return false)
+		{"Hello", false},
+		{"WORLD", false},
+		{"MixedCase", false},
+		{"hELLO", false},
+		{"aBc", false},
+		// Mixed with Unicode
+		{"Über", false},
+		{"Café", false},
+		
+		// Acceptance criteria: no letters (should return false)
+		{"", false},
+		{"123", false},
+		{"!@#", false},
+		{"   ", false},
+		{"123!@#", false},
+		{"\t\n", false},
+		
+		// Lowercase with numbers/special characters (should return true)
+		{"hello123", true},
+		{"abc!@#", true},
+		{"test123world", true},
+		{"a1b2c3", true},
+		{"hello-world", true},
+		{"test_case", true},
+		{"abc 123 def", true},
+		{"hello, world!", true},
+	}
+
+	for _, tt := range tests {
+		if got := IsLower(tt.in); got != tt.want {
+			t.Errorf("IsLower(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
