@@ -604,3 +604,37 @@ func TestIsUpper(t *testing.T) {
 		}
 	}
 }
+
+func TestAcronym(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		// Acceptance criteria: empty string returns ""
+		{"", ""},
+		// Acceptance criteria: "portable network graphics" returns "PNG"
+		{"portable network graphics", "PNG"},
+		// Acceptance criteria: one word
+		{"hello", "H"},
+		// Acceptance criteria: several words
+		{"hello world", "HW"},
+		{"one two three", "OTT"},
+		// Extra whitespace
+		{"  hello   world  ", "HW"},
+		{"one  two   three", "OTT"},
+		// Unicode awareness
+		{"élan vital", "ÉV"},
+		{"über alles", "ÜA"},
+		// Mixed case input (should uppercase)
+		{"hello World", "HW"},
+		{"HELLO world", "HW"},
+		// Tab and newline whitespace
+		{"one\ttwo\nthree", "OTT"},
+	}
+
+	for _, tt := range tests {
+		if got := Acronym(tt.in); got != tt.want {
+			t.Errorf("Acronym(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
