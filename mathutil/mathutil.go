@@ -193,6 +193,18 @@ func GCD(a, b int) int {
 	return a
 }
 
+// LCM returns the least common multiple of the absolute values of a and b.
+// LCM(0, x) returns 0 for any x.
+func LCM(a, b int) int {
+	// LCM(0, x) = 0 for any x
+	if a == 0 || b == 0 {
+		return 0
+	}
+	// LCM(a, b) = |a * b| / GCD(a, b)
+	abs_a, abs_b := Abs(a), Abs(b)
+	return (abs_a * abs_b) / GCD(a, b)
+}
+
 // Sign returns the sign of x: -1 for negative, 0 for zero, 1 for positive.
 func Sign(x int) int {
 	if x < 0 {
