@@ -452,3 +452,50 @@ func TestCountFields(t *testing.T) {
 		}
 	}
 }
+
+func TestStartsWithVowel(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: empty string returns false
+		{"", false},
+		// Acceptance criteria: lowercase vowels
+		{"apple", true},
+		{"elephant", true},
+		{"igloo", true},
+		{"orange", true},
+		{"umbrella", true},
+		// Acceptance criteria: uppercase vowels
+		{"Apple", true},
+		{"Elephant", true},
+		{"Igloo", true},
+		{"Orange", true},
+		{"Umbrella", true},
+		// Acceptance criteria: consonants
+		{"banana", false},
+		{"cherry", false},
+		{"date", false},
+		{"grape", false},
+		{"kiwi", false},
+		{"Banana", false},
+		{"CHERRY", false},
+		// Single vowel
+		{"a", true},
+		{"e", true},
+		{"i", true},
+		{"o", true},
+		{"u", true},
+		{"A", true},
+		{"E", true},
+		{"I", true},
+		{"O", true},
+		{"U", true},
+	}
+
+	for _, tt := range tests {
+		if got := StartsWithVowel(tt.in); got != tt.want {
+			t.Errorf("StartsWithVowel(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
