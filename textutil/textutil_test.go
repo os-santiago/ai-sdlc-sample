@@ -551,3 +551,56 @@ func TestCountChar(t *testing.T) {
 		}
 	}
 }
+
+func TestIsUpper(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: ABC-1 is true
+		{"ABC-1", true},
+		// Acceptance criteria: 123 is false (no letters)
+		{"123", false},
+		// Acceptance criteria: AbC is false (mixed case)
+		{"AbC", false},
+		// Empty string (no letters)
+		{"", false},
+		// All uppercase letters
+		{"ABC", true},
+		{"HELLO", true},
+		{"WORLD", true},
+		// All lowercase letters
+		{"abc", false},
+		{"hello", false},
+		// Mixed case
+		{"Hello", false},
+		{"HeLLo", false},
+		{"ABC123abc", false},
+		// Only non-letters (should return false)
+		{"!@#$%", false},
+		{"   ", false},
+		{"---", false},
+		// Uppercase with non-letters (should ignore non-letters)
+		{"ABC-DEF", true},
+		{"HELLO WORLD", true},
+		{"A B C", true},
+		{"X-Y-Z", true},
+		{"A1B2C3", true},
+		// Single character
+		{"A", true},
+		{"a", false},
+		{"1", false},
+		// Unicode uppercase
+		{"ÉLAN", true},
+		{"ÜBER", true},
+		// Unicode mixed case
+		{"Élan", false},
+		{"über", false},
+	}
+
+	for _, tt := range tests {
+		if got := IsUpper(tt.in); got != tt.want {
+			t.Errorf("IsUpper(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
