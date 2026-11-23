@@ -716,3 +716,48 @@ func TestLines(t *testing.T) {
 		}
 	}
 }
+
+func TestHasDigit(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: empty string
+		{"", false},
+		
+		// Acceptance criteria: letters-only (should return false)
+		{"abc", false},
+		{"hello", false},
+		{"WORLD", false},
+		{"AbCdEf", false},
+		
+		// Acceptance criteria: mixed input (letters and digits)
+		{"abc123", true},
+		{"hello1world", true},
+		{"test9", true},
+		{"1test", true},
+		{"a1b2c3", true},
+		
+		// Digits only
+		{"123", true},
+		{"0", true},
+		{"9", true},
+		{"0123456789", true},
+		
+		// Special characters without digits
+		{"!@#$%", false},
+		{"hello-world", false},
+		{"test_case", false},
+		
+		// Special characters with digits
+		{"test-123", true},
+		{"abc@456", true},
+		{"#1winner", true},
+	}
+
+	for _, tt := range tests {
+		if got := HasDigit(tt.in); got != tt.want {
+			t.Errorf("HasDigit(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}

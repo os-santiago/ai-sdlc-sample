@@ -249,3 +249,13 @@ func Lines(s string) []string {
 	
 	return lines
 }
+
+// HasDigit reports whether s contains an ASCII digit (0-9).
+func HasDigit(s string) bool {
+	for _, r := range s {
+		if r >= '0' && r <= '9' {
+			return true
+		}
+	}
+	return false
+}
