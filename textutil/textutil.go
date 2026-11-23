@@ -149,3 +149,16 @@ func Squeeze(s string) string {
 func CountRunes(s string) int {
 	return utf8.RuneCountInString(s)
 }
+
+// CountFields returns the number of non-empty fields of s split on sep.
+// Fields are separated by the separator rune sep, and consecutive separators
+// do not produce empty fields (they are skipped).
+func CountFields(s string, sep rune) int {
+	count := 0
+	for _, field := range strings.Split(s, string(sep)) {
+		if field != "" {
+			count++
+		}
+	}
+	return count
+}
