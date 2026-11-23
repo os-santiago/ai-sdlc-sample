@@ -796,3 +796,52 @@ func TestFactorialOverflow(t *testing.T) {
 		t.Errorf("Factorial(25) = %d, want 0", got)
 	}
 }
+
+func TestDigitsZero(t *testing.T) {
+	got := Digits(0)
+	if got != 1 {
+		t.Errorf("Digits(0) = %d, want 1", got)
+	}
+}
+
+func TestDigitsPositiveSingle(t *testing.T) {
+	got := Digits(5)
+	if got != 1 {
+		t.Errorf("Digits(5) = %d, want 1", got)
+	}
+}
+
+func TestDigitsPositiveThree(t *testing.T) {
+	got := Digits(123)
+	if got != 3 {
+		t.Errorf("Digits(123) = %d, want 3", got)
+	}
+}
+
+func TestDigitsNegativeSingle(t *testing.T) {
+	got := Digits(-7)
+	if got != 1 {
+		t.Errorf("Digits(-7) = %d, want 1 (ignoring sign)", got)
+	}
+}
+
+func TestDigitsNegativeThree(t *testing.T) {
+	got := Digits(-123)
+	if got != 3 {
+		t.Errorf("Digits(-123) = %d, want 3 (ignoring sign)", got)
+	}
+}
+
+func TestDigitsLargePositive(t *testing.T) {
+	got := Digits(9999)
+	if got != 4 {
+		t.Errorf("Digits(9999) = %d, want 4", got)
+	}
+}
+
+func TestDigitsLargeNegative(t *testing.T) {
+	got := Digits(-9999)
+	if got != 4 {
+		t.Errorf("Digits(-9999) = %d, want 4 (ignoring sign)", got)
+	}
+}
