@@ -202,6 +202,21 @@ func IsUpper(s string) bool {
 	return hasLetter
 }
 
+// IsLower reports whether s has at least one letter and all letters are lowercase.
+// Non-letter characters are ignored.
+func IsLower(s string) bool {
+	hasLetter := false
+	for _, r := range s {
+		if unicode.IsLetter(r) {
+			hasLetter = true
+			if !unicode.IsLower(r) {
+				return false
+			}
+		}
+	}
+	return hasLetter
+}
+
 // Acronym returns the uppercase first letter of each space-separated word.
 // Words are separated by whitespace, and extra whitespace is ignored.
 func Acronym(s string) string {
