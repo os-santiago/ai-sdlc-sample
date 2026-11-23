@@ -255,3 +255,24 @@ func AverageInt(xs []int) (int, bool) {
 	
 	return avg, true
 }
+
+// IsPrime returns true if n is a prime number, false otherwise.
+// A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.
+// Values below 2 (including negative numbers, 0, and 1) are not prime.
+func IsPrime(n int) bool {
+	if n < 2 {
+		return false
+	}
+	if n == 2 {
+		return true
+	}
+	if n%2 == 0 {
+		return false
+	}
+	for i := 3; i*i <= n; i += 2 {
+		if n%i == 0 {
+			return false
+		}
+	}
+	return true
+}

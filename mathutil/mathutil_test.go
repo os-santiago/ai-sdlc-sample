@@ -628,3 +628,90 @@ func TestLCMCoprime(t *testing.T) {
 		t.Errorf("LCM(5, 7) = %d, want 35 (coprime numbers)", got)
 	}
 }
+
+func TestIsPrimeNegative(t *testing.T) {
+	if got := IsPrime(-5); got {
+		t.Error("IsPrime(-5) = true, want false (negative numbers are not prime)")
+	}
+	if got := IsPrime(-2); got {
+		t.Error("IsPrime(-2) = true, want false (negative numbers are not prime)")
+	}
+}
+
+func TestIsPrimeZero(t *testing.T) {
+	if got := IsPrime(0); got {
+		t.Error("IsPrime(0) = true, want false (0 is not prime)")
+	}
+}
+
+func TestIsPrimeOne(t *testing.T) {
+	if got := IsPrime(1); got {
+		t.Error("IsPrime(1) = true, want false (1 is not prime)")
+	}
+}
+
+func TestIsPrimeTwo(t *testing.T) {
+	if got := IsPrime(2); !got {
+		t.Error("IsPrime(2) = false, want true (2 is prime)")
+	}
+}
+
+func TestIsPrimeThirteen(t *testing.T) {
+	if got := IsPrime(13); !got {
+		t.Error("IsPrime(13) = false, want true (13 is prime)")
+	}
+}
+
+func TestIsPrimeFifteen(t *testing.T) {
+	if got := IsPrime(15); got {
+		t.Error("IsPrime(15) = true, want false (15 = 3 × 5 is composite)")
+	}
+}
+
+func TestIsPrimeSmallPrimes(t *testing.T) {
+	primes := []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31}
+	for _, p := range primes {
+		if got := IsPrime(p); !got {
+			t.Errorf("IsPrime(%d) = false, want true", p)
+		}
+	}
+}
+
+func TestIsPrimeSmallComposites(t *testing.T) {
+	composites := []int{4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28}
+	for _, c := range composites {
+		if got := IsPrime(c); got {
+			t.Errorf("IsPrime(%d) = true, want false", c)
+		}
+	}
+}
+
+func TestIsPrimeFour(t *testing.T) {
+	if got := IsPrime(4); got {
+		t.Error("IsPrime(4) = true, want false (4 = 2 × 2 is composite)")
+	}
+}
+
+func TestIsPrimeNine(t *testing.T) {
+	if got := IsPrime(9); got {
+		t.Error("IsPrime(9) = true, want false (9 = 3 × 3 is composite)")
+	}
+}
+
+func TestIsPrimeLargePrime(t *testing.T) {
+	if got := IsPrime(97); !got {
+		t.Error("IsPrime(97) = false, want true (97 is prime)")
+	}
+}
+
+func TestIsPrimeLargeComposite(t *testing.T) {
+	if got := IsPrime(100); got {
+		t.Error("IsPrime(100) = true, want false (100 = 10 × 10 is composite)")
+	}
+}
+
+func TestIsPrimeEvenComposite(t *testing.T) {
+	if got := IsPrime(50); got {
+		t.Error("IsPrime(50) = true, want false (50 = 2 × 25 is composite)")
+	}
+}
