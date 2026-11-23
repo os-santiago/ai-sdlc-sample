@@ -276,3 +276,24 @@ func IsPrime(n int) bool {
 	}
 	return true
 }
+
+// Factorial returns n! (n factorial) for small non-negative integers.
+// It returns the factorial and true for 0 <= n <= 20.
+// For negative n or n > 20, it returns 0, false to prevent integer overflow.
+//
+// Examples:
+//   Factorial(0) = 1, true
+//   Factorial(5) = 120, true
+//   Factorial(20) = 2432902008176640000, true
+//   Factorial(21) = 0, false (overflow guard)
+//   Factorial(-1) = 0, false (negative input)
+func Factorial(n int) (int, bool) {
+	if n < 0 || n > 20 {
+		return 0, false
+	}
+	result := 1
+	for i := 2; i <= n; i++ {
+		result *= i
+	}
+	return result, true
+}

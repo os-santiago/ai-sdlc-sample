@@ -715,3 +715,84 @@ func TestIsPrimeEvenComposite(t *testing.T) {
 		t.Error("IsPrime(50) = true, want false (50 = 2 × 25 is composite)")
 	}
 }
+
+func TestFactorialZero(t *testing.T) {
+	got, ok := Factorial(0)
+	if !ok {
+		t.Error("Factorial(0) returned false, want true")
+	}
+	if got != 1 {
+		t.Errorf("Factorial(0) = %d, want 1", got)
+	}
+}
+
+func TestFactorialOne(t *testing.T) {
+	got, ok := Factorial(1)
+	if !ok {
+		t.Error("Factorial(1) returned false, want true")
+	}
+	if got != 1 {
+		t.Errorf("Factorial(1) = %d, want 1", got)
+	}
+}
+
+func TestFactorialFive(t *testing.T) {
+	got, ok := Factorial(5)
+	if !ok {
+		t.Error("Factorial(5) returned false, want true")
+	}
+	if got != 120 {
+		t.Errorf("Factorial(5) = %d, want 120", got)
+	}
+}
+
+func TestFactorialTwenty(t *testing.T) {
+	got, ok := Factorial(20)
+	if !ok {
+		t.Error("Factorial(20) returned false, want true")
+	}
+	// 20! = 2432902008176640000
+	if got != 2432902008176640000 {
+		t.Errorf("Factorial(20) = %d, want 2432902008176640000", got)
+	}
+}
+
+func TestFactorialTwentyOne(t *testing.T) {
+	got, ok := Factorial(21)
+	if ok {
+		t.Error("Factorial(21) returned true, want false (overflow guard)")
+	}
+	if got != 0 {
+		t.Errorf("Factorial(21) = %d, want 0", got)
+	}
+}
+
+func TestFactorialNegative(t *testing.T) {
+	got, ok := Factorial(-1)
+	if ok {
+		t.Error("Factorial(-1) returned true, want false (negative input)")
+	}
+	if got != 0 {
+		t.Errorf("Factorial(-1) = %d, want 0", got)
+	}
+}
+
+func TestFactorialNegativeLarge(t *testing.T) {
+	got, ok := Factorial(-10)
+	if ok {
+		t.Error("Factorial(-10) returned true, want false (negative input)")
+	}
+	if got != 0 {
+		t.Errorf("Factorial(-10) = %d, want 0", got)
+	}
+}
+
+func TestFactorialOverflow(t *testing.T) {
+	got, ok := Factorial(25)
+	if ok {
+		t.Error("Factorial(25) returned true, want false (overflow guard)")
+	}
+	if got != 0 {
+		t.Errorf("Factorial(25) = %d, want 0", got)
+	}
+}
