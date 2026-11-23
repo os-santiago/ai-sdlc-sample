@@ -186,3 +186,18 @@ func CountChar(s string, r rune) int {
 	}
 	return count
 }
+
+// IsUpper reports whether s has at least one letter and all letters are uppercase.
+// Non-letter characters are ignored.
+func IsUpper(s string) bool {
+	hasLetter := false
+	for _, r := range s {
+		if unicode.IsLetter(r) {
+			hasLetter = true
+			if !unicode.IsUpper(r) {
+				return false
+			}
+		}
+	}
+	return hasLetter
+}
