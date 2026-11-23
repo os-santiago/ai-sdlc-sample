@@ -400,3 +400,55 @@ func TestCountRunes(t *testing.T) {
 		}
 	}
 }
+
+func TestCountFields(t *testing.T) {
+	tests := []struct {
+		in   string
+		sep  rune
+		want int
+	}{
+		// Acceptance criteria: specific example
+		{"a,,b,", ',', 2},
+		// Acceptance criteria: empty string
+		{"", ',', 0},
+		// Single separator
+		{"a,b", ',', 2},
+		{"a,b,c", ',', 3},
+		{"one,two,three", ',', 3},
+		// Repeated separators (should skip empty fields)
+		{"a,,b", ',', 2},
+		{"a,,,b", ',', 2},
+		{"a,,,,b", ',', 2},
+		// Leading separator
+		{",a", ',', 1},
+		{",,a", ',', 1},
+		// Trailing separator
+		{"a,", ',', 1},
+		{"a,,", ',', 1},
+		// Leading and trailing separators
+		{",a,", ',', 1},
+		{",,a,,", ',', 1},
+		// Only separators
+		{",,", ',', 0},
+		{",,,,", ',', 0},
+		// No separators
+		{"abc", ',', 1},
+		{"hello", ',', 1},
+		// Different separators
+		{"a:b:c", ':', 3},
+		{"a;b;c", ';', 3},
+		{"a|b|c", '|', 3},
+		{"a b c", ' ', 3},
+		// Unicode separator
+		{"a·b·c", '·', 3},
+		// Mixed cases
+		{"one,two,,three,", ',', 3},
+		{",one,,two,,,three", ',', 3},
+	}
+
+	for _, tt := range tests {
+		if got := CountFields(tt.in, tt.sep); got != tt.want {
+			t.Errorf("CountFields(%q, %q) = %d, want %d", tt.in, tt.sep, got, tt.want)
+		}
+	}
+}
