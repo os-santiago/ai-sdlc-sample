@@ -260,3 +260,40 @@ func Dedent(s string) string {
 
 	return strings.Join(lines, "\n")
 }
+
+// TrimRunes removes leading and trailing runes from s that appear in cutset.
+// If cutset is empty, s is returned unchanged. All runes in cutset are
+// considered as a set, and any rune at the start or end of s that appears
+// in cutset is removed.
+func TrimRunes(s, cutset string) string {
+	if cutset == "" {
+		return s
+	}
+
+	runes := []rune(s)
+	cutRunes := []rune(cutset)
+
+	// Trim from start
+	start := 0
+	for start < len(runes) && contains(cutRunes, runes[start]) {
+		start++
+	}
+
+	// Trim from end
+	end := len(runes)
+	for end > start && contains(cutRunes, runes[end-1]) {
+		end--
+	}
+
+	return string(runes[start:end])
+}
+
+// contains checks if a rune is in a slice of runes.
+func contains(runes []rune, r rune) bool {
+	for _, cr := range runes {
+		if cr == r {
+			return true
+		}
+	}
+	return false
+}
