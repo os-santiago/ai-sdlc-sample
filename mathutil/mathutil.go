@@ -297,3 +297,24 @@ func Factorial(n int) (int, bool) {
 	}
 	return result, true
 }
+
+// Digits returns the number of decimal digits of n, ignoring the sign.
+// Digits(0) returns 1; Digits(-123) returns 3.
+func Digits(n int) int {
+	if n == 0 {
+		return 1
+	}
+	
+	// Use absolute value to ignore sign
+	if n < 0 {
+		n = -n
+	}
+	
+	count := 0
+	for n > 0 {
+		count++
+		n /= 10
+	}
+	
+	return count
+}
