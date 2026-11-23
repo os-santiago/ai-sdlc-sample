@@ -142,6 +142,13 @@ func Equal(a, b map[string]string) bool {
 	return true
 }
 
+// EqualMaps returns true when both maps have the same keys and values.
+// A nil map equals an empty map.
+func EqualMaps(a, b map[string]string) bool {
+	// Delegate to Equal for consistent behavior
+	return Equal(a, b)
+}
+
 // Filter returns a new map with only the keys starting with the given prefix.
 // The input map is not modified.
 func Filter(m map[string]string, prefix string) map[string]string {
