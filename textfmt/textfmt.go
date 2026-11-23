@@ -184,3 +184,12 @@ func Quote(s string) string {
 	result.WriteByte('"')
 	return result.String()
 }
+
+// Surround wraps s with marker on both sides. If marker is empty, s is
+// returned unchanged.
+func Surround(s, marker string) string {
+	if marker == "" {
+		return s
+	}
+	return marker + s + marker
+}

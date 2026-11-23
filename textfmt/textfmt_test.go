@@ -385,3 +385,41 @@ func TestQuoteMultipleBackslashes(t *testing.T) {
 		t.Errorf("Quote = %q, want %q", got, `"a\\\\b"`)
 	}
 }
+
+// Surround tests
+
+func TestSurroundBasic(t *testing.T) {
+	if got := Surround("x", "**"); got != "**x**" {
+		t.Errorf("Surround = %q, want %q", got, "**x**")
+	}
+}
+
+func TestSurroundEmptyText(t *testing.T) {
+	if got := Surround("", "**"); got != "****" {
+		t.Errorf("Surround = %q, want %q", got, "****")
+	}
+}
+
+func TestSurroundEmptyMarker(t *testing.T) {
+	if got := Surround("hello", ""); got != "hello" {
+		t.Errorf("Surround = %q, want %q", got, "hello")
+	}
+}
+
+func TestSurroundMultibyteMarker(t *testing.T) {
+	if got := Surround("text", "🔥"); got != "🔥text🔥" {
+		t.Errorf("Surround = %q, want %q", got, "🔥text🔥")
+	}
+}
+
+func TestSurroundMultibyteText(t *testing.T) {
+	if got := Surround("café", "["); got != "[café[" {
+		t.Errorf("Surround = %q, want %q", got, "[café[")
+	}
+}
+
+func TestSurroundMultibyteMarkerAndText(t *testing.T) {
+	if got := Surround("émoji", "✨"); got != "✨émoji✨" {
+		t.Errorf("Surround = %q, want %q", got, "✨émoji✨")
+	}
+}
