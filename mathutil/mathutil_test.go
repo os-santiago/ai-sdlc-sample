@@ -893,3 +893,33 @@ func TestSumOfSquaresMultipleValues(t *testing.T) {
 		t.Errorf("SumOfSquares([1, 2, 3, 4, 5]) = %d, want 55 (1 + 4 + 9 + 16 + 25)", got)
 	}
 }
+
+func TestAverageFloatEmpty(t *testing.T) {
+	got, ok := AverageFloat([]float64{})
+	if ok {
+		t.Errorf("AverageFloat([]) returned ok=true, want false")
+	}
+	if got != 0 {
+		t.Errorf("AverageFloat([]) = %v, want 0", got)
+	}
+}
+
+func TestAverageFloatSingleValue(t *testing.T) {
+	got, ok := AverageFloat([]float64{5.5})
+	if !ok {
+		t.Errorf("AverageFloat([5.5]) returned ok=false, want true")
+	}
+	if got != 5.5 {
+		t.Errorf("AverageFloat([5.5]) = %v, want 5.5", got)
+	}
+}
+
+func TestAverageFloatMultipleValues(t *testing.T) {
+	got, ok := AverageFloat([]float64{1.0, 2.0, 3.0, 4.0, 5.0})
+	if !ok {
+		t.Errorf("AverageFloat([1.0, 2.0, 3.0, 4.0, 5.0]) returned ok=false, want true")
+	}
+	if got != 3.0 {
+		t.Errorf("AverageFloat([1.0, 2.0, 3.0, 4.0, 5.0]) = %v, want 3.0", got)
+	}
+}

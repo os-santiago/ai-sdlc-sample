@@ -256,6 +256,19 @@ func AverageInt(xs []int) (int, bool) {
 	return avg, true
 }
 
+// AverageFloat returns the arithmetic mean of values and true,
+// or 0, false for an empty slice.
+func AverageFloat(values []float64) (float64, bool) {
+	if len(values) == 0 {
+		return 0, false
+	}
+	var sum float64
+	for _, v := range values {
+		sum += v
+	}
+	return sum / float64(len(values)), true
+}
+
 // IsPrime returns true if n is a prime number, false otherwise.
 // A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.
 // Values below 2 (including negative numbers, 0, and 1) are not prime.
