@@ -211,3 +211,52 @@ func Bullet(items []string) string {
 	}
 	return result.String()
 }
+
+// Dedent removes the longest run of leading spaces shared by all non-blank lines.
+// Blank lines are kept and do not affect the shared indentation.
+func Dedent(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	lines := strings.Split(s, "\n")
+
+	// Find minimum indentation among non-blank lines
+	minIndent := -1
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" {
+			// Skip blank lines
+			continue
+		}
+
+		// Count leading spaces
+		indent := 0
+		for _, ch := range line {
+			if ch == ' ' {
+				indent++
+			} else {
+				break
+			}
+		}
+
+		if minIndent == -1 || indent < minIndent {
+			minIndent = indent
+		}
+	}
+
+	// If no non-blank lines or no indentation, return original
+	if minIndent <= 0 {
+		return s
+	}
+
+	// Remove minIndent spaces from each line
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if trimmed != "" && len(line) >= minIndent {
+			lines[i] = line[minIndent:]
+		}
+	}
+
+	return strings.Join(lines, "\n")
+}
