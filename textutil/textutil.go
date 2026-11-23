@@ -201,3 +201,19 @@ func IsUpper(s string) bool {
 	}
 	return hasLetter
 }
+
+// Acronym returns the uppercase first letter of each space-separated word.
+// Words are separated by whitespace, and extra whitespace is ignored.
+func Acronym(s string) string {
+	words := strings.Fields(s)
+	if len(words) == 0 {
+		return ""
+	}
+	
+	var result strings.Builder
+	for _, word := range words {
+		runes := []rune(word)
+		result.WriteRune(unicode.ToUpper(runes[0]))
+	}
+	return result.String()
+}
