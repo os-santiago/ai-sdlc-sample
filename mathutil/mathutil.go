@@ -219,3 +219,27 @@ func Pow(base, exp int) (int, bool) {
 	
 	return result, true
 }
+
+// AverageInt returns the floor of the arithmetic mean of xs and true,
+// or 0, false for an empty slice.
+// The floor function rounds towards negative infinity, so:
+// AverageInt([]int{1, 2, 4}) returns 2 (floor of 2.333...)
+// AverageInt([]int{-3, -4}) returns -4 (floor of -3.5)
+func AverageInt(xs []int) (int, bool) {
+	if len(xs) == 0 {
+		return 0, false
+	}
+	
+	sum := 0
+	for _, x := range xs {
+		sum += x
+	}
+	
+	// Floor division: adjust for negative remainders
+	avg := sum / len(xs)
+	if sum%len(xs) != 0 && sum < 0 {
+		avg--
+	}
+	
+	return avg, true
+}
