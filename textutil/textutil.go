@@ -162,3 +162,15 @@ func CountFields(s string, sep rune) int {
 	}
 	return count
 }
+
+// StartsWithVowel reports whether s starts with an ASCII vowel (a, e, i, o, u).
+// The check is case-insensitive. An empty string returns false.
+func StartsWithVowel(s string) bool {
+	if s == "" {
+		return false
+	}
+	
+	firstRune := []rune(s)[0]
+	lower := unicode.ToLower(firstRune)
+	return lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u'
+}
