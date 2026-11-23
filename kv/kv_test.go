@@ -647,3 +647,64 @@ func TestValuesNilMap(t *testing.T) {
 		t.Fatalf("Values(nil) length = %d, want 0", len(got))
 	}
 }
+
+// Rename tests - Issue #119 Acceptance Criteria
+
+func TestRenameSuccess(t *testing.T) {
+	// Acceptance Criteria 1: Rename moves value from "from" to "to" and returns true
+	m := map[string]string{
+		"old":   "value",
+		"other": "data",
+	}
+	got := Rename(m, "old", "new")
+	if !got {
+		t.Fatalf("Rename returned false, want true")
+	}
+	if m["new"] != "value" {
+		t.Fatalf("m[\"new\"] = %q, want \"value\"", m["new"])
+	}
+	if _, exists := m["old"]; exists {
+		t.Fatalf("m[\"old\"] still exists after rename")
+	}
+	if m["other"] != "data" {
+		t.Fatalf("m[\"other\"] = %q, want \"data\" (should be unchanged)", m["other"])
+	}
+}
+
+func TestRenameMissingFrom(t *testing.T) {
+	// Acceptance Criteria 2: Returns false when "from" key is missing
+	m := map[string]string{
+		"existing": "value",
+	}
+	original := map[string]string{
+		"existing": "value",
+	}
+	got := Rename(m, "missing", "new")
+	if got {
+		t.Fatalf("Rename with missing 'from' returned true, want false")
+	}
+	// Verify map is unchanged
+	if !Equal(m, original) {
+		t.Fatalf("Rename modified map when 'from' was missing: got %v, want %v", m, original)
+	}
+}
+
+func TestRenameExistingTo(t *testing.T) {
+	// Acceptance Criteria 2: Returns false when "to" key already exists
+	m := map[string]string{
+		"old": "value1",
+		"new": "value2",
+	}
+	original := map[string]string{
+		"old": "value1",
+		"new": "value2",
+	}
+	got := Rename(m, "old", "new")
+	if got {
+		t.Fatalf("Rename with existing 'to' returned true, want false")
+	}
+	// Verify map is unchanged
+	if !Equal(m, original) {
+		t.Fatalf("Rename modified map when 'to' already existed: got %v, want %v", m, original)
+	}
+}

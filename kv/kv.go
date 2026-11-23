@@ -183,3 +183,27 @@ func Invert(m map[string]string) (map[string]string, bool) {
 	}
 	return out, true
 }
+
+// Rename renames a key in the map from "from" to "to".
+// It returns true when the rename succeeds.
+// It returns false and leaves the map unchanged when:
+// - the "from" key is missing, or
+// - the "to" key already exists.
+func Rename(m map[string]string, from, to string) bool {
+	// Check if "from" key exists
+	value, fromExists := m[from]
+	if !fromExists {
+		return false
+	}
+	
+	// Check if "to" key already exists
+	_, toExists := m[to]
+	if toExists {
+		return false
+	}
+	
+	// Perform the rename
+	delete(m, from)
+	m[to] = value
+	return true
+}
