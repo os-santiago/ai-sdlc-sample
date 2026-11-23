@@ -318,3 +318,19 @@ func Digits(n int) int {
 	
 	return count
 }
+
+// SumOfSquares returns the sum of each value squared in values, or 0 for an empty slice.
+// Examples:
+//   SumOfSquares([]int{1, 2, 3}) = 1 + 4 + 9 = 14
+//   SumOfSquares([]int{-2, 3}) = 4 + 9 = 13
+//   SumOfSquares([]int{}) = 0
+func SumOfSquares(values []int) int {
+	if len(values) == 0 {
+		return 0
+	}
+	sum := 0
+	for _, v := range values {
+		sum += v * v
+	}
+	return sum
+}

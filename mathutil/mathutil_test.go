@@ -845,3 +845,51 @@ func TestDigitsLargeNegative(t *testing.T) {
 		t.Errorf("Digits(-9999) = %d, want 4 (ignoring sign)", got)
 	}
 }
+
+func TestSumOfSquaresEmpty(t *testing.T) {
+	if got := SumOfSquares([]int{}); got != 0 {
+		t.Errorf("SumOfSquares([]int{}) = %d, want 0", got)
+	}
+}
+
+func TestSumOfSquaresNil(t *testing.T) {
+	if got := SumOfSquares(nil); got != 0 {
+		t.Errorf("SumOfSquares(nil) = %d, want 0", got)
+	}
+}
+
+func TestSumOfSquaresPositive(t *testing.T) {
+	if got := SumOfSquares([]int{1, 2, 3}); got != 14 {
+		t.Errorf("SumOfSquares([1, 2, 3]) = %d, want 14 (1 + 4 + 9)", got)
+	}
+}
+
+func TestSumOfSquaresNegative(t *testing.T) {
+	if got := SumOfSquares([]int{-1, -2, -3}); got != 14 {
+		t.Errorf("SumOfSquares([-1, -2, -3]) = %d, want 14 (1 + 4 + 9)", got)
+	}
+}
+
+func TestSumOfSquaresMixed(t *testing.T) {
+	if got := SumOfSquares([]int{-2, 3}); got != 13 {
+		t.Errorf("SumOfSquares([-2, 3]) = %d, want 13 (4 + 9)", got)
+	}
+}
+
+func TestSumOfSquaresSingleValue(t *testing.T) {
+	if got := SumOfSquares([]int{5}); got != 25 {
+		t.Errorf("SumOfSquares([5]) = %d, want 25", got)
+	}
+}
+
+func TestSumOfSquaresZero(t *testing.T) {
+	if got := SumOfSquares([]int{0}); got != 0 {
+		t.Errorf("SumOfSquares([0]) = %d, want 0", got)
+	}
+}
+
+func TestSumOfSquaresMultipleValues(t *testing.T) {
+	if got := SumOfSquares([]int{1, 2, 3, 4, 5}); got != 55 {
+		t.Errorf("SumOfSquares([1, 2, 3, 4, 5]) = %d, want 55 (1 + 4 + 9 + 16 + 25)", got)
+	}
+}
