@@ -593,3 +593,57 @@ func TestHasNilMap(t *testing.T) {
 		t.Fatalf("Has(nil, \"any\") = true, want false")
 	}
 }
+
+// Values tests - Issue #106 Acceptance Criteria
+
+func TestValuesOrderedByKey(t *testing.T) {
+	// Acceptance Criteria 1: Values returns values ordered by their keys ascending
+	m := map[string]string{
+		"z": "last",
+		"a": "first",
+		"m": "middle",
+	}
+	got := Values(m)
+	want := []string{"first", "middle", "last"}
+	if len(got) != len(want) {
+		t.Fatalf("Values(%v) length = %d, want %d", m, len(got), len(want))
+	}
+	for i := range want {
+		if got[i] != want[i] {
+			t.Fatalf("Values(%v)[%d] = %q, want %q", m, i, got[i], want[i])
+		}
+	}
+}
+
+func TestValuesEmpty(t *testing.T) {
+	// Acceptance Criteria 2: Empty map returns empty, non-nil slice
+	m := map[string]string{}
+	got := Values(m)
+	if got == nil {
+		t.Fatalf("Values(empty map) = nil, want non-nil empty slice")
+	}
+	if len(got) != 0 {
+		t.Fatalf("Values(empty map) length = %d, want 0", len(got))
+	}
+}
+
+func TestValuesSingle(t *testing.T) {
+	// Acceptance Criteria 3: Test with single entry
+	m := map[string]string{"key": "value"}
+	got := Values(m)
+	if len(got) != 1 || got[0] != "value" {
+		t.Fatalf("Values(%v) = %v, want [\"value\"]", m, got)
+	}
+}
+
+func TestValuesNilMap(t *testing.T) {
+	// Edge case: nil map returns empty, non-nil slice
+	var m map[string]string
+	got := Values(m)
+	if got == nil {
+		t.Fatalf("Values(nil) = nil, want non-nil empty slice")
+	}
+	if len(got) != 0 {
+		t.Fatalf("Values(nil) length = %d, want 0", len(got))
+	}
+}

@@ -81,6 +81,24 @@ func Keys(m map[string]string) []string {
 	return keys
 }
 
+// Values returns the values of the map ordered by their keys ascending.
+// Returns an empty, non-nil slice for a nil map.
+func Values(m map[string]string) []string {
+	if m == nil {
+		return []string{}
+	}
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	values := make([]string, len(keys))
+	for i, k := range keys {
+		values[i] = m[k]
+	}
+	return values
+}
+
 // Merge returns a new map with every key of a and b.
 // When a key is in both, the value from b wins (right-hand precedence).
 // Neither input map is modified.
