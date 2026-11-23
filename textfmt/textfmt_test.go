@@ -521,3 +521,83 @@ func TestDedentOnlyBlankLines(t *testing.T) {
 		t.Errorf("Dedent = %q, want %q", got, want)
 	}
 }
+
+// TrimRunes tests
+
+func TestTrimRunesEmptyCutset(t *testing.T) {
+	if got := TrimRunes("hello", ""); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesASCII(t *testing.T) {
+	if got := TrimRunes("--hello--", "-"); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesASCIIMultipleChars(t *testing.T) {
+	if got := TrimRunes(".-*hello*-.", ".-*"); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesMultibyte(t *testing.T) {
+	if got := TrimRunes("★café★", "★"); got != "café" {
+		t.Errorf("TrimRunes = %q, want %q", got, "café")
+	}
+}
+
+func TestTrimRunesMultibyteMultiple(t *testing.T) {
+	if got := TrimRunes("🔥✨hello✨🔥", "🔥✨"); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesMixedASCIIAndMultibyte(t *testing.T) {
+	if got := TrimRunes("★-café-★", "★-"); got != "café" {
+		t.Errorf("TrimRunes = %q, want %q", got, "café")
+	}
+}
+
+func TestTrimRunesEmptyString(t *testing.T) {
+	if got := TrimRunes("", "abc"); got != "" {
+		t.Errorf("TrimRunes = %q, want empty", got)
+	}
+}
+
+func TestTrimRunesNothingToTrim(t *testing.T) {
+	if got := TrimRunes("hello", "xyz"); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesLeadingOnly(t *testing.T) {
+	if got := TrimRunes("--hello", "-"); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesTrailingOnly(t *testing.T) {
+	if got := TrimRunes("hello--", "-"); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
+
+func TestTrimRunesAllCharactersInCutset(t *testing.T) {
+	if got := TrimRunes("---", "-"); got != "" {
+		t.Errorf("TrimRunes = %q, want empty", got)
+	}
+}
+
+func TestTrimRunesMiddleNotTrimmed(t *testing.T) {
+	if got := TrimRunes("--he-llo--", "-"); got != "he-llo" {
+		t.Errorf("TrimRunes = %q, want %q", got, "he-llo")
+	}
+}
+
+func TestTrimRunesSpaces(t *testing.T) {
+	if got := TrimRunes("  hello  ", " "); got != "hello" {
+		t.Errorf("TrimRunes = %q, want %q", got, "hello")
+	}
+}
