@@ -371,3 +371,12 @@ func IsEven(n int) bool {
 func IsOdd(n int) bool {
 	return n%2 != 0
 }
+
+// Square returns n squared (n*n).
+// Examples:
+//   Square(5) = 25
+//   Square(-3) = 9
+//   Square(0) = 0
+func Square(n int) int {
+	return n * n
+}

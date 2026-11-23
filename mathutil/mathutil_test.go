@@ -1004,3 +1004,33 @@ func TestIsOddLargeValues(t *testing.T) {
 		t.Errorf("IsOdd(-1000) = %v, want false", got)
 	}
 }
+
+func TestSquarePositive(t *testing.T) {
+	if got := Square(5); got != 25 {
+		t.Errorf("Square(5) = %d, want 25", got)
+	}
+}
+
+func TestSquareNegative(t *testing.T) {
+	if got := Square(-3); got != 9 {
+		t.Errorf("Square(-3) = %d, want 9", got)
+	}
+}
+
+func TestSquareZero(t *testing.T) {
+	if got := Square(0); got != 0 {
+		t.Errorf("Square(0) = %d, want 0", got)
+	}
+}
+
+func TestSquareLargePositive(t *testing.T) {
+	if got := Square(100); got != 10000 {
+		t.Errorf("Square(100) = %d, want 10000", got)
+	}
+}
+
+func TestSquareLargeNegative(t *testing.T) {
+	if got := Square(-10); got != 100 {
+		t.Errorf("Square(-10) = %d, want 100", got)
+	}
+}
