@@ -457,3 +457,67 @@ func TestBulletNil(t *testing.T) {
 		t.Errorf("Bullet = %q, want empty", got)
 	}
 }
+
+// Dedent tests
+
+func TestDedentNoIndentation(t *testing.T) {
+	input := "hello\nworld"
+	want := "hello\nworld"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
+
+func TestDedentUniformIndentation(t *testing.T) {
+	input := "    hello\n    world"
+	want := "hello\nworld"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
+
+func TestDedentMixedIndentation(t *testing.T) {
+	input := "    hello\n      world"
+	want := "hello\n  world"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
+
+func TestDedentWithBlankLines(t *testing.T) {
+	input := "    hello\n\n    world"
+	want := "hello\n\nworld"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
+
+func TestDedentBlankLineDoesNotAffectIndent(t *testing.T) {
+	input := "    hello\n  \n    world"
+	want := "hello\n  \nworld"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
+
+func TestDedentEmptyString(t *testing.T) {
+	if got := Dedent(""); got != "" {
+		t.Errorf("Dedent = %q, want empty", got)
+	}
+}
+
+func TestDedentSingleLine(t *testing.T) {
+	input := "    hello"
+	want := "hello"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
+
+func TestDedentOnlyBlankLines(t *testing.T) {
+	input := "\n  \n"
+	want := "\n  \n"
+	if got := Dedent(input); got != want {
+		t.Errorf("Dedent = %q, want %q", got, want)
+	}
+}
