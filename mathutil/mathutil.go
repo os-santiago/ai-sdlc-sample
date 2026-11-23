@@ -347,3 +347,16 @@ func SumOfSquares(values []int) int {
 	}
 	return sum
 }
+
+// IsEven returns true if n is even, false otherwise.
+// A number is even if it is divisible by 2.
+// This includes zero and negative even numbers.
+// Examples:
+//   IsEven(0) = true
+//   IsEven(2) = true
+//   IsEven(-2) = true
+//   IsEven(1) = false
+//   IsEven(-1) = false
+func IsEven(n int) bool {
+	return n%2 == 0
+}
