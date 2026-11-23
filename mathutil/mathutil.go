@@ -380,3 +380,13 @@ func IsOdd(n int) bool {
 func Square(n int) int {
 	return n * n
 }
+
+// Half returns n/2 rounded toward zero.
+// Examples:
+//   Half(5) = 2
+//   Half(-5) = -2
+//   Half(4) = 2
+//   Half(0) = 0
+func Half(n int) int {
+	return n / 2
+}
