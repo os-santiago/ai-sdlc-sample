@@ -552,3 +552,44 @@ func TestInvertEmpty(t *testing.T) {
 		t.Fatalf("Invert(empty map) length = %d, want 0", len(got))
 	}
 }
+
+// Has tests - Issue #102 Acceptance Criteria
+
+func TestHasPresent(t *testing.T) {
+	// Acceptance Criteria 1: Returns true when key is present
+	m := map[string]string{
+		"name": "Alice",
+		"age":  "30",
+	}
+	if !Has(m, "name") {
+		t.Fatalf("Has(%v, \"name\") = false, want true", m)
+	}
+}
+
+func TestHasEmptyValue(t *testing.T) {
+	// Acceptance Criteria 1: Returns true even when key has empty value
+	m := map[string]string{
+		"name": "",
+	}
+	if !Has(m, "name") {
+		t.Fatalf("Has(%v, \"name\") = false, want true for empty value", m)
+	}
+}
+
+func TestHasMissing(t *testing.T) {
+	// Acceptance Criteria 2: Returns false when key is missing
+	m := map[string]string{
+		"name": "Alice",
+	}
+	if Has(m, "age") {
+		t.Fatalf("Has(%v, \"age\") = true, want false", m)
+	}
+}
+
+func TestHasNilMap(t *testing.T) {
+	// Edge case: Has on nil map returns false
+	var m map[string]string
+	if Has(m, "any") {
+		t.Fatalf("Has(nil, \"any\") = true, want false")
+	}
+}
