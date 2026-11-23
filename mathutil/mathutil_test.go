@@ -1034,3 +1034,45 @@ func TestSquareLargeNegative(t *testing.T) {
 		t.Errorf("Square(-10) = %d, want 100", got)
 	}
 }
+
+func TestHalfZero(t *testing.T) {
+	if got := Half(0); got != 0 {
+		t.Errorf("Half(0) = %d, want 0", got)
+	}
+}
+
+func TestHalfPositiveEven(t *testing.T) {
+	if got := Half(4); got != 2 {
+		t.Errorf("Half(4) = %d, want 2", got)
+	}
+}
+
+func TestHalfPositiveOdd(t *testing.T) {
+	if got := Half(5); got != 2 {
+		t.Errorf("Half(5) = %d, want 2", got)
+	}
+}
+
+func TestHalfNegativeEven(t *testing.T) {
+	if got := Half(-4); got != -2 {
+		t.Errorf("Half(-4) = %d, want -2", got)
+	}
+}
+
+func TestHalfNegativeOdd(t *testing.T) {
+	if got := Half(-5); got != -2 {
+		t.Errorf("Half(-5) = %d, want -2", got)
+	}
+}
+
+func TestHalfLargePositiveOdd(t *testing.T) {
+	if got := Half(99); got != 49 {
+		t.Errorf("Half(99) = %d, want 49", got)
+	}
+}
+
+func TestHalfLargeNegativeOdd(t *testing.T) {
+	if got := Half(-99); got != -49 {
+		t.Errorf("Half(-99) = %d, want -49", got)
+	}
+}
