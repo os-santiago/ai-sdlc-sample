@@ -116,6 +116,42 @@ func TestInitials(t *testing.T) {
 	}
 }
 
+func TestAbbreviate(t *testing.T) {
+	tests := []struct {
+		in   string
+		want string
+	}{
+		// Acceptance criteria: basic case
+		{"ada lovelace", "A.L."},
+		// Acceptance criteria: empty string
+		{"", ""},
+		// Extra whitespace (acceptance criteria)
+		{"  ada   lovelace  ", "A.L."},
+		{"one  two   three", "O.T.T."},
+		// Unicode awareness (acceptance criteria)
+		{"élan vital", "É.V."},
+		{"über alles", "Ü.A."},
+		// Single word
+		{"hello", "H."},
+		// Mixed case input (should uppercase)
+		{"hello World", "H.W."},
+		{"HELLO world", "H.W."},
+		// Tab and newline whitespace
+		{"one\ttwo\nthree", "O.T.T."},
+		// Only whitespace
+		{"   ", ""},
+		{"\t\n  ", ""},
+		// Numbers (first character)
+		{"123 abc", "1.A."},
+	}
+
+	for _, tt := range tests {
+		if got := Abbreviate(tt.in); got != tt.want {
+			t.Errorf("Abbreviate(%q) = %q, want %q", tt.in, got, tt.want)
+		}
+	}
+}
+
 func TestCapitalize(t *testing.T) {
 	tests := []struct {
 		in   string
