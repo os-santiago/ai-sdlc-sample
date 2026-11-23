@@ -423,3 +423,37 @@ func TestSurroundMultibyteMarkerAndText(t *testing.T) {
 		t.Errorf("Surround = %q, want %q", got, "✨émoji✨")
 	}
 }
+
+// Bullet tests
+
+func TestBulletEmpty(t *testing.T) {
+	if got := Bullet([]string{}); got != "" {
+		t.Errorf("Bullet = %q, want empty", got)
+	}
+}
+
+func TestBulletOne(t *testing.T) {
+	if got := Bullet([]string{"item"}); got != "- item" {
+		t.Errorf("Bullet = %q, want %q", got, "- item")
+	}
+}
+
+func TestBulletSeveral(t *testing.T) {
+	want := "- first\n- second\n- third"
+	if got := Bullet([]string{"first", "second", "third"}); got != want {
+		t.Errorf("Bullet = %q, want %q", got, want)
+	}
+}
+
+func TestBulletMultibyte(t *testing.T) {
+	want := "- café\n- thé"
+	if got := Bullet([]string{"café", "thé"}); got != want {
+		t.Errorf("Bullet = %q, want %q", got, want)
+	}
+}
+
+func TestBulletNil(t *testing.T) {
+	if got := Bullet(nil); got != "" {
+		t.Errorf("Bullet = %q, want empty", got)
+	}
+}
