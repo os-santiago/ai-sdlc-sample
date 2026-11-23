@@ -558,3 +558,73 @@ func TestAverageIntMixed(t *testing.T) {
 		t.Errorf("AverageInt([-5, 10, -2]) = %d, want 1 (floor of 1.0)", got)
 	}
 }
+
+func TestLCMExample1(t *testing.T) {
+	got := LCM(4, 6)
+	if got != 12 {
+		t.Errorf("LCM(4, 6) = %d, want 12", got)
+	}
+}
+
+func TestLCMZeroFirst(t *testing.T) {
+	got := LCM(0, 5)
+	if got != 0 {
+		t.Errorf("LCM(0, 5) = %d, want 0", got)
+	}
+}
+
+func TestLCMZeroSecond(t *testing.T) {
+	got := LCM(5, 0)
+	if got != 0 {
+		t.Errorf("LCM(5, 0) = %d, want 0", got)
+	}
+}
+
+func TestLCMBothZero(t *testing.T) {
+	got := LCM(0, 0)
+	if got != 0 {
+		t.Errorf("LCM(0, 0) = %d, want 0", got)
+	}
+}
+
+func TestLCMPositive(t *testing.T) {
+	got := LCM(12, 18)
+	if got != 36 {
+		t.Errorf("LCM(12, 18) = %d, want 36", got)
+	}
+}
+
+func TestLCMNegativeFirst(t *testing.T) {
+	got := LCM(-4, 6)
+	if got != 12 {
+		t.Errorf("LCM(-4, 6) = %d, want 12 (using absolute values)", got)
+	}
+}
+
+func TestLCMNegativeSecond(t *testing.T) {
+	got := LCM(4, -6)
+	if got != 12 {
+		t.Errorf("LCM(4, -6) = %d, want 12 (using absolute values)", got)
+	}
+}
+
+func TestLCMBothNegative(t *testing.T) {
+	got := LCM(-4, -6)
+	if got != 12 {
+		t.Errorf("LCM(-4, -6) = %d, want 12 (using absolute values)", got)
+	}
+}
+
+func TestLCMIdenticalValues(t *testing.T) {
+	got := LCM(7, 7)
+	if got != 7 {
+		t.Errorf("LCM(7, 7) = %d, want 7", got)
+	}
+}
+
+func TestLCMCoprime(t *testing.T) {
+	got := LCM(5, 7)
+	if got != 35 {
+		t.Errorf("LCM(5, 7) = %d, want 35 (coprime numbers)", got)
+	}
+}
