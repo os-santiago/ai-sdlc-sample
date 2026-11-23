@@ -360,3 +360,14 @@ func SumOfSquares(values []int) int {
 func IsEven(n int) bool {
 	return n%2 == 0
 }
+// IsOdd returns true if n is odd, false otherwise.
+// A number is odd if it is not divisible by 2.
+// This includes negative odd numbers but not zero.
+// Examples:
+//   IsOdd(1) = true
+//   IsOdd(-1) = true
+//   IsOdd(0) = false
+//   IsOdd(2) = false
+func IsOdd(n int) bool {
+	return n%2 != 0
+}
