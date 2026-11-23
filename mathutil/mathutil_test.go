@@ -923,3 +923,45 @@ func TestAverageFloatMultipleValues(t *testing.T) {
 		t.Errorf("AverageFloat([1.0, 2.0, 3.0, 4.0, 5.0]) = %v, want 3.0", got)
 	}
 }
+
+func TestIsEvenZero(t *testing.T) {
+	if got := IsEven(0); !got {
+		t.Errorf("IsEven(0) = %v, want true", got)
+	}
+}
+
+func TestIsEvenPositiveEven(t *testing.T) {
+	if got := IsEven(2); !got {
+		t.Errorf("IsEven(2) = %v, want true", got)
+	}
+}
+
+func TestIsEvenPositiveOdd(t *testing.T) {
+	if got := IsEven(1); got {
+		t.Errorf("IsEven(1) = %v, want false", got)
+	}
+}
+
+func TestIsEvenNegativeEven(t *testing.T) {
+	if got := IsEven(-2); !got {
+		t.Errorf("IsEven(-2) = %v, want true", got)
+	}
+}
+
+func TestIsEvenNegativeOdd(t *testing.T) {
+	if got := IsEven(-1); got {
+		t.Errorf("IsEven(-1) = %v, want false", got)
+	}
+}
+
+func TestIsEvenLargePositiveEven(t *testing.T) {
+	if got := IsEven(1000); !got {
+		t.Errorf("IsEven(1000) = %v, want true", got)
+	}
+}
+
+func TestIsEvenLargeNegativeOdd(t *testing.T) {
+	if got := IsEven(-999); got {
+		t.Errorf("IsEven(-999) = %v, want false", got)
+	}
+}
