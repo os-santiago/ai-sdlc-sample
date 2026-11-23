@@ -193,3 +193,21 @@ func Surround(s, marker string) string {
 	}
 	return marker + s + marker
 }
+
+// Bullet formats items as a bulleted list with each item on its own line
+// prefixed with "- ", joined with "\n", with no trailing newline.
+// An empty slice returns an empty string.
+func Bullet(items []string) string {
+	if len(items) == 0 {
+		return ""
+	}
+	var result strings.Builder
+	for i, item := range items {
+		if i > 0 {
+			result.WriteString("\n")
+		}
+		result.WriteString("- ")
+		result.WriteString(item)
+	}
+	return result.String()
+}
