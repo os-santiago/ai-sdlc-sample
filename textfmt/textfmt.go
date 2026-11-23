@@ -169,3 +169,18 @@ func Wrap(s string, width int) string {
 
 	return result.String()
 }
+
+// Quote wraps s in double quotes and escapes inner double quotes and backslashes
+// with a backslash. The result is suitable for display in quoted contexts.
+func Quote(s string) string {
+	var result strings.Builder
+	result.WriteByte('"')
+	for i := 0; i < len(s); i++ {
+		if s[i] == '\\' || s[i] == '"' {
+			result.WriteByte('\\')
+		}
+		result.WriteByte(s[i])
+	}
+	result.WriteByte('"')
+	return result.String()
+}
