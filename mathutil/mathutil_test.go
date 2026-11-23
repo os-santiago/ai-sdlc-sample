@@ -965,3 +965,42 @@ func TestIsEvenLargeNegativeOdd(t *testing.T) {
 		t.Errorf("IsEven(-999) = %v, want false", got)
 	}
 }
+
+func TestIsOddZero(t *testing.T) {
+	if got := IsOdd(0); got {
+		t.Errorf("IsOdd(0) = %v, want false", got)
+	}
+}
+
+func TestIsOddPositiveOdd(t *testing.T) {
+	if got := IsOdd(1); !got {
+		t.Errorf("IsOdd(1) = %v, want true", got)
+	}
+}
+
+func TestIsOddPositiveEven(t *testing.T) {
+	if got := IsOdd(2); got {
+		t.Errorf("IsOdd(2) = %v, want false", got)
+	}
+}
+
+func TestIsOddNegativeOdd(t *testing.T) {
+	if got := IsOdd(-1); !got {
+		t.Errorf("IsOdd(-1) = %v, want true", got)
+	}
+}
+
+func TestIsOddNegativeEven(t *testing.T) {
+	if got := IsOdd(-2); got {
+		t.Errorf("IsOdd(-2) = %v, want false", got)
+	}
+}
+
+func TestIsOddLargeValues(t *testing.T) {
+	if got := IsOdd(999); !got {
+		t.Errorf("IsOdd(999) = %v, want true", got)
+	}
+	if got := IsOdd(-1000); got {
+		t.Errorf("IsOdd(-1000) = %v, want false", got)
+	}
+}
