@@ -207,3 +207,14 @@ func Rename(m map[string]string, from, to string) bool {
 	m[to] = value
 	return true
 }
+
+// Count returns the number of keys whose value equals the given value.
+func Count(m map[string]string, value string) int {
+	count := 0
+	for _, v := range m {
+		if v == value {
+			count++
+		}
+	}
+	return count
+}
