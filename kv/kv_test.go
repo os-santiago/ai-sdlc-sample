@@ -837,3 +837,38 @@ func TestEqualMapsNilInput(t *testing.T) {
 		t.Fatalf("EqualMaps(nil/empty, non-empty) = true, want false")
 	}
 }
+
+// ByteSize tests - Issue #172 Acceptance Criteria
+
+func TestByteSizeNil(t *testing.T) {
+	// Acceptance Criteria: A nil map returns 0
+	var nilMap map[string]string
+	got := ByteSize(nilMap)
+	if got != 0 {
+		t.Fatalf("ByteSize(nil) = %d, want 0", got)
+	}
+}
+
+func TestByteSizeOneEntry(t *testing.T) {
+	// Acceptance Criteria: Tests cover one entry
+	m := map[string]string{"key": "value"}
+	got := ByteSize(m)
+	want := len("key") + len("value") // 3 + 5 = 8
+	if got != want {
+		t.Fatalf("ByteSize(%v) = %d, want %d", m, got, want)
+	}
+}
+
+func TestByteSizeSeveralEntries(t *testing.T) {
+	// Acceptance Criteria: Tests cover several entries
+	m := map[string]string{
+		"a": "1",
+		"bb": "22",
+		"ccc": "333",
+	}
+	got := ByteSize(m)
+	want := len("a") + len("1") + len("bb") + len("22") + len("ccc") + len("333") // 1+1+2+2+3+3 = 12
+	if got != want {
+		t.Fatalf("ByteSize(%v) = %d, want %d", m, got, want)
+	}
+}

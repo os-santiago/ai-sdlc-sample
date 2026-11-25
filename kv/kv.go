@@ -225,3 +225,17 @@ func Count(m map[string]string, value string) int {
 	}
 	return count
 }
+
+// ByteSize returns the total number of bytes in all keys and values of the map.
+// A nil map returns 0.
+func ByteSize(m map[string]string) int {
+	if m == nil {
+		return 0
+	}
+	
+	total := 0
+	for k, v := range m {
+		total += len(k) + len(v)
+	}
+	return total
+}
