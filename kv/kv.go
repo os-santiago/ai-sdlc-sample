@@ -1,4 +1,4 @@
-// Package kv parses simple "key=value" lists.
+// Package kv parses simple "key=[REDACTED]" lists.
 package kv
 
 import (
@@ -28,7 +28,7 @@ func Parse(s string) (map[string]string, error) {
 	return out, nil
 }
 
-// Format renders a map as a deterministic "key=value;key=value" string.
+// Format renders a map as a deterministic "key=[REDACTED];key=[REDACTED]" string.
 // Keys are sorted alphabetically. Returns empty string for empty map.
 func Format(m map[string]string) string {
 	if len(m) == 0 {
@@ -238,4 +238,18 @@ func ByteSize(m map[string]string) int {
 		total += len(k) + len(v)
 	}
 	return total
+}
+
+// SortedKeys returns the keys of the map sorted in ascending order.
+// Returns an empty, non-nil slice for a nil map.
+func SortedKeys(m map[string]string) []string {
+	if m == nil {
+		return []string{}
+	}
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
 }
