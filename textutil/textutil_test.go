@@ -218,6 +218,38 @@ func TestCountVowels(t *testing.T) {
 	}
 }
 
+func TestVowelCount(t *testing.T) {
+	tests := []struct {
+		in   string
+		want int
+	}{
+		// Acceptance criteria: empty input
+		{"", 0},
+		// Acceptance criteria: mixed case
+		{"Hello World", 3},
+		{"AEIOU", 5},
+		{"aeiou", 5},
+		{"AeIoU", 5},
+		// Acceptance criteria: string without vowels
+		{"bcdfg", 0},
+		{"xyz", 0},
+		// Additional test cases
+		{"Programming", 3},
+		{"rhythm", 0},
+		{"beautiful", 5},
+		{"HELLO", 2},
+		{"hello", 2},
+		{"a", 1},
+		{"E", 1},
+		{"bcdfg", 0},
+	}
+
+	for _, tt := range tests {
+		if got := VowelCount(tt.in); got != tt.want {
+			t.Errorf("VowelCount(%q) = %d, want %d", tt.in, got, tt.want)
+		}
+	}
+}
 func TestReverseWords(t *testing.T) {
 	tests := []struct {
 		in   string
