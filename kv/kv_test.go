@@ -859,6 +859,36 @@ func TestByteSizeOneEntry(t *testing.T) {
 	}
 }
 
+func TestSortedKeys(t *testing.T) {
+	// Test nil map
+	got := SortedKeys(nil)
+	if got == nil {
+		t.Fatalf("SortedKeys(nil) returned nil, want empty slice")
+	}
+	if len(got) != 0 {
+		t.Fatalf("SortedKeys(nil) returned slice with %d elements, want 0", len(got))
+	}
+
+	// Test single key
+	m1 := map[string]string{"a": "1"}
+	got = SortedKeys(m1)
+	if len(got) != 1 {
+		t.Fatalf("SortedKeys(single) returned slice with %d elements, want 1", len(got))
+	}
+	if got[0] != "a" {
+		t.Fatalf("SortedKeys(single) returned %v, want [\"a\"]", got)
+	}
+
+	// Test multiple keys
+	m2 := map[string]string{"c": "3", "a": "1", "b": "2"}
+	got = SortedKeys(m2)
+	if len(got) != 3 {
+		t.Fatalf("SortedKeys(multiple) returned slice with %d elements, want 3", len(got))
+	}
+	if got[0] != "a" || got[1] != "b" || got[2] != "c" {
+		t.Fatalf("SortedKeys(multiple) returned %v, want [\"a\", \"b\", \"c\"]", got)
+	}
+}
 func TestByteSizeSeveralEntries(t *testing.T) {
 	// Acceptance Criteria: Tests cover several entries
 	m := map[string]string{
