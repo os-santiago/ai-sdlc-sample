@@ -601,3 +601,29 @@ func TestTrimRunesSpaces(t *testing.T) {
 		t.Errorf("TrimRunes = %q, want %q", got, "hello")
 	}
 }
+
+// TruncateDots tests
+
+func TestTruncateDotsShortInput(t *testing.T) {
+	if got := TruncateDots("hello", 10); got != "hello" {
+		t.Errorf("TruncateDots = %q, want %q", got, "hello")
+	}
+}
+
+func TestTruncateDotsTruncation(t *testing.T) {
+	if got := TruncateDots("hello world", 8); got != "hello w…" {
+		t.Errorf("TruncateDots = %q, want %q", got, "hello w…")
+	}
+}
+
+func TestTruncateDotsMaxZero(t *testing.T) {
+	if got := TruncateDots("hello", 0); got != "" {
+		t.Errorf("TruncateDots = %q, want empty", got)
+	}
+}
+
+func TestTruncateDotsMaxNegative(t *testing.T) {
+	if got := TruncateDots("hello", -1); got != "" {
+		t.Errorf("TruncateDots = %q, want empty", got)
+	}
+}

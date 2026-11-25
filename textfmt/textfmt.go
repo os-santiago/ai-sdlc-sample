@@ -103,6 +103,21 @@ func Ellipsis(s string, n int) string {
 	return string(runes[:n-1]) + "…"
 }
 
+// TruncateDots shortens s to at most max runes, ending with "…" when it
+// had to cut. max smaller than 1 returns an empty string. When s has at
+// most max runes (runes), it is returned unchanged. Otherwise the first
+// max-1 runes are returned followed by "…".
+func TruncateDots(s string, max int) string {
+	if max <= 0 {
+		return ""
+	}
+	runes := []rune(s)
+	if len(runes) <= max {
+		return s
+	}
+	return string(runes[:max-1]) + "…"
+}
+
 // Indent adds prefix at the start of every non-empty line in s.
 // Empty lines stay empty, and line endings are kept.
 func Indent(s, prefix string) string {
