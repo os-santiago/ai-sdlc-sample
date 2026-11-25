@@ -288,6 +288,15 @@ func HasDigit(s string) bool {
 	return false
 }
 
+// HasSuffixFold reports whether s ends with suffix, ignoring Unicode case.
+// An empty suffix always matches.
+func HasSuffixFold(s, suffix string) bool {
+	if len(suffix) > len(s) {
+		return false
+	}
+	return strings.EqualFold(s[len(s)-len(suffix):], suffix)
+}
+
 // HasUpper reports whether s contains at least one uppercase letter.
 // It is Unicode-aware.
 func HasUpper(s string) bool {
