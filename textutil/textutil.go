@@ -106,6 +106,19 @@ func CountVowels(s string) int {
 	return count
 }
 
+// VowelCount returns the number of vowels (a, e, i, o, u) in s,
+// counting both upper and lower case.
+func VowelCount(s string) int {
+	count := 0
+	for _, r := range s {
+		lower := unicode.ToLower(r)
+		if lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u' {
+			count++
+		}
+	}
+	return count
+}
+
 // ReverseWords returns s with the order of its words reversed.
 // Words are separated by any whitespace, and the result joins them with single spaces.
 func ReverseWords(s string) string {
