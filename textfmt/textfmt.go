@@ -331,3 +331,31 @@ func contains(runes []rune, r rune) bool {
 	}
 	return false
 }
+
+// Indent2 prefixes every non-empty line of s with two spaces; empty lines stay empty.
+// Line endings are preserved.
+func Indent2(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	var result strings.Builder
+	atLineStart := true
+
+	for i := 0; i < len(s); i++ {
+		ch := s[i]
+
+		if atLineStart && ch != '\n' && ch != '\r' {
+			result.WriteString("  ")
+			atLineStart = false
+		}
+
+		result.WriteByte(ch)
+
+		if ch == '\n' {
+			atLineStart = true
+		}
+	}
+
+	return result.String()
+}
