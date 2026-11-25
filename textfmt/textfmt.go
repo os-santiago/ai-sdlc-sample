@@ -185,6 +185,25 @@ func Wrap(s string, width int) string {
 	return result.String()
 }
 
+// RepeatJoin joins n copies of s with sep as the separator between them.
+// If n is 0 or less, it returns an empty string.
+func RepeatJoin(s, sep string, n int) string {
+	if n <= 0 {
+		return ""
+	}
+	if n == 1 {
+		return s
+	}
+	var result strings.Builder
+	for i := 0; i < n; i++ {
+		if i > 0 {
+			result.WriteString(sep)
+		}
+		result.WriteString(s)
+	}
+	return result.String()
+}
+
 // Quote wraps s in double quotes and escapes inner double quotes and backslashes
 // with a backslash. The result is suitable for display in quoted contexts.
 func Quote(s string) string {

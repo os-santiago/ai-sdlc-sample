@@ -627,3 +627,47 @@ func TestTruncateDotsMaxNegative(t *testing.T) {
 		t.Errorf("TruncateDots = %q, want empty", got)
 	}
 }
+
+// RepeatJoin tests
+
+func TestRepeatJoinBasic(t *testing.T) {
+	if got := RepeatJoin("ab", "-", 3); got != "ab-ab-ab" {
+		t.Errorf("RepeatJoin = %q, want %q", got, "ab-ab-ab")
+	}
+}
+
+func TestRepeatJoinZero(t *testing.T) {
+	if got := RepeatJoin("hello", ",", 0); got != "" {
+		t.Errorf("RepeatJoin = %q, want empty", got)
+	}
+}
+
+func TestRepeatJoinNegative(t *testing.T) {
+	if got := RepeatJoin("test", " ", -1); got != "" {
+		t.Errorf("RepeatJoin = %q, want empty", got)
+	}
+}
+
+func TestRepeatJoinOne(t *testing.T) {
+	if got := RepeatJoin("single", "|", 1); got != "single" {
+		t.Errorf("RepeatJoin = %q, want %q", got, "single")
+	}
+}
+
+func TestRepeatJoinEmptyString(t *testing.T) {
+	if got := RepeatJoin("", "-", 3); got != "--" {
+		t.Errorf("RepeatJoin = %q, want %q", got, "--")
+	}
+}
+
+func TestRepeatJoinEmptySeparator(t *testing.T) {
+	if got := RepeatJoin("ab", "", 3); got != "ababab" {
+		t.Errorf("RepeatJoin = %q, want %q", got, "ababab")
+	}
+}
+
+func TestRepeatJoinMultibyte(t *testing.T) {
+	if got := RepeatJoin("é", "•", 2); got != "é•é" {
+		t.Errorf("RepeatJoin = %q, want %q", got, "é•é")
+	}
+}
