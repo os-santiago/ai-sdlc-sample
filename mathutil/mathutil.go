@@ -400,3 +400,29 @@ func SignOf(n int) int {
 	}
 	return 0
 }
+
+// DigitSum returns the sum of the decimal digits of the absolute value of n.
+// Examples:
+//   DigitSum(0) = 0
+//   DigitSum(123) = 6 (1 + 2 + 3)
+//   DigitSum(-123) = 6 (1 + 2 + 3)
+func DigitSum(n int) int {
+	// Use absolute value to ignore sign
+	if n < 0 {
+		n = -n
+	}
+	
+	// Special case for 0
+	if n == 0 {
+		return 0
+	}
+	
+	// Sum the digits
+	sum := 0
+	for n > 0 {
+		sum += n % 10
+		n /= 10
+	}
+	
+	return sum
+}
