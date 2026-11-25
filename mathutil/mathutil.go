@@ -390,3 +390,13 @@ func Square(n int) int {
 func Half(n int) int {
 	return n / 2
 }
+// SignOf returns the sign of n: -1 for negative, 0 for zero, 1 for positive.
+func SignOf(n int) int {
+	if n < 0 {
+		return -1
+	}
+	if n > 0 {
+		return 1
+	}
+	return 0
+}
