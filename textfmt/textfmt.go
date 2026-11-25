@@ -246,6 +246,15 @@ func Bullet(items []string) string {
 	return result.String()
 }
 
+// Underline returns s, a newline, and one hyphen per rune of s.
+func Underline(s string) string {
+	runes := []rune(s)
+	underline := make([]rune, len(runes))
+	for i := range underline {
+		underline[i] = '-'
+	}
+	return s + "\n" + string(underline)
+}
 // Dedent removes the longest run of leading spaces shared by all non-blank lines.
 // Blank lines are kept and do not affect the shared indentation.
 func Dedent(s string) string {

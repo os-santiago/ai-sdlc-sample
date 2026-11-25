@@ -702,6 +702,28 @@ func TestIndent2EmptyString(t *testing.T) {
 	}
 }
 
+// Underline tests
+
+func TestUnderlineASCII(t *testing.T) {
+	expected := "heading\n-------"
+	if got := Underline("heading"); got != expected {
+		t.Errorf("Underline = %q, want %q", got, expected)
+	}
+}
+
+func TestUnderlineMultibyte(t *testing.T) {
+	expected := "héllo wörld\n-----------"
+	if got := Underline("héllo wörld"); got != expected {
+		t.Errorf("Underline = %q, want %q", got, expected)
+	}
+}
+
+func TestUnderlineEmpty(t *testing.T) {
+	expected := "\n"
+	if got := Underline(""); got != expected {
+		t.Errorf("Underline = %q, want %q", got, expected)
+	}
+}
 func TestIndent2OnlyEmptyLines(t *testing.T) {
 	input := "\n\n"
 	expected := "\n\n"
