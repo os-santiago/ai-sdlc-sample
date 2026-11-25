@@ -811,3 +811,67 @@ func TestIsLower(t *testing.T) {
 		}
 	}
 }
+
+func TestHasUpper(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: empty string
+		{"", false},
+		
+		// Acceptance criteria: lowercase-only (should return false)
+		{"hello", false},
+		{"world", false},
+		{"abc", false},
+		{"lowercase", false},
+		// Unicode lowercase
+		{"über", false},
+		{"café", false},
+		
+		// Acceptance criteria: mixed input (should return true)
+		{"Hello", true},
+		{"WORLD", true},
+		{"MixedCase", true},
+		{"hELLO", true},
+		{"aBc", true},
+		// Mixed with Unicode
+		{"Über", true},
+		{"Café", true},
+		
+		// Acceptance criteria: non-ASCII uppercase input
+		{"HELLO", true},
+		{"ÜBER", true},
+		{"CaféMüller", true},
+		
+		// Edge cases with numbers and special characters
+		{"123", false},
+		{"!@#", false},
+		{"   ", false},
+		{"123!@#", false},
+		{"\t\n", false},
+		{"hello123", false},
+		{"abc!@#", false},
+		{"test123world", false},
+		{"a1b2c3", false},
+		{"hello-world", false},
+		{"test_case", false},
+		{"abc 123 def", false},
+		{"hello, world!", false},
+		
+		// Cases with uppercase letters
+		{"hello WORLD", true},
+		{"test CASE", true},
+		{"aB1c2d3", true},
+		{"!@#ABC$%^", true},
+		{"123ABC", true},
+		{"ABC123", true},
+		{"aBcDeF", true},
+	}
+
+	for _, tt := range tests {
+		if got := HasUpper(tt.in); got != tt.want {
+			t.Errorf("HasUpper(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
