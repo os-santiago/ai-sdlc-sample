@@ -429,3 +429,10 @@ func DigitSum(n int) int {
 	
 	return sum
 }
+// Distance returns the absolute difference of a and b.
+func Distance(a, b int) int {
+	if a < b {
+		return b - a
+	}
+	return a - b
+}
