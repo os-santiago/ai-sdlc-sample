@@ -1,7 +1,10 @@
 // Package mathutil provides small numeric helpers.
 package mathutil
 
-import ("math"; "sort")
+import (
+	"math"
+	"sort"
+)
 
 // Clamp limits x to the closed range [lo, hi].
 func Clamp(x, lo, hi int) int {
