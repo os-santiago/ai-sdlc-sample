@@ -844,6 +844,40 @@ func TestIsLower(t *testing.T) {
 	}
 }
 
+func TestCountUpper(t *testing.T) {
+	tests := []struct {
+		in   string
+		want int
+	}{
+		// Acceptance criteria: empty input
+		{"", 0},
+		
+		// Acceptance criteria: mixed case
+		{"Hello World", 2}, // 'H' and 'W'
+		
+		// Acceptance criteria: string without upper-case letters
+		{"hello world", 0},
+		
+		// Additional test cases
+		{"HELLO WORLD", 10}, // All uppercase letters
+		{"ABC123def", 3}, // 'A','B','C'
+		{"!@#$%", 0}, // No letters
+		{"12345", 0}, // No letters
+		{"A1B2C3", 3}, // 'A','B','C'
+		{"aBcDeFg", 3}, // 'B','D','F'
+		{"ABC", 3},
+		{"abc", 0},
+		{"A", 1},
+		{"a", 0},
+		{"", 0},
+	}
+
+	for _, tt := range tests {
+		if got := CountUpper(tt.in); got != tt.want {
+			t.Errorf("CountUpper(%q) = %d, want %d", tt.in, got, tt.want)
+		}
+	}
+}
 func TestHasUpper(t *testing.T) {
 	tests := []struct {
 		in   string
