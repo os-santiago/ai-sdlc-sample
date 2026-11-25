@@ -671,3 +671,41 @@ func TestRepeatJoinMultibyte(t *testing.T) {
 		t.Errorf("RepeatJoin = %q, want %q", got, "é•é")
 	}
 }
+
+// Indent2 tests
+
+func TestIndent2SingleLine(t *testing.T) {
+	if got := Indent2("hello"); got != "  hello" {
+		t.Errorf("Indent2 = %q, want %q", got, "  hello")
+	}
+}
+
+func TestIndent2MultipleLines(t *testing.T) {
+	input := "first\nsecond\nthird"
+	expected := "  first\n  second\n  third"
+	if got := Indent2(input); got != expected {
+		t.Errorf("Indent2 = %q, want %q", got, expected)
+	}
+}
+
+func TestIndent2EmptyLineBetween(t *testing.T) {
+	input := "first\n\nthird"
+	expected := "  first\n\n  third"
+	if got := Indent2(input); got != expected {
+		t.Errorf("Indent2 = %q, want %q", got, expected)
+	}
+}
+
+func TestIndent2EmptyString(t *testing.T) {
+	if got := Indent2(""); got != "" {
+		t.Errorf("Indent2 = %q, want empty", got)
+	}
+}
+
+func TestIndent2OnlyEmptyLines(t *testing.T) {
+	input := "\n\n"
+	expected := "\n\n"
+	if got := Indent2(input); got != expected {
+		t.Errorf("Indent2 = %q, want %q", got, expected)
+	}
+}
