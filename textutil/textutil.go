@@ -274,3 +274,14 @@ func HasDigit(s string) bool {
 	}
 	return false
 }
+
+// HasUpper reports whether s contains at least one uppercase letter.
+// It is Unicode-aware.
+func HasUpper(s string) bool {
+	for _, r := range s {
+		if unicode.IsUpper(r) {
+			return true
+		}
+	}
+	return false
+}
