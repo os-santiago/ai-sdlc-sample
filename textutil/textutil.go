@@ -200,6 +200,21 @@ func CountChar(s string, r rune) int {
 	return count
 }
 
+// TrimSuffixFold removes suffix from the end of s when it matches ignoring Unicode case;
+// otherwise returns s unchanged.
+func TrimSuffixFold(s, suffix string) string {
+	if len(suffix) > len(s) {
+		return s
+	}
+	
+	// Check if the suffix matches (case-insensitive)
+	if !strings.EqualFold(s[len(s)-len(suffix):], suffix) {
+		return s
+	}
+	
+	// Return the string with the suffix removed
+	return s[:len(s)-len(suffix)]
+}
 // LastRune returns the last rune of s and true, or 0 and false for an empty string.
 func LastRune(s string) (rune, bool) {
 	if s == "" {
