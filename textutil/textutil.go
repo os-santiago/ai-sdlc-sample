@@ -307,3 +307,15 @@ func HasUpper(s string) bool {
 	}
 	return false
 }
+
+// CountUpper returns the number of uppercase letters in s.
+// It counts runes for which unicode.IsUpper is true.
+func CountUpper(s string) int {
+	count := 0
+	for _, r := range s {
+		if unicode.IsUpper(r) {
+			count++
+		}
+	}
+	return count
+}
