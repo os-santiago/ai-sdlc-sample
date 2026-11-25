@@ -200,6 +200,19 @@ func CountChar(s string, r rune) int {
 	return count
 }
 
+// LastRune returns the last rune of s and true, or 0 and false for an empty string.
+func LastRune(s string) (rune, bool) {
+	if s == "" {
+		return 0, false
+	}
+	
+	// Get the last rune using utf8.DecodeLastRuneInString
+	r, size := utf8.DecodeLastRuneInString(s)
+	if size == 0 {
+		return 0, false
+	}
+	return r, true
+}
 // IsUpper reports whether s has at least one letter and all letters are uppercase.
 // Non-letter characters are ignored.
 func IsUpper(s string) bool {

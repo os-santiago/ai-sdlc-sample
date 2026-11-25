@@ -844,6 +844,41 @@ func TestIsLower(t *testing.T) {
 	}
 }
 
+func TestLastRune(t *testing.T) {
+	tests := []struct {
+		in   string
+		want rune
+		wantOk bool
+	}{
+		// Acceptance criteria: empty input
+		{"", 0, false},
+		
+		// Acceptance criteria: ASCII character
+		{"a", 'a', true},
+		{"hello", 'o', true},
+		
+		// Acceptance criteria: multibyte last character
+		{"héllo", 'o', true},
+		{"日本語", '語', true},
+		{"café", 'é', true},
+		
+		// Additional test cases
+		{"123", '3', true},
+		{"!@#", '#', true},
+		{"a1b2c3", '3', true},
+		{"Hello, 世界!", '!', true},
+		{"\n\t", '\t', true},
+		{"\x00", '\x00', true},
+		{"\u2026", '\u2026', true},
+	}
+
+	for _, tt := range tests {
+		got, gotOk := LastRune(tt.in)
+		if got != tt.want || gotOk != tt.wantOk {
+			t.Errorf("LastRune(%q) = (%U, %v), want (%U, %v)", tt.in, got, gotOk, tt.want, tt.wantOk)
+		}
+	}
+}
 func TestCountUpper(t *testing.T) {
 	tests := []struct {
 		in   string
