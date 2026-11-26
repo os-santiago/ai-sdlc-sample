@@ -427,6 +427,14 @@ func NumberLines(s string) string {
 	return result.String()
 }
 
+// Tag wraps s in an HTML-like tag with the given name. When name is empty,
+// it returns s unchanged.
+func Tag(name, s string) string {
+	if name == "" {
+		return s
+	}
+	return "<" + name + ">" + s + "</" + name + ">"
+}
 // Banner centers s within width using = on both sides, with one space around s.
 // When width is too small, it returns s unchanged.
 func Banner(s string, width int) string {

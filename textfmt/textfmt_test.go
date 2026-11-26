@@ -854,3 +854,24 @@ func TestHangingEmptyString(t *testing.T) {
 		t.Errorf("Hanging = %q, want empty", got)
 	}
 }
+
+// Tag tests
+
+func TestTagNormal(t *testing.T) {
+	if got := Tag("p", "content"); got != "<p>content</p>" {
+		t.Errorf("Tag = %q, want %q", got, "<p>content</p>")
+	}
+}
+
+func TestTagEmptyName(t *testing.T) {
+	input := "just text"
+	if got := Tag("", input); got != input {
+		t.Errorf("Tag = %q, want %q", got, input)
+	}
+}
+
+func TestTagEmptyString(t *testing.T) {
+	if got := Tag("div", ""); got != "<div></div>" {
+		t.Errorf("Tag = %q, want %q", got, "<div></div>")
+	}
+}
