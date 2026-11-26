@@ -446,3 +446,25 @@ func Banner(s string, width int) string {
 
 	return strings.Repeat("=", leftEquals) + " " + s + " " + strings.Repeat("=", rightEquals)
 }
+
+// Hanging indents every line after the first by n spaces. If n is 0 or less,
+// it returns s unchanged.
+func Hanging(s string, n int) string {
+	if n <= 0 {
+		return s
+	}
+
+	lines := strings.Split(s, "\n")
+	if len(lines) <= 1 {
+		return s
+	}
+
+	indent := strings.Repeat(" ", n)
+	var result strings.Builder
+	result.WriteString(lines[0])
+	for i := 1; i < len(lines); i++ {
+		result.WriteString("\n")
+		result.WriteString(indent + lines[i])
+	}
+	return result.String()
+}

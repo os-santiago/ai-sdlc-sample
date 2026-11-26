@@ -814,3 +814,43 @@ func TestNumberLinesSeveralLines(t *testing.T) {
 		t.Errorf("NumberLines = %q, want %q", got, want)
 	}
 }
+
+// Hanging tests
+
+func TestHangingSingleLine(t *testing.T) {
+	input := "single line"
+	want := "single line"
+	if got := Hanging(input, 4); got != want {
+		t.Errorf("Hanging = %q, want %q", got, want)
+	}
+}
+
+func TestHangingSeveralLines(t *testing.T) {
+	input := "first line\nsecond line\nthird line"
+	want := "first line\n    second line\n    third line"
+	if got := Hanging(input, 4); got != want {
+		t.Errorf("Hanging = %q, want %q", got, want)
+	}
+}
+
+func TestHangingZero(t *testing.T) {
+	input := "first line\nsecond line"
+	want := "first line\nsecond line"
+	if got := Hanging(input, 0); got != want {
+		t.Errorf("Hanging = %q, want %q", got, want)
+	}
+}
+
+func TestHangingNegative(t *testing.T) {
+	input := "first line\nsecond line"
+	want := "first line\nsecond line"
+	if got := Hanging(input, -5); got != want {
+		t.Errorf("Hanging = %q, want %q", got, want)
+	}
+}
+
+func TestHangingEmptyString(t *testing.T) {
+	if got := Hanging("", 4); got != "" {
+		t.Errorf("Hanging = %q, want empty", got)
+	}
+}
