@@ -390,3 +390,14 @@ func Quoted(s string) string {
 
 	return result.String()
 }
+
+// Box returns s in a box made of + and - characters. The result has three
+// lines: a top border of + followed by one - per rune of s plus two, a
+// middle line "| s |", and a bottom border equal to the top.
+func Box(s string) string {
+	runes := []rune(s)
+	dashes := len(runes) + 2
+	border := "+" + strings.Repeat("-", dashes) + "+"
+	middle := "| " + s + " |"
+	return border + "\n" + middle + "\n" + border
+}
