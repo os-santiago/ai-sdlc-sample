@@ -792,3 +792,25 @@ func TestBoxEmpty(t *testing.T) {
 		t.Errorf("Box = %q, want %q", got, expected)
 	}
 }
+
+// NumberLines tests
+
+func TestNumberLinesEmpty(t *testing.T) {
+	if got := NumberLines(""); got != "" {
+		t.Errorf("NumberLines = %q, want empty", got)
+	}
+}
+
+func TestNumberLinesOneLine(t *testing.T) {
+	if got := NumberLines("hello"); got != "1: hello" {
+		t.Errorf("NumberLines = %q, want %q", got, "1: hello")
+	}
+}
+
+func TestNumberLinesSeveralLines(t *testing.T) {
+	input := "first\nsecond\nthird"
+	want := "1: first\n2: second\n3: third"
+	if got := NumberLines(input); got != want {
+		t.Errorf("NumberLines = %q, want %q", got, want)
+	}
+}

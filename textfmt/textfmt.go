@@ -1,7 +1,10 @@
 // Package textfmt formats short texts for display.
 package textfmt
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
 // Truncate shortens s to at most n characters, ending with "..." when it
 // had to cut. n smaller than 4 returns s cut to n characters.
@@ -400,4 +403,26 @@ func Box(s string) string {
 	border := "+" + strings.Repeat("-", dashes) + "+"
 	middle := "| " + s + " |"
 	return border + "\n" + middle + "\n" + border
+}
+
+// NumberLines prefixes each line of s with its 1-based number, a colon and
+// a space. An empty string returns an empty string.
+func NumberLines(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	lines := strings.Split(s, "\n")
+	var result strings.Builder
+
+	for i, line := range lines {
+		if i > 0 {
+			result.WriteString("\n")
+		}
+		result.WriteString(strconv.Itoa(i + 1))
+		result.WriteString(": ")
+		result.WriteString(line)
+	}
+
+	return result.String()
 }
