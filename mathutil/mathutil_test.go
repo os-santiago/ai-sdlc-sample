@@ -1076,3 +1076,118 @@ func TestHalfLargeNegativeOdd(t *testing.T) {
 		t.Errorf("Half(-99) = %d, want -49", got)
 	}
 }
+
+func TestClipNil(t *testing.T) {
+	got := Clip(nil, 0, 10)
+	if got != nil {
+		t.Errorf("Clip(nil, 0, 10) = %v, want nil", got)
+	}
+}
+
+func TestClipEmpty(t *testing.T) {
+	got := Clip([]int{}, 0, 10)
+	if got == nil {
+		t.Errorf("Clip([]int{}, 0, 10) = nil, want empty slice")
+	}
+	if len(got) != 0 {
+		t.Errorf("Clip([]int{}, 0, 10) = %v, want []", got)
+	}
+}
+
+func TestClipValuesInside(t *testing.T) {
+	input := []int{1, 5, 9}
+	got := Clip(input, 0, 10)
+	want := []int{1, 5, 9}
+
+	if len(got) != len(want) {
+		t.Fatalf("Clip(%v, 0, 10) length = %d, want %d", input, len(got), len(want))
+	}
+
+	for i := range want {
+		if got[i] != want[i] {
+			t.Errorf("Clip(%v, 0, 10)[%d] = %d, want %d", input, i, got[i], want[i])
+		}
+	}
+}
+
+func TestClipValuesBelow(t *testing.T) {
+	input := []int{-5, -10, -1}
+	got := Clip(input, 0, 10)
+	want := []int{0, 0, 0}
+
+	if len(got) != len(want) {
+		t.Fatalf("Clip(%v, 0, 10) length = %d, want %d", input, len(got), len(want))
+	}
+
+	for i := range want {
+		if got[i] != want[i] {
+			t.Errorf("Clip(%v, 0, 10)[%d] = %d, want %d", input, i, got[i], want[i])
+		}
+	}
+}
+
+func TestClipValuesAbove(t *testing.T) {
+	input := []int{15, 20, 11}
+	got := Clip(input, 0, 10)
+	want := []int{10, 10, 10}
+
+	if len(got) != len(want) {
+		t.Fatalf("Clip(%v, 0, 10) length = %d, want %d", input, len(got), len(want))
+	}
+
+	for i := range want {
+		if got[i] != want[i] {
+			t.Errorf("Clip(%v, 0, 10)[%d] = %d, want %d", input, i, got[i], want[i])
+		}
+	}
+}
+
+func TestClipMixedValues(t *testing.T) {
+	input := []int{-5, 5, 15}
+	got := Clip(input, 0, 10)
+	want := []int{0, 5, 10}
+
+	if len(got) != len(want) {
+		t.Fatalf("Clip(%v, 0, 10) length = %d, want %d", input, len(got), len(want))
+	}
+
+	for i := range want {
+		if got[i] != want[i] {
+			t.Errorf("Clip(%v, 0, 10)[%d] = %d, want %d", input, i, got[i], want[i])
+		}
+	}
+}
+
+func TestClipInputUnchanged(t *testing.T) {
+	input := []int{-5, 5, 15}
+	original := []int{-5, 5, 15}
+
+	Clip(input, 0, 10)
+
+	// Check that input was not modified
+	if len(input) != len(original) {
+		t.Fatalf("input length changed from %d to %d", len(original), len(input))
+	}
+
+	for i := range original {
+		if input[i] != original[i] {
+			t.Errorf("input[%d] = %d, want %d (input was modified)", i, input[i], original[i])
+		}
+	}
+}
+
+func TestClipBoundaryValues(t *testing.T) {
+	input := []int{0, 10}
+	got := Clip(input, 0, 10)
+	want := []int{0, 10}
+
+	if len(got) != len(want) {
+		t.Fatalf("Clip(%v, 0, 10) length = %d, want %d", input, len(got), len(want))
+	}
+
+	for i := range want {
+		if got[i] != want[i] {
+			t.Errorf("Clip(%v, 0, 10)[%d] = %d, want %d", input, i, got[i], want[i])
+		}
+	}
+}
