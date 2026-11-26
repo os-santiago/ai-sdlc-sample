@@ -426,3 +426,23 @@ func NumberLines(s string) string {
 
 	return result.String()
 }
+
+// Banner centers s within width using = on both sides, with one space around s.
+// When width is too small, it returns s unchanged.
+func Banner(s string, width int) string {
+	runes := []rune(s)
+	sLen := len(runes)
+
+	// Need at least: 1 = + 1 space + s + 1 space + 1 = = sLen + 4
+	minWidth := sLen + 4
+	if width < minWidth {
+		return s
+	}
+
+	// Total equals needed
+	totalEquals := width - sLen - 2 // subtract the 2 spaces
+	leftEquals := totalEquals / 2
+	rightEquals := totalEquals - leftEquals
+
+	return strings.Repeat("=", leftEquals) + " " + s + " " + strings.Repeat("=", rightEquals)
+}
