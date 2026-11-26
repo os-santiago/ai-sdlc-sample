@@ -976,3 +976,47 @@ func TestHasUpper(t *testing.T) {
 		}
 	}
 }
+
+func TestHasDuplicateRune(t *testing.T) {
+	tests := []struct {
+		in   string
+		want bool
+	}{
+		// Acceptance criteria: empty input
+		{"", false},
+
+		// Acceptance criteria: all distinct runes
+		{"abc", false},
+		{"world", false},
+		{"12345", false},
+		{"abcdefg", false},
+		{"quick", false},
+
+		// Acceptance criteria: a repeated rune
+		{"aaa", true},
+		{"hello", true}, // 'l' appears twice
+		{"test", true},  // 't' appears twice
+		{"aba", true},   // 'a' appears twice
+
+		// Acceptance criteria: a repeated multibyte rune
+		{"世界世", true}, // '世' appears twice
+		{"你好世界好", true}, // '好' appears twice
+		{"αβγα", true}, // 'α' appears twice
+
+		// Additional test cases
+		{"a", false},
+		{"ab", false},
+		{"🌍🌎🌏", false}, // all distinct emojis
+		{"🌍🌎🌍", true}, // emoji repeated
+		{"café", false}, // all distinct
+		{"naïve", false}, // all distinct
+		{"héllö", true}, // 'l' appears twice
+		{"hello world", true}, // 'l' and 'o' appear multiple times
+	}
+
+	for _, tt := range tests {
+		if got := HasDuplicateRune(tt.in); got != tt.want {
+			t.Errorf("HasDuplicateRune(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
