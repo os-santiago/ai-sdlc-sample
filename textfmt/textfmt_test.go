@@ -769,3 +769,26 @@ func TestQuotedEmptyLinesBetween(t *testing.T) {
 		t.Errorf("Quoted = %q, want %q", got, want)
 	}
 }
+
+// Box tests
+
+func TestBoxASCII(t *testing.T) {
+	expected := "+-------+\n| hello |\n+-------+"
+	if got := Box("hello"); got != expected {
+		t.Errorf("Box = %q, want %q", got, expected)
+	}
+}
+
+func TestBoxMultibyte(t *testing.T) {
+	expected := "+---+\n| 🔥 |\n+---+"
+	if got := Box("🔥"); got != expected {
+		t.Errorf("Box = %q, want %q", got, expected)
+	}
+}
+
+func TestBoxEmpty(t *testing.T) {
+	expected := "+--+\n|  |\n+--+"
+	if got := Box(""); got != expected {
+		t.Errorf("Box = %q, want %q", got, expected)
+	}
+}
