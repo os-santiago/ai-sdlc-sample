@@ -731,3 +731,41 @@ func TestIndent2OnlyEmptyLines(t *testing.T) {
 		t.Errorf("Indent2 = %q, want %q", got, expected)
 	}
 }
+
+// Quoted tests
+
+func TestQuotedEmpty(t *testing.T) {
+	if got := Quoted(""); got != "" {
+		t.Errorf("Quoted = %q, want empty", got)
+	}
+}
+
+func TestQuotedOneLine(t *testing.T) {
+	if got := Quoted("hello"); got != "> hello" {
+		t.Errorf("Quoted = %q, want %q", got, "> hello")
+	}
+}
+
+func TestQuotedSeveralLines(t *testing.T) {
+	input := "first\nsecond\nthird"
+	want := "> first\n> second\n> third"
+	if got := Quoted(input); got != want {
+		t.Errorf("Quoted = %q, want %q", got, want)
+	}
+}
+
+func TestQuotedTrailingNewline(t *testing.T) {
+	input := "hello\n"
+	want := "> hello\n"
+	if got := Quoted(input); got != want {
+		t.Errorf("Quoted = %q, want %q", got, want)
+	}
+}
+
+func TestQuotedEmptyLinesBetween(t *testing.T) {
+	input := "first\n\nthird"
+	want := "> first\n> \n> third"
+	if got := Quoted(input); got != want {
+		t.Errorf("Quoted = %q, want %q", got, want)
+	}
+}

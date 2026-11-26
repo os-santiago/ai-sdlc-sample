@@ -255,6 +255,7 @@ func Underline(s string) string {
 	}
 	return s + "\n" + string(underline)
 }
+
 // Dedent removes the longest run of leading spaces shared by all non-blank lines.
 // Blank lines are kept and do not affect the shared indentation.
 func Dedent(s string) string {
@@ -363,6 +364,27 @@ func Indent2(s string) string {
 
 		if ch == '\n' {
 			atLineStart = true
+		}
+	}
+
+	return result.String()
+}
+
+// Quoted prefixes every line of s with "> "; an empty string returns an empty string.
+func Quoted(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	var result strings.Builder
+	result.WriteString("> ")
+
+	for i := 0; i < len(s); i++ {
+		ch := s[i]
+		result.WriteByte(ch)
+
+		if ch == '\n' && i < len(s)-1 {
+			result.WriteString("> ")
 		}
 	}
 
