@@ -476,3 +476,11 @@ func Hanging(s string, n int) string {
 	}
 	return result.String()
 }
+
+// Parenthesize wraps s in parentheses. Returns an empty string for empty input.
+func Parenthesize(s string) string {
+	if s == "" {
+		return ""
+	}
+	return "(" + s + ")"
+}
