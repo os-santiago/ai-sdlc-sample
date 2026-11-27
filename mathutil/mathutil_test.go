@@ -1191,3 +1191,37 @@ func TestClipBoundaryValues(t *testing.T) {
 		}
 	}
 }
+
+func TestAbsDiffSumNil(t *testing.T) {
+	got := AbsDiffSum(nil)
+	if got != 0 {
+		t.Errorf("AbsDiffSum(nil) = %d, want 0", got)
+	}
+}
+
+func TestAbsDiffSumSingleValue(t *testing.T) {
+	got := AbsDiffSum([]int{42})
+	if got != 0 {
+		t.Errorf("AbsDiffSum([]int{42}) = %d, want 0", got)
+	}
+}
+
+func TestAbsDiffSumUpsAndDowns(t *testing.T) {
+	// Test a slice with ups and downs
+	got := AbsDiffSum([]int{1, 3, 2, 5, 4})
+	// Differences: |3-1|=2, |2-3|=1, |5-2|=3, |4-5|=1
+	// Sum: 2+1+3+1 = 7
+	if got != 7 {
+		t.Errorf("AbsDiffSum([]int{1, 3, 2, 5, 4}) = %d, want 7", got)
+	}
+}
+
+func TestAbsDiffSumExample(t *testing.T) {
+	// Test a simple case
+	got := AbsDiffSum([]int{10, 15, 12})
+	// Differences: |15-10|=5, |12-15|=3
+	// Sum: 5+3 = 8
+	if got != 8 {
+		t.Errorf("AbsDiffSum([]int{10, 15, 12}) = %d, want 8", got)
+	}
+}

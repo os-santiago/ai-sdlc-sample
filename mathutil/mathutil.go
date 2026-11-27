@@ -463,3 +463,21 @@ func DigitProduct(n int) int {
 	
 	return product
 }
+
+// AbsDiffSum returns the sum of the absolute differences between consecutive values in xs,
+// or 0 for fewer than two values.
+func AbsDiffSum(xs []int) int {
+	if len(xs) < 2 {
+		return 0
+	}
+	
+	sum := 0
+	for i := 1; i < len(xs); i++ {
+		diff := xs[i] - xs[i-1]
+		if diff < 0 {
+			diff = -diff
+		}
+		sum += diff
+	}
+	return sum
+}
