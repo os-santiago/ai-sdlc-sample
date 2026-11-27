@@ -875,3 +875,25 @@ func TestTagEmptyString(t *testing.T) {
 		t.Errorf("Tag = %q, want %q", got, "<div></div>")
 	}
 }
+
+// Parenthesize tests
+
+func TestParenthesizeEmpty(t *testing.T) {
+	if got := Parenthesize(""); got != "" {
+		t.Errorf("Parenthesize = %q, want empty", got)
+	}
+}
+
+func TestParenthesizeWord(t *testing.T) {
+	if got := Parenthesize("hello"); got != "(hello)" {
+		t.Errorf("Parenthesize = %q, want %q", got, "(hello)")
+	}
+}
+
+func TestParenthesizeWithParens(t *testing.T) {
+	input := "already (has) parentheses"
+	want := "(already (has) parentheses)"
+	if got := Parenthesize(input); got != want {
+		t.Errorf("Parenthesize = %q, want %q", got, want)
+	}
+}
