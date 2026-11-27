@@ -436,3 +436,30 @@ func Distance(a, b int) int {
 	}
 	return a - b
 }
+
+// DigitProduct returns the product of the decimal digits of the absolute value of n.
+// Examples:
+//   DigitProduct(0) = 0
+//   DigitProduct(234) = 24 (2 * 3 * 4)
+//   DigitProduct(-234) = 24 (2 * 3 * 4)
+//   DigitProduct(5) = 5
+func DigitProduct(n int) int {
+	// Use absolute value to ignore sign
+	if n < 0 {
+		n = -n
+	}
+	
+	// Special case for 0
+	if n == 0 {
+		return 0
+	}
+	
+	// Multiply the digits
+	product := 1
+	for n > 0 {
+		product *= n % 10
+		n /= 10
+	}
+	
+	return product
+}
