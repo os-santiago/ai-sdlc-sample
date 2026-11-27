@@ -1020,3 +1020,56 @@ func TestHasDuplicateRune(t *testing.T) {
 		}
 	}
 }
+
+func TestWordLengths(t *testing.T) {
+	tests := []struct {
+		in   string
+		want []int
+	}{
+		// Acceptance criteria: blank input
+		{"", []int{}},
+		{"   ", []int{}},
+		{"\t\n  ", []int{}},
+		
+		// Acceptance criteria: one word
+		{"hello", []int{5}},
+		{"world", []int{5}},
+		
+		// Acceptance criteria: several words with extra spaces
+		{"hello world", []int{5, 5}},
+		{"  hello   world  ", []int{5, 5}},
+		{"one two three", []int{3, 3, 5}},
+		{"  one   two    three  ", []int{3, 3, 5}},
+		
+		// Additional test cases
+		{"a b c", []int{1, 1, 1}},
+		{"hello, world!", []int{6, 6}},
+		{"", []int{}},
+		{"   ", []int{}},
+		{"\t\n", []int{}},
+		{"a", []int{1}},
+		{"  a  ", []int{1}},
+		{"αβγ δεζ", []int{3, 3}}, // Unicode characters
+		{"123 456", []int{3, 3}}, // Numbers
+		{"hello123 world456", []int{8, 8}}, // Mixed alphanumeric
+	}
+
+	for _, tt := range tests {
+		if got := WordLengths(tt.in); !equalSlices(got, tt.want) {
+			t.Errorf("WordLengths(%q) = %v, want %v", tt.in, got, tt.want)
+		}
+	}
+}
+
+// equalSlices compares two slices of int for equality
+func equalSlices(a, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
+}
