@@ -200,6 +200,22 @@ func CountChar(s string, r rune) int {
 	return count
 }
 
+// WordLengths returns the rune count of each whitespace-separated word in s,
+// in order, and an empty slice for blank input.
+func WordLengths(s string) []int {
+	if s == "" || strings.TrimSpace(s) == "" {
+		return []int{}
+	}
+	
+	words := strings.Fields(s)
+	lengths := make([]int, len(words))
+	
+	for i, word := range words {
+		lengths[i] = utf8.RuneCountInString(word)
+	}
+	
+	return lengths
+}
 // TrimSuffixFold removes suffix from the end of s when it matches ignoring Unicode case;
 // otherwise returns s unchanged.
 func TrimSuffixFold(s, suffix string) string {
