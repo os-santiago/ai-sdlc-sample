@@ -267,3 +267,16 @@ func SortedKeys(m map[string]string) []string {
 	sort.Strings(keys)
 	return keys
 }
+
+// HasAny reports whether at least one of keys is in m.
+func HasAny(m map[string]string, keys ...string) bool {
+	if m == nil {
+		return false
+	}
+	for _, key := range keys {
+		if _, ok := m[key]; ok {
+			return true
+		}
+	}
+	return false
+}

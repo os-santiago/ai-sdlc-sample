@@ -902,3 +902,41 @@ func TestByteSizeSeveralEntries(t *testing.T) {
 		t.Fatalf("ByteSize(%v) = %d, want %d", m, got, want)
 	}
 }
+
+// HasAny tests - Issue #338 Acceptance Criteria
+
+func TestHasAnyNoKeys(t *testing.T) {
+	// Acceptance Criteria: Tests cover no keys
+	m := map[string]string{"a": "1", "b": "2"}
+	got := HasAny(m)
+	if got {
+		t.Fatalf("HasAny(empty keys) = true, want false")
+	}
+}
+
+func TestHasAnyNoMatch(t *testing.T) {
+	// Acceptance Criteria: Tests cover no match
+	m := map[string]string{"a": "1", "b": "2"}
+	got := HasAny(m, "c", "d")
+	if got {
+		t.Fatalf("HasAny(no match) = true, want false")
+	}
+}
+
+func TestHasAnyOneMatch(t *testing.T) {
+	// Acceptance Criteria: Tests cover one match
+	m := map[string]string{"a": "1", "b": "2"}
+	got := HasAny(m, "c", "a", "d")
+	if !got {
+		t.Fatalf("HasAny(one match) = false, want true")
+	}
+}
+
+func TestHasAnyNilMap(t *testing.T) {
+	// Test nil map handling
+	var nilMap map[string]string
+	got := HasAny(nilMap, "a", "b")
+	if got {
+		t.Fatalf("HasAny(nil map) = true, want false")
+	}
+}
